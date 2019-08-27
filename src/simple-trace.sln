@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{97D520FC-5825-448D-96A1-9B313C3A17A0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{97D520FC-5825-448D-96A1-9B313C3A17A0}"
 	ProjectSection(SolutionItems) = preProject
 		..\readme.md = ..\readme.md
 	EndProjectSection
@@ -13,6 +13,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTrace.Shared", "SimpleTrace.Shared\SimpleTrace.Shared.csproj", "{BDFF52C0-4DFF-44D8-A186-1FBE57633029}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTrace.UnitTest", "SimpleTrace.UnitTest\SimpleTrace.UnitTest.csproj", "{B66DE67B-B77A-4392-B25C-A71B08145FAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTrace.Api", "SimpleTrace.Api\SimpleTrace.Api.csproj", "{CA998AB8-2B6E-414C-930A-D9E0A85674BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{6699DC9A-A98A-486F-92B7-067D3F6E6800}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.WinApp", "Demo.WinApp\Demo.WinApp.csproj", "{66156845-C4F6-4C7D-A114-B5CD049B858D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTrace.Jaeger", "SimpleTrace.Jaeger\SimpleTrace.Jaeger.csproj", "{8C6845E0-4110-481E-86FE-F15D4F7CF1AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "open trace", "open trace", "{32FDDF58-9533-4984-B7EA-C69E0510A84A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +42,25 @@ Global
 		{B66DE67B-B77A-4392-B25C-A71B08145FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B66DE67B-B77A-4392-B25C-A71B08145FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B66DE67B-B77A-4392-B25C-A71B08145FAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA998AB8-2B6E-414C-930A-D9E0A85674BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA998AB8-2B6E-414C-930A-D9E0A85674BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA998AB8-2B6E-414C-930A-D9E0A85674BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA998AB8-2B6E-414C-930A-D9E0A85674BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66156845-C4F6-4C7D-A114-B5CD049B858D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66156845-C4F6-4C7D-A114-B5CD049B858D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66156845-C4F6-4C7D-A114-B5CD049B858D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66156845-C4F6-4C7D-A114-B5CD049B858D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C6845E0-4110-481E-86FE-F15D4F7CF1AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C6845E0-4110-481E-86FE-F15D4F7CF1AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C6845E0-4110-481E-86FE-F15D4F7CF1AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C6845E0-4110-481E-86FE-F15D4F7CF1AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{66156845-C4F6-4C7D-A114-B5CD049B858D} = {6699DC9A-A98A-486F-92B7-067D3F6E6800}
+		{8C6845E0-4110-481E-86FE-F15D4F7CF1AB} = {32FDDF58-9533-4984-B7EA-C69E0510A84A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C15D5D5A-B1FB-4C85-954D-9F6A8F3D52F7}
