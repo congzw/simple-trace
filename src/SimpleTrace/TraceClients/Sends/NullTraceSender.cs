@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SimpleTrace.TraceClients.Sends
 {
-    public class EmptyTraceSender : ITraceSender
+    public class NullTraceSender : ITraceSender
     {
         public Task Send(IList<ClientSpanEntity> entities)
         {

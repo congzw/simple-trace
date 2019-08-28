@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SimpleTrace.TraceClients.Repos
 {
-    public class EmptyClientSpanRepository : IClientSpanRepository
+    public class NullClientSpanRepository : IClientSpanRepository
     {
         public Task Add(IList<ClientSpanEntity> spans)
         {
