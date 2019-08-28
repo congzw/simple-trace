@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SimpleTrace.TraceClients.ScheduleTasks
+namespace SimpleTrace.Common
 {
     public class DelayedGroupCache<T>
     {
@@ -18,17 +18,17 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
         public TimeSpan DelaySpan { get; set; }
 
         public IDictionary<string, DelayedGroup<T>> DelayedGroups { get; set; }
-
-        public void AppendToGroups(IList<T> items, Func<T, string> getGroupKey, Func<T, DateTime> getCreateAt)
+        
+        public void AppendToGroups(IList<T> items, Func<T, string> getGroupKey, Func<T, DateTime> getAppendAt)
         {
             if (getGroupKey == null)
             {
                 throw new ArgumentNullException(nameof(getGroupKey));
             }
 
-            if (getCreateAt == null)
+            if (getAppendAt == null)
             {
-                throw new ArgumentNullException(nameof(getCreateAt));
+                throw new ArgumentNullException(nameof(getAppendAt));
             }
 
             if (items == null || items.Count == 0)
@@ -45,7 +45,7 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
                     var groupItems = itemGroup.ToList();
                     if (groupItems.Count > 0)
                     {
-                        var lastItemDate = groupItems.Max(getCreateAt);
+                        var lastItemDate = groupItems.Max(getAppendAt);
                         DelayedGroups.TryGetValue(groupKey, out var theGroup);
                         if (theGroup == null)
                         {
@@ -58,7 +58,7 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
                 }
             }
         }
-
+        
         public IList<DelayedGroup<T>> PopExpiredGroups(DateTime popAt)
         {
             lock (Lock)
@@ -112,7 +112,7 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             theGroup.LastItemDate = createAt;
             return theGroup;
         }
-
+        
 
         #endregion
     }
