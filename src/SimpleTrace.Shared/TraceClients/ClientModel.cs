@@ -140,4 +140,20 @@ namespace SimpleTrace.TraceClients
         public DateTime StartUtc { get; set; }
         public DateTime FinishUtc { get; set; }
     }
+
+    public class QueueInfo
+    {
+        public QueueInfo()
+        {
+            Commands = new List<object>();
+        }
+
+        public int TotalCount { get; set; }
+        public IList<object> Commands { get; set; }
+    }
+
+    public class GetQueueInfoArgs
+    {
+        //todo
+    }
 }

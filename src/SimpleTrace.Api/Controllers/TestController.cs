@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CommonTrace.Api.Controllers
+namespace SimpleTrace.Api.Controllers
 {
     //for test only
     [Route("api/test")]

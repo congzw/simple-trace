@@ -63,5 +63,12 @@ namespace SimpleTrace.Api.Controllers
         {
             return _clientTracerApi.SaveSpans(args);
         }
+
+        [Route("GetQueueInfo")]
+        [HttpGet]
+        public Task<QueueInfo> GetQueueInfo([FromQuery]GetQueueInfoArgs args)
+        {
+            return _clientTracerApi.GetQueueInfo(args);
+        }
     }
 }

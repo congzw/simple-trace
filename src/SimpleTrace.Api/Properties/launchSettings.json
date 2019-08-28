@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/test/GetDate",
+      "launchUrl": "api/trace/GetDate",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +20,7 @@
     "SimpleTrace.Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/test/GetDate",
+      "launchUrl": "api/trace/GetDate",
       "applicationUrl": "http://localhost:16685",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

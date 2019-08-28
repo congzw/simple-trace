@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SimpleTrace.TraceClients.Api
 {
@@ -15,5 +16,7 @@ namespace SimpleTrace.TraceClients.Api
         /// <param name="args"></param>
         /// <returns></returns>
         Task SaveSpans(SaveSpansArgs args);
+
+        Task<QueueInfo> GetQueueInfo(GetQueueInfoArgs args);
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleTrace.Api.Extensions;
 
 namespace SimpleTrace.Api
 {
@@ -18,10 +19,14 @@ namespace SimpleTrace.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSimpleTrace();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.ConfigSimpleTrace(env, Configuration);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
