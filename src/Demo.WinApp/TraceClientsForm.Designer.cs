@@ -28,12 +28,183 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.txtMessage = new System.Windows.Forms.TextBox();
+            this.btnStart = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.cbxSeconds = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbxCount = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbxAutoLine = new System.Windows.Forms.CheckBox();
+            this.cbxAutoDate = new System.Windows.Forms.CheckBox();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // txtMessage
+            // 
+            this.txtMessage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtMessage.Location = new System.Drawing.Point(0, 0);
+            this.txtMessage.Multiline = true;
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.Size = new System.Drawing.Size(800, 267);
+            this.txtMessage.TabIndex = 24;
+            // 
+            // btnStart
+            // 
+            this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStart.Location = new System.Drawing.Point(590, 14);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(96, 23);
+            this.btnStart.TabIndex = 29;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cbxAutoLine);
+            this.groupBox1.Controls.Add(this.cbxAutoDate);
+            this.groupBox1.Controls.Add(this.btnClear);
+            this.groupBox1.Controls.Add(this.btnStart);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox1.Location = new System.Drawing.Point(0, 407);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(800, 43);
+            this.groupBox1.TabIndex = 36;
+            this.groupBox1.TabStop = false;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClear.Location = new System.Drawing.Point(692, 14);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(96, 23);
+            this.btnClear.TabIndex = 30;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.cbxSeconds);
+            this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.cbxCount);
+            this.splitContainer1.Panel1.Controls.Add(this.label2);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.txtMessage);
+            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
+            this.splitContainer1.SplitterDistance = 179;
+            this.splitContainer1.TabIndex = 37;
+            // 
+            // cbxSeconds
+            // 
+            this.cbxSeconds.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbxSeconds.FormattingEnabled = true;
+            this.cbxSeconds.Location = new System.Drawing.Point(90, 50);
+            this.cbxSeconds.Name = "cbxSeconds";
+            this.cbxSeconds.Size = new System.Drawing.Size(68, 20);
+            this.cbxSeconds.TabIndex = 19;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 53);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 12);
+            this.label3.TabIndex = 18;
+            this.label3.Text = "Interval";
+            // 
+            // cbxCount
+            // 
+            this.cbxCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbxCount.FormattingEnabled = true;
+            this.cbxCount.Location = new System.Drawing.Point(90, 16);
+            this.cbxCount.Name = "cbxCount";
+            this.cbxCount.Size = new System.Drawing.Size(68, 20);
+            this.cbxCount.TabIndex = 17;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 19);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 12);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Times";
+            // 
+            // cbxAutoLine
+            // 
+            this.cbxAutoLine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxAutoLine.AutoSize = true;
+            this.cbxAutoLine.Location = new System.Drawing.Point(512, 18);
+            this.cbxAutoLine.Name = "cbxAutoLine";
+            this.cbxAutoLine.Size = new System.Drawing.Size(72, 16);
+            this.cbxAutoLine.TabIndex = 35;
+            this.cbxAutoLine.Text = "AutoLine";
+            this.cbxAutoLine.UseVisualStyleBackColor = true;
+            // 
+            // cbxAutoDate
+            // 
+            this.cbxAutoDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxAutoDate.AutoSize = true;
+            this.cbxAutoDate.Location = new System.Drawing.Point(428, 18);
+            this.cbxAutoDate.Name = "cbxAutoDate";
+            this.cbxAutoDate.Size = new System.Drawing.Size(72, 16);
+            this.cbxAutoDate.TabIndex = 34;
+            this.cbxAutoDate.Text = "AutoDate";
+            this.cbxAutoDate.UseVisualStyleBackColor = true;
+            // 
+            // TraceClientsForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.splitContainer1);
+            this.Name = "TraceClientsForm";
             this.Text = "TraceClientsForm";
+            this.Load += new System.EventHandler(this.TraceClientsForm_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.ComboBox cbxSeconds;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cbxCount;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox cbxAutoLine;
+        private System.Windows.Forms.CheckBox cbxAutoDate;
     }
 }

@@ -46,6 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\AsyncUiHelper.cs" />
+    <Compile Include="Helper\AsyncUiHelperForMessageEventBus.cs" />
+    <Compile Include="Helper\SimpleEventBus.cs" />
+    <Compile Include="Helper\SimpleEventBusExtensions.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +76,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TraceClientsForm.resx">
+      <DependentUpon>TraceClientsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -87,6 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleTrace.Shared\SimpleTrace.Shared.csproj">
+      <Project>{bdff52c0-4dff-44d8-a186-1fbe57633029}</Project>
+      <Name>SimpleTrace.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
