@@ -31,10 +31,13 @@
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnClear = new System.Windows.Forms.Button();
             this.checkAutoLine = new System.Windows.Forms.CheckBox();
             this.checkAutoDate = new System.Windows.Forms.CheckBox();
-            this.btnClear = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnQuery = new System.Windows.Forms.Button();
+            this.btnSend = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.cbxInterval = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbxCount = new System.Windows.Forms.ComboBox();
@@ -62,14 +65,12 @@
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(96, 23);
             this.btnStart.TabIndex = 29;
-            this.btnStart.Text = "Start";
+            this.btnStart.Text = "CallApi";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.checkAutoLine);
-            this.groupBox1.Controls.Add(this.checkAutoDate);
             this.groupBox1.Controls.Add(this.btnClear);
             this.groupBox1.Controls.Add(this.btnStart);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -78,28 +79,6 @@
             this.groupBox1.Size = new System.Drawing.Size(800, 43);
             this.groupBox1.TabIndex = 36;
             this.groupBox1.TabStop = false;
-            // 
-            // checkAutoLine
-            // 
-            this.checkAutoLine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkAutoLine.AutoSize = true;
-            this.checkAutoLine.Location = new System.Drawing.Point(512, 18);
-            this.checkAutoLine.Name = "checkAutoLine";
-            this.checkAutoLine.Size = new System.Drawing.Size(72, 16);
-            this.checkAutoLine.TabIndex = 35;
-            this.checkAutoLine.Text = "AutoLine";
-            this.checkAutoLine.UseVisualStyleBackColor = true;
-            // 
-            // checkAutoDate
-            // 
-            this.checkAutoDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkAutoDate.AutoSize = true;
-            this.checkAutoDate.Location = new System.Drawing.Point(428, 18);
-            this.checkAutoDate.Name = "checkAutoDate";
-            this.checkAutoDate.Size = new System.Drawing.Size(72, 16);
-            this.checkAutoDate.TabIndex = 34;
-            this.checkAutoDate.Text = "AutoDate";
-            this.checkAutoDate.UseVisualStyleBackColor = true;
             // 
             // btnClear
             // 
@@ -112,6 +91,26 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // checkAutoLine
+            // 
+            this.checkAutoLine.AutoSize = true;
+            this.checkAutoLine.Location = new System.Drawing.Point(178, 53);
+            this.checkAutoLine.Name = "checkAutoLine";
+            this.checkAutoLine.Size = new System.Drawing.Size(72, 16);
+            this.checkAutoLine.TabIndex = 35;
+            this.checkAutoLine.Text = "AutoLine";
+            this.checkAutoLine.UseVisualStyleBackColor = true;
+            // 
+            // checkAutoDate
+            // 
+            this.checkAutoDate.AutoSize = true;
+            this.checkAutoDate.Location = new System.Drawing.Point(178, 18);
+            this.checkAutoDate.Name = "checkAutoDate";
+            this.checkAutoDate.Size = new System.Drawing.Size(72, 16);
+            this.checkAutoDate.TabIndex = 34;
+            this.checkAutoDate.Text = "AutoDate";
+            this.checkAutoDate.UseVisualStyleBackColor = true;
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -121,6 +120,11 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnQuery);
+            this.splitContainer1.Panel1.Controls.Add(this.btnSend);
+            this.splitContainer1.Panel1.Controls.Add(this.checkAutoLine);
+            this.splitContainer1.Panel1.Controls.Add(this.checkAutoDate);
+            this.splitContainer1.Panel1.Controls.Add(this.btnSave);
             this.splitContainer1.Panel1.Controls.Add(this.cbxInterval);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.cbxCount);
@@ -133,9 +137,41 @@
             this.splitContainer1.SplitterDistance = 179;
             this.splitContainer1.TabIndex = 37;
             // 
+            // btnQuery
+            // 
+            this.btnQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnQuery.Location = new System.Drawing.Point(692, 42);
+            this.btnQuery.Name = "btnQuery";
+            this.btnQuery.Size = new System.Drawing.Size(96, 23);
+            this.btnQuery.TabIndex = 38;
+            this.btnQuery.Text = "Query";
+            this.btnQuery.UseVisualStyleBackColor = true;
+            this.btnQuery.Click += new System.EventHandler(this.btnQuery_Click);
+            // 
+            // btnSend
+            // 
+            this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSend.Location = new System.Drawing.Point(692, 71);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(96, 23);
+            this.btnSend.TabIndex = 37;
+            this.btnSend.Text = "Send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Location = new System.Drawing.Point(692, 12);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(96, 23);
+            this.btnSave.TabIndex = 36;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // cbxInterval
             // 
-            this.cbxInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbxInterval.FormattingEnabled = true;
             this.cbxInterval.Location = new System.Drawing.Point(90, 50);
             this.cbxInterval.Name = "cbxInterval";
@@ -144,7 +180,6 @@
             // 
             // label3
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 53);
             this.label3.Name = "label3";
@@ -154,7 +189,6 @@
             // 
             // cbxCount
             // 
-            this.cbxCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbxCount.FormattingEnabled = true;
             this.cbxCount.Location = new System.Drawing.Point(90, 16);
             this.cbxCount.Name = "cbxCount";
@@ -163,7 +197,6 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 19);
             this.label2.Name = "label2";
@@ -182,7 +215,6 @@
             this.Text = "TraceClientsForm";
             this.Load += new System.EventHandler(this.TraceClientsForm_Load);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -206,5 +238,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox checkAutoLine;
         private System.Windows.Forms.CheckBox checkAutoDate;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.Button btnQuery;
     }
 }

@@ -84,6 +84,21 @@ namespace Demo.WinApp
             this.txtMessage.Clear();
         }
 
+        private void btnQuery_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+
+        }
+
         #region demo for async
         
         private bool _processing = false;

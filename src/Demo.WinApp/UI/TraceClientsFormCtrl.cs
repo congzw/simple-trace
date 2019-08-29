@@ -9,6 +9,11 @@ namespace Demo.WinApp.UI
 {
     public class TraceClientsFormCtrl
     {
+        //public Task<MessageResult> SaveQueue()
+        //{
+
+        //}
+
         public async Task CallTraceApi(CallTraceApiArgs args)
         {
             var apiProxy = ApiProxyContext.Current;
