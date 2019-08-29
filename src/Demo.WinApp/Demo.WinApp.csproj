@@ -46,10 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helper\AsyncUiHelper.cs" />
-    <Compile Include="Helper\AsyncUiHelperForMessageEventBus.cs" />
-    <Compile Include="Helper\SimpleEventBus.cs" />
-    <Compile Include="Helper\SimpleEventBusExtensions.cs" />
+    <Compile Include="Common\AsyncUiHelper.cs" />
+    <Compile Include="Common\AsyncUiHelperForMessageEventBus.cs" />
+    <Compile Include="Common\SimpleEventBus.cs" />
+    <Compile Include="Common\SimpleEventBusExtensions.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +64,7 @@
     <Compile Include="TraceClientsForm.Designer.cs">
       <DependentUpon>TraceClientsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AppInit.cs" />
     <Compile Include="UI\TraceClientsFormCtrl.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

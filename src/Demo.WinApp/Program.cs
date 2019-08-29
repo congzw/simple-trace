@@ -11,6 +11,7 @@ namespace Demo.WinApp
         [STAThread]
         static void Main()
         {
+            AppInit.Init();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new TraceClientsForm());

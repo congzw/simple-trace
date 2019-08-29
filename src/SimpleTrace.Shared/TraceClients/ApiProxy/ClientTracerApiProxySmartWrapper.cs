@@ -13,10 +13,23 @@ namespace SimpleTrace.TraceClients.ApiProxy
         {
             Proxy = apiProxy;
             GetDateNow = DateHelper.Instance.GetDateNow;
-            //todo config
             CheckSmart = CheckIfNotOkAndExpired.Create(TimeSpan.FromSeconds(3));
         }
 
+        public void Reset(IClientTracerApiProxy apiProxy, TimeSpan? checkApiStatusInterval = null, Func<DateTime> getDateNow = null)
+        {
+            Proxy = apiProxy ?? throw new ArgumentNullException(nameof(apiProxy));
+
+            if (checkApiStatusInterval != null)
+            {
+                CheckSmart = CheckIfNotOkAndExpired.Create(checkApiStatusInterval);
+            }
+            if (getDateNow != null)
+            {
+                GetDateNow = getDateNow;
+            }
+        }
+        
         public IClientTracerApiProxy Proxy { get; set; }
 
         public CheckIfNotOkAndExpired CheckSmart { get; set; }
@@ -62,6 +75,7 @@ namespace SimpleTrace.TraceClients.ApiProxy
             }
             return SafeInvokeTask(Proxy.FinishSpan(args));
         }
+
         public Task SaveSpans(SaveSpansArgs args)
         {
             var isOk = CheckApiStatusOkSmart();
@@ -109,7 +123,6 @@ namespace SimpleTrace.TraceClients.ApiProxy
 
             return task;
         }
-
         
         private bool CheckApiStatusOkSmart()
         {
@@ -137,5 +150,13 @@ namespace SimpleTrace.TraceClients.ApiProxy
         {
             return Proxy.TryTestApiConnection();
         }
+
+        #region for di extensions and simple use
+
+        private static readonly ClientTracerApiProxySmartWrapper Instance = new ClientTracerApiProxySmartWrapper(NullClientTracerApiProxy.Instance);
+
+        public static Func<ClientTracerApiProxySmartWrapper> Resolve { get; set; } = () => Instance;
+
+        #endregion
     }
 }

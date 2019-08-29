@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+// ReSharper disable CheckNamespace
 
-// ReSharper disable once CheckNamespace
 namespace Common
 {
     public delegate void UpdateUiMessageDelegate(string value);
@@ -31,7 +31,8 @@ namespace Common
             }
             if (InvokeControl.InvokeRequired)
             {
-                InvokeControl.Invoke(UpdateUiMessage, value);
+                InvokeControl.BeginInvoke(UpdateUiMessage, value);
+                //InvokeControl.Invoke(UpdateUiMessage, value);
             }
             else
             {
@@ -52,5 +53,13 @@ namespace Common
         }
 
         #endregion
+    }
+
+    public static class AsyncUiHelperExtensions
+    {
+        public static AsyncUiHelper CreateAsyncUiHelper(this Control invokeControl, UpdateUiMessageDelegate updateMessage)
+        {
+            return AsyncUiHelper.Create(invokeControl, updateMessage);
+        }
     }
 }

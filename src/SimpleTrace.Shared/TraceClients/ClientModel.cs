@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
+using SimpleTrace.Common;
 
 namespace SimpleTrace.TraceClients
 {
@@ -8,7 +10,7 @@ namespace SimpleTrace.TraceClients
     {
         public ClientSpan()
         {
-            Bags = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            Bags = DictionaryHelper.CreateDictionary<string>();
         }
 
         public string TracerId { get; set; }
@@ -37,7 +39,7 @@ namespace SimpleTrace.TraceClients
         //    }
         //    return clientSpan;
         //}
-        
+
         //public static ClientSpan Create(IClientSpanLocate locate, string opName, IDictionary<string, string> bags = null)
         //{
         //    if (locate == null)
@@ -47,30 +49,36 @@ namespace SimpleTrace.TraceClients
         //    return Create(locate.TracerId, locate.TraceId, locate.SpanId, locate.ParentSpanId, opName, bags);
         //}
 
-        //public static ClientSpan Create(string tracerId, string traceId, string parentSpanId, string spanId, string opName, IDictionary<string, string> bags = null)
-        //{
-        //    var clientSpan = new ClientSpan();
-        //    if (bags != null)
-        //    {
-        //        clientSpan.Bags = bags;
-        //    }
+        public static ClientSpan Create(string tracerId, string traceId, string parentSpanId, string spanId, string opName, IDictionary<string, string> bags = null)
+        {
+            var theSpan = new ClientSpan();
+            Set(theSpan, tracerId, traceId, parentSpanId, spanId, opName, bags);
+            return theSpan;
+        }
 
-        //    //todo validate
-        //    clientSpan.TracerId = tracerId;
-        //    clientSpan.TraceId = traceId;
-        //    clientSpan.SpanId = spanId;
-        //    clientSpan.ParentSpanId = parentSpanId;
-        //    clientSpan.OpName = opName;
+        public static ClientSpan Set(ClientSpan clientSpan, string tracerId, string traceId, string parentSpanId, string spanId, string opName, IDictionary<string, string> bags = null)
+        {
+            if (bags != null)
+            {
+                clientSpan.Bags = bags;
+            }
 
-        //    return clientSpan;
-        //}
+            //todo validate
+            clientSpan.TracerId = tracerId;
+            clientSpan.TraceId = traceId;
+            clientSpan.SpanId = spanId;
+            clientSpan.ParentSpanId = parentSpanId;
+            clientSpan.OpName = opName;
+
+            return clientSpan;
+        }
     }
 
     public class LogArgs : IClientSpanLocate
     {
         public LogArgs()
         {
-            Logs = new Dictionary<string, object>();
+            Logs = DictionaryHelper.CreateDictionary<object>();
         }
 
         public string TracerId { get; set; }
@@ -92,7 +100,7 @@ namespace SimpleTrace.TraceClients
     {
         public SetTagArgs()
         {
-            Tags = new Dictionary<string, object>();
+            Tags = DictionaryHelper.CreateDictionary<object>();
         }
 
         public string TracerId { get; set; }
@@ -125,14 +133,21 @@ namespace SimpleTrace.TraceClients
             Items = new List<SaveClientSpan>();
         }
         public IList<SaveClientSpan> Items { get; set; }
+
+        public static SaveSpansArgs Create(params SaveClientSpan[] saveClientSpans)
+        {
+            var saveSpansArgs = new SaveSpansArgs { Items = saveClientSpans.ToList() };
+            return saveSpansArgs;
+        }
     }
 
     public class SaveClientSpan : ClientSpan
     {
         public SaveClientSpan()
         {
-            Logs = new ConcurrentDictionary<string, object>();
-            Tags = new Dictionary<string, object>();
+            Logs = DictionaryHelper.CreateDictionary<object>();
+            Tags = DictionaryHelper.CreateDictionary<object>();
+            StartUtc = DateHelper.Instance.GetDateNow();
         }
 
         public IDictionary<string, object> Logs { get; set; }
@@ -155,5 +170,18 @@ namespace SimpleTrace.TraceClients
     public class GetQueueInfoArgs
     {
         //todo
+    }
+
+    internal class DictionaryHelper
+    {
+        public static IDictionary<string, T> CreateDictionary<T>(bool ignoreCase = true, bool concurrent = false)
+        {
+            if (concurrent)
+            {
+                return ignoreCase ? new ConcurrentDictionary<string, T>(StringComparer.OrdinalIgnoreCase) : new ConcurrentDictionary<string, T>();
+            }
+
+            return ignoreCase ? new Dictionary<string, T>(StringComparer.OrdinalIgnoreCase) : new Dictionary<string, T>();
+        }
     }
 }
