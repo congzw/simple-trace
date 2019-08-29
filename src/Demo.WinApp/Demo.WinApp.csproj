@@ -50,12 +50,7 @@
     <Compile Include="Common\AsyncUiHelperForMessageEventBus.cs" />
     <Compile Include="Common\SimpleEventBus.cs" />
     <Compile Include="Common\SimpleEventBusExtensions.cs" />
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="SimpleLogSingleton.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TraceClientsForm.cs">
@@ -66,9 +61,6 @@
     </Compile>
     <Compile Include="AppInit.cs" />
     <Compile Include="UI\TraceClientsFormCtrl.cs" />
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -99,6 +91,10 @@
     <ProjectReference Include="..\SimpleTrace.Shared\SimpleTrace.Shared.csproj">
       <Project>{bdff52c0-4dff-44d8-a186-1fbe57633029}</Project>
       <Name>SimpleTrace.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleTrace\SimpleTrace.csproj">
+      <Project>{4432c6b4-ea5d-43e3-acef-e8f7f8965b3e}</Project>
+      <Name>SimpleTrace</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

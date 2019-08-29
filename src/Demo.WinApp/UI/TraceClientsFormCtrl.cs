@@ -9,9 +9,20 @@ namespace Demo.WinApp.UI
 {
     public class TraceClientsFormCtrl
     {
+
+        public Task<QueueInfo> QueryQueue()
+        {
+            var apiProxy = ApiProxyContext.Current;
+            return apiProxy.GetQueueInfo(new GetQueueInfoArgs());
+        }
+
         //public Task<MessageResult> SaveQueue()
         //{
+        //    var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand());
 
+        //    var clientSpanProcesses = new List<IClientSpanProcess>();
+        //    clientSpanProcesses.Add(new TraceSaveProcess(new NullClientSpanRepository()));
+        //    commandQueueTask.Process(clientSpanProcesses)
         //}
 
         public async Task CallTraceApi(CallTraceApiArgs args)
@@ -25,7 +36,7 @@ namespace Demo.WinApp.UI
 
             for (int i = 0; i < args.Count; i++)
             {
-                await Task.Delay(TimeSpan.FromMilliseconds(args.Interval));
+                await Task.Delay(TimeSpan.FromMilliseconds(args.IntervalMs));
 
                 var now = dateHelper.GetDateNow();
                 var traceId = "Trace_" + now.Ticks;
@@ -42,7 +53,7 @@ namespace Demo.WinApp.UI
                 saveSpans.Add(apiSpan2);
                 saveSpans.Add(apiSpan3);
             }
-            
+
             var saveSpansArgs = SaveSpansArgs.Create(saveSpans.ToArray());
             await apiProxy.SaveSpans(saveSpansArgs);
         }
@@ -59,7 +70,7 @@ namespace Demo.WinApp.UI
             return saveClientSpan;
         }
 
-        private void MockDuration(SaveClientSpan saveClientSpan, DateTime now,  int delayStartMs, int durationMs)
+        private void MockDuration(SaveClientSpan saveClientSpan, DateTime now, int delayStartMs, int durationMs)
         {
             saveClientSpan.StartUtc = now.AddMilliseconds(delayStartMs);
             saveClientSpan.FinishUtc = saveClientSpan.StartUtc.AddMilliseconds(durationMs);
@@ -69,6 +80,6 @@ namespace Demo.WinApp.UI
     public class CallTraceApiArgs
     {
         public int Count { get; set; }
-        public int Interval { get; set; }
+        public int IntervalMs { get; set; }
     }
 }

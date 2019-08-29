@@ -73,7 +73,7 @@ namespace Demo.WinApp
         {
             var callTraceApiArgs = new CallTraceApiArgs();
             callTraceApiArgs.Count = (int)this.cbxCount.SelectedItem;
-            callTraceApiArgs.Interval = (int)this.cbxInterval.SelectedItem;
+            callTraceApiArgs.IntervalMs = (int)this.cbxInterval.SelectedItem;
             return callTraceApiArgs;
         }
 
@@ -84,9 +84,10 @@ namespace Demo.WinApp
             this.txtMessage.Clear();
         }
 
-        private void btnQuery_Click(object sender, EventArgs e)
+        private async void btnQuery_Click(object sender, EventArgs e)
         {
-
+            var queueInfo = await Ctrl.QueryQueue();
+            this.txtMessage.Text = queueInfo.ToJson(true);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -112,7 +113,7 @@ namespace Demo.WinApp
             {
                 for (int i = 0; i < count; i++)
                 {
-                    Task.Delay(TimeSpan.FromSeconds(interval)).Wait();
+                    Task.Delay(TimeSpan.FromMilliseconds(interval)).Wait();
                     if (!_processing)
                     {
                         break;
@@ -134,15 +135,5 @@ namespace Demo.WinApp
         }
 
         #endregion
-    }
-
-    public class LazySimpleLog<T>
-    {
-        public static void LogInfo(string message)
-        {
-            var simpleLogFactory = SimpleLogFactory.Resolve();
-            var simpleLog = simpleLogFactory.GetOrCreateLogFor<T>();
-            simpleLog.LogInfo(message);
-        }
     }
 }
