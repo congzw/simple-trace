@@ -31,14 +31,14 @@
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkAutoLine = new System.Windows.Forms.CheckBox();
+            this.checkAutoDate = new System.Windows.Forms.CheckBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.cbxSeconds = new System.Windows.Forms.ComboBox();
+            this.cbxInterval = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbxCount = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.cbxAutoLine = new System.Windows.Forms.CheckBox();
-            this.cbxAutoDate = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -68,8 +68,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.cbxAutoLine);
-            this.groupBox1.Controls.Add(this.cbxAutoDate);
+            this.groupBox1.Controls.Add(this.checkAutoLine);
+            this.groupBox1.Controls.Add(this.checkAutoDate);
             this.groupBox1.Controls.Add(this.btnClear);
             this.groupBox1.Controls.Add(this.btnStart);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -78,6 +78,28 @@
             this.groupBox1.Size = new System.Drawing.Size(800, 43);
             this.groupBox1.TabIndex = 36;
             this.groupBox1.TabStop = false;
+            // 
+            // checkAutoLine
+            // 
+            this.checkAutoLine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkAutoLine.AutoSize = true;
+            this.checkAutoLine.Location = new System.Drawing.Point(512, 18);
+            this.checkAutoLine.Name = "checkAutoLine";
+            this.checkAutoLine.Size = new System.Drawing.Size(72, 16);
+            this.checkAutoLine.TabIndex = 35;
+            this.checkAutoLine.Text = "AutoLine";
+            this.checkAutoLine.UseVisualStyleBackColor = true;
+            // 
+            // checkAutoDate
+            // 
+            this.checkAutoDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkAutoDate.AutoSize = true;
+            this.checkAutoDate.Location = new System.Drawing.Point(428, 18);
+            this.checkAutoDate.Name = "checkAutoDate";
+            this.checkAutoDate.Size = new System.Drawing.Size(72, 16);
+            this.checkAutoDate.TabIndex = 34;
+            this.checkAutoDate.Text = "AutoDate";
+            this.checkAutoDate.UseVisualStyleBackColor = true;
             // 
             // btnClear
             // 
@@ -99,7 +121,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.cbxSeconds);
+            this.splitContainer1.Panel1.Controls.Add(this.cbxInterval);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.cbxCount);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
@@ -111,14 +133,14 @@
             this.splitContainer1.SplitterDistance = 179;
             this.splitContainer1.TabIndex = 37;
             // 
-            // cbxSeconds
+            // cbxInterval
             // 
-            this.cbxSeconds.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cbxSeconds.FormattingEnabled = true;
-            this.cbxSeconds.Location = new System.Drawing.Point(90, 50);
-            this.cbxSeconds.Name = "cbxSeconds";
-            this.cbxSeconds.Size = new System.Drawing.Size(68, 20);
-            this.cbxSeconds.TabIndex = 19;
+            this.cbxInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbxInterval.FormattingEnabled = true;
+            this.cbxInterval.Location = new System.Drawing.Point(90, 50);
+            this.cbxInterval.Name = "cbxInterval";
+            this.cbxInterval.Size = new System.Drawing.Size(68, 20);
+            this.cbxInterval.TabIndex = 19;
             // 
             // label3
             // 
@@ -149,28 +171,6 @@
             this.label2.TabIndex = 16;
             this.label2.Text = "Times";
             // 
-            // cbxAutoLine
-            // 
-            this.cbxAutoLine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxAutoLine.AutoSize = true;
-            this.cbxAutoLine.Location = new System.Drawing.Point(512, 18);
-            this.cbxAutoLine.Name = "cbxAutoLine";
-            this.cbxAutoLine.Size = new System.Drawing.Size(72, 16);
-            this.cbxAutoLine.TabIndex = 35;
-            this.cbxAutoLine.Text = "AutoLine";
-            this.cbxAutoLine.UseVisualStyleBackColor = true;
-            // 
-            // cbxAutoDate
-            // 
-            this.cbxAutoDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxAutoDate.AutoSize = true;
-            this.cbxAutoDate.Location = new System.Drawing.Point(428, 18);
-            this.cbxAutoDate.Name = "cbxAutoDate";
-            this.cbxAutoDate.Size = new System.Drawing.Size(72, 16);
-            this.cbxAutoDate.TabIndex = 34;
-            this.cbxAutoDate.Text = "AutoDate";
-            this.cbxAutoDate.UseVisualStyleBackColor = true;
-            // 
             // TraceClientsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -200,11 +200,11 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.ComboBox cbxSeconds;
+        private System.Windows.Forms.ComboBox cbxInterval;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbxCount;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.CheckBox cbxAutoLine;
-        private System.Windows.Forms.CheckBox cbxAutoDate;
+        private System.Windows.Forms.CheckBox checkAutoLine;
+        private System.Windows.Forms.CheckBox checkAutoDate;
     }
 }

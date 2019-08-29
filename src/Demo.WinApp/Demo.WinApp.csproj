@@ -64,6 +64,7 @@
     <Compile Include="TraceClientsForm.Designer.cs">
       <DependentUpon>TraceClientsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\TraceClientsFormCtrl.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,9 +93,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SimpleTrace.Shared\SimpleTrace.Shared.csproj">
       <Project>{bdff52c0-4dff-44d8-a186-1fbe57633029}</Project>
