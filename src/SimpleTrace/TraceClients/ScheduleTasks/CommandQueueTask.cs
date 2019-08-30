@@ -9,15 +9,18 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
     public class CommandQueueTask
     {
         private readonly DelayedGroupCacheCommand _delayedGroupCacheCommand;
+        private readonly KnownCommands _knownCommands;
 
-        public CommandQueueTask(DelayedGroupCacheCommand delayedGroupCacheCommand)
+        public CommandQueueTask(DelayedGroupCacheCommand delayedGroupCacheCommand, KnownCommands knownCommands)
         {
             _delayedGroupCacheCommand = delayedGroupCacheCommand;
+            _knownCommands = knownCommands;
         }
 
-        public IList<ClientSpanEntity> GetEntities(IList<ICommandLogistic> commandLogistics, IList<Command> allCommands, DateTime now)
+        public IList<ClientSpanEntity> GetEntities(IList<Command> allCommands, DateTime now)
         {
             var spanCache = new Dictionary<string, ClientSpanEntity>();
+            var commandLogistics = _knownCommands.CommandLogistics;
             var logistics = commandLogistics.OrderBy(x => x.ProcessSort).ToList();
 
             //process no delay
@@ -58,7 +61,7 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             return clientSpanEntities;
         }
 
-        public async Task Process(IList<IClientSpanProcess> processes, IList<ICommandLogistic> commandLogistics, CommandQueue commandQueue, DateTime now)
+        public async Task Process(IList<IClientSpanProcess> processes, CommandQueue commandQueue, DateTime now)
         {
             //process steps:
             //dequeue all commands to groupCache
@@ -68,7 +71,7 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             //run process: ...
 
             var currentCommands = await commandQueue.TryDequeueAll().ConfigureAwait(false);
-            var spanEntities = GetEntities(commandLogistics, currentCommands, now);
+            var spanEntities = GetEntities(currentCommands, now);
 
             var orderedProcesses = processes.OrderBy(x => x.SortNum).ToList();
             await Task.WhenAll(orderedProcesses.Select(x => x.Process(spanEntities)));

@@ -21,17 +21,6 @@ namespace Demo.WinApp.UI
 
         public async Task SaveQueue(QueueInfo queueInfo)
         {
-
-            var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand());
-            
-            //var commandLogistics = new List<ICommandLogistic>();
-            //commandLogistics.Add(new SaveSpansCommand());
-            //commandLogistics.Add(new StartSpanCommand());
-            //commandLogistics.Add(new LogCommand());
-            //commandLogistics.Add(new SetTagCommand());
-            //commandLogistics.Add(new FinishSpanCommand());
-
-
             var knownCommands = KnownCommands.Instance;
             knownCommands.Register(new SaveSpansCommand());
             knownCommands.Register(new StartSpanCommand());
@@ -39,74 +28,14 @@ namespace Demo.WinApp.UI
             knownCommands.Register(new SetTagCommand());
             knownCommands.Register(new FinishSpanCommand());
 
-            var commandLogistics = knownCommands.CommandLogistics;
+            var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand(), knownCommands);
             var commands = queueInfo.Commands.As<Command>().ToList();
             
-            var clientSpanEntities = commandQueueTask.GetEntities(commandLogistics, commands, DateHelper.Instance.GetDateNow().AddSeconds(-100));
+            var clientSpanEntities = commandQueueTask.GetEntities(commands, DateHelper.Instance.GetDateNow().AddSeconds(-100));
 
             var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
             await clientSpanRepository.Add(clientSpanEntities);
-
-            //var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
-            //var clientSpanProcesses = new List<IClientSpanProcess>();
-            //clientSpanProcesses.Add(new TraceSaveProcess(clientSpanRepository));
-            //var commandQueue = new CommandQueue();
-            //await commandQueueTask.Process(clientSpanProcesses, commandLogistics, commandQueue,
-            //    DateHelper.Instance.GetDateNow().AddSeconds(-100));
-
-
-            ////var commands = FilterCommands<StartSpanCommand>(queueInfo);
-            //var saveCommands = FilterCommands<SaveSpansCommand>(queueInfo).ToList();
-            //foreach (var command in saveCommands)
-            //{
-            //    await commandQueue.Enqueue(command);
-            //}
         }
-
-        //private IEnumerable<T> FilterCommands<T>(QueueInfo queueInfo) where T : ICommand
-        //{
-        //    foreach (var queueInfoCommand in queueInfo.Commands)
-        //    {
-        //        if (queueInfoCommand is T theCommand)
-        //        {
-        //            yield return theCommand;
-        //        }
-        //        else
-        //        {
-        //            var propName = "CommandType";
-        //            var tryGetProperty = queueInfoCommand.TryGetProperty(propName, true, out var propValue);
-
-        //            if (tryGetProperty)
-        //            {
-        //                if (propValue.ToString() == typeof(T).Name)
-        //                {
-        //                    yield return queueInfoCommand.As<T>();
-        //                }
-        //            }
-        //        }
-        //    }
-
-
-        //    //var dynamicCommands = queueInfo.Commands.Cast<dynamic>().ToList();
-        //    //foreach (var dynamicCommand in dynamicCommands)
-        //    //{
-        //    //    if (dynamicCommand.CommandType == knownCommands.StartSpan())
-        //    //    {
-        //    //        commands.Add();
-        //    //    }
-        //    //}
-
-
-        //    //var commands = queueInfo.Commands.Cast<ICommand>().ToList();
-        //    //return commands;
-
-        //    //foreach (ICommand queueInfoCommand in queueInfo.Commands)
-        //    //{
-
-        //    //    var command = queueInfoCommand.As<ICommand>();
-        //    //    await commandQueue.Enqueue(command);
-        //    //}
-        //}
 
         public async Task CallTraceApi(CallTraceApiArgs args)
         {
