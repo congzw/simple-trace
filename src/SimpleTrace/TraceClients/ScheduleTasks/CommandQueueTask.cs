@@ -1,73 +1,77 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
-//using SimpleTrace.TraceClients.Commands;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using SimpleTrace.TraceClients.Commands;
 
-//namespace SimpleTrace.TraceClients.ScheduleTasks
-//{
-//    public class CommandQueueTask
-//    {
-//        private readonly DelayedGroupCacheCommand _delayedGroupCacheCommand;
+namespace SimpleTrace.TraceClients.ScheduleTasks
+{
+    public class CommandQueueTask
+    {
+        private readonly DelayedGroupCacheCommand _delayedGroupCacheCommand;
 
-//        public CommandQueueTask(DelayedGroupCacheCommand delayedGroupCacheCommand)
-//        {
-//            _delayedGroupCacheCommand = delayedGroupCacheCommand;
-//        }
+        public CommandQueueTask(DelayedGroupCacheCommand delayedGroupCacheCommand)
+        {
+            _delayedGroupCacheCommand = delayedGroupCacheCommand;
+        }
 
-//        public IList<ClientSpanEntity> GetEntities(IList<ICommand> allCommands, DateTime now)
-//        {
-//            var spanCache = new Dictionary<string, ClientSpanEntity>();
-//            var theType = typeof(SaveSpansCommand);
-//            var noDelayCommands = allCommands.Where(x => x.GetType() == theType).ToList();
-//            foreach (var noDelayCommand in noDelayCommands)
-//            {
-//                noDelayCommand.CreateOrUpdate(spanCache);
-//            }
+        public IList<ClientSpanEntity> GetEntities(IList<ICommandLogistic> commandLogistics, IList<Command> allCommands, DateTime now)
+        {
+            var spanCache = new Dictionary<string, ClientSpanEntity>();
+            var logistics = commandLogistics.OrderBy(x => x.ProcessSort).ToList();
 
-//            var delayedCommands = allCommands.Where(x => x.GetType() != theType).ToList();
-//            _delayedGroupCacheCommand.AppendToGroups(delayedCommands);
-//            var expiredGroups = _delayedGroupCacheCommand.PopExpiredGroups(now).OrderBy(x => x.LastItemDate).ToList();
-//            if (expiredGroups.Count > 0)
-//            {
-//                var expiredCommands = new List<ICommand>();
-//                foreach (var expiredGroup in expiredGroups)
-//                {
-//                    foreach (var cmd in expiredGroup.Items)
-//                    {
-//                        expiredCommands.Add(cmd);
-//                    }
-//                }
+            //process no delay
+            var noDelayLogistics = commandLogistics.Where(x => !x.NeedDelay).ToList();
+            foreach (var noDelayLogistic in noDelayLogistics)
+            {
+                var noDelayCommands = allCommands.Where(x => noDelayLogistic.IsForCommand(x)).ToList();
+                foreach (var noDelayCommand in noDelayCommands)
+                {
+                    noDelayLogistic.CreateOrUpdate(noDelayCommand, spanCache);
+                }
+            }
 
-//                var orderedCommandGroups = expiredCommands.GroupBy(x => x.ProcessSort).OrderBy(g => g.Key);
-//                foreach (var commandGroup in orderedCommandGroups)
-//                {
-//                    var theCommands = commandGroup.ToList();
-//                    foreach (var theCommand in theCommands)
-//                    {
-//                        theCommand.CreateOrUpdate(spanCache);
-//                    }
-//                }
-//            }
+            //process delay
+            var delayLogistics = logistics.Where(x => x.NeedDelay).ToList();
+            foreach (var delayLogistic in delayLogistics)
+            {
+                var delayCommands = allCommands.Where(x => delayLogistic.IsForCommand(x)).ToList();
+                _delayedGroupCacheCommand.AppendToGroups(delayCommands);
+            }
 
-//            var clientSpanEntities = spanCache.Values.ToList();
-//            return clientSpanEntities;
-//        }
+            var expiredGroups = _delayedGroupCacheCommand.PopExpiredGroups(now).OrderBy(x => x.LastItemDate).ToList();
+            if (expiredGroups.Count > 0)
+            {
+                foreach (var expiredGroup in expiredGroups)
+                {
+                    foreach (var delayCommand in expiredGroup.Items)
+                    {
+                        foreach (var delayLogistic in delayLogistics)
+                        {
+                            delayLogistic.CreateOrUpdate(delayCommand, spanCache);
+                        }
+                    }
+                }
+            }
 
-//        public async Task Process(IList<IClientSpanProcess> processes, CommandQueue commandQueue, DateTime now)
-//        {
-//            //process steps:
-//            //dequeue all commands to groupCache
-//            //get expired entities from commands
-//            //run process: save client spans
-//            //run process: send client spans
-//            //run process: ...
+            var clientSpanEntities = spanCache.Values.ToList();
+            return clientSpanEntities;
+        }
 
-//            var currentCommands = await commandQueue.TryDequeueAll().ConfigureAwait(false);
-//            var spanEntities = GetEntities(currentCommands, now);
+        public async Task Process(IList<IClientSpanProcess> processes, IList<ICommandLogistic> commandLogistics, CommandQueue commandQueue, DateTime now)
+        {
+            //process steps:
+            //dequeue all commands to groupCache
+            //get expired entities from commands
+            //run process: save client spans
+            //run process: send client spans
+            //run process: ...
 
-//            var orderedProcesses = processes.OrderBy(x => x.SortNum).ToList();
-//            await Task.WhenAll(orderedProcesses.Select(x => x.Process(spanEntities)));
-//        }
-//    }
-//}
+            var currentCommands = await commandQueue.TryDequeueAll().ConfigureAwait(false);
+            var spanEntities = GetEntities(commandLogistics, currentCommands, now);
+
+            var orderedProcesses = processes.OrderBy(x => x.SortNum).ToList();
+            await Task.WhenAll(orderedProcesses.Select(x => x.Process(spanEntities)));
+        }
+    }
+}

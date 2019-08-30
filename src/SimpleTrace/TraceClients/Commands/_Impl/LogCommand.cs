@@ -1,26 +1,27 @@
-﻿//using System.Collections.Generic;
-//// ReSharper disable CheckNamespace
+﻿using System.Collections.Generic;
+using SimpleTrace.Common;
 
-//namespace SimpleTrace.TraceClients.Commands
-//{
-//    public class LogCommand : BaseCommand
-//    {
-//        public LogCommand(LogArgs args) : base(args, 2)
-//        {
-//        }
+// ReSharper disable CheckNamespace
 
-//        public override bool CreateOrUpdate(IDictionary<string, ClientSpanEntity> clientSpanCache)
-//        {
-//            var logArgs = (LogArgs)this.Args;
-//            var currentKey = logArgs.ToLocateCurrentKey();
-//            if (!clientSpanCache.ContainsKey(currentKey))
-//            {
-//                return false;
-//            }
+namespace SimpleTrace.TraceClients.Commands
+{
+    public class LogCommand : BaseCommandLogistic<LogCommand>
+    {
+        public LogCommand() : base(true, 2)
+        {
+        }
+        public override bool CreateOrUpdate(Command command, IDictionary<string, ClientSpanEntity> clientSpanCache)
+        {
+            var logArgs = command.Args.As<LogArgs>();
+            var currentKey = logArgs.ToLocateCurrentKey();
+            if (!clientSpanCache.ContainsKey(currentKey))
+            {
+                return false;
+            }
 
-//            var clientSpanEntity = clientSpanCache[currentKey];
-//            clientSpanEntity.SetLogs(logArgs.Logs);
-//            return true;
-//        }
-//    }
-//}
+            var clientSpanEntity = clientSpanCache[currentKey];
+            clientSpanEntity.SetLogs(logArgs.Logs);
+            return true;
+        }
+    }
+}

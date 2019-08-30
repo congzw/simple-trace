@@ -24,13 +24,22 @@ namespace Demo.WinApp.UI
 
             var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand());
             
-            var commandLogistics = new List<ICommandLogistic>();
-            commandLogistics.Add(new SaveSpansCommand());
-            commandLogistics.Add(new StartSpanCommand());
-            commandLogistics.Add(new LogCommand());
-            commandLogistics.Add(new SetTagCommand());
-            commandLogistics.Add(new FinishSpanCommand());
+            //var commandLogistics = new List<ICommandLogistic>();
+            //commandLogistics.Add(new SaveSpansCommand());
+            //commandLogistics.Add(new StartSpanCommand());
+            //commandLogistics.Add(new LogCommand());
+            //commandLogistics.Add(new SetTagCommand());
+            //commandLogistics.Add(new FinishSpanCommand());
 
+
+            var knownCommands = KnownCommands.Instance;
+            knownCommands.Register(new SaveSpansCommand());
+            knownCommands.Register(new StartSpanCommand());
+            knownCommands.Register(new LogCommand());
+            knownCommands.Register(new SetTagCommand());
+            knownCommands.Register(new FinishSpanCommand());
+
+            var commandLogistics = knownCommands.CommandLogistics;
             var commands = queueInfo.Commands.As<Command>().ToList();
             
             var clientSpanEntities = commandQueueTask.GetEntities(commandLogistics, commands, DateHelper.Instance.GetDateNow().AddSeconds(-100));

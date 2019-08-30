@@ -5,23 +5,22 @@ using SimpleTrace.Common;
 
 namespace SimpleTrace.TraceClients.Commands
 {
-
-    public class SetTagCommand : BaseCommandLogistic<SetTagCommand>
+    public class FinishSpanCommand : BaseCommandLogistic<FinishSpanCommand>
     {
-        public SetTagCommand() : base(true, 3)
+        public FinishSpanCommand() : base(true, 4)
         {
         }
         public override bool CreateOrUpdate(Command command, IDictionary<string, ClientSpanEntity> clientSpanCache)
         {
-            var setTagArgs = command.Args.As<SetTagArgs>();
-            var currentKey = setTagArgs.ToLocateCurrentKey();
+            var finishSpanArgs = command.Args.As<FinishSpanArgs>();
+            var currentKey = finishSpanArgs.ToLocateCurrentKey();
             if (!clientSpanCache.ContainsKey(currentKey))
             {
                 return false;
             }
 
             var clientSpanEntity = clientSpanCache[currentKey];
-            clientSpanEntity.SetTags(setTagArgs.Tags);
+            clientSpanEntity.FinishUtc = command.CreateUtc;
             return true;
         }
     }

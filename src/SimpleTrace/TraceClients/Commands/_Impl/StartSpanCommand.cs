@@ -1,25 +1,27 @@
-﻿//using System.Collections.Generic;
-//// ReSharper disable CheckNamespace
+﻿using System.Collections.Generic;
+using SimpleTrace.Common;
 
-//namespace SimpleTrace.TraceClients.Commands
-//{
-//    public class StartSpanCommand : BaseCommand
-//    {
-//        public StartSpanCommand(ClientSpan args) : base(args, 1)
-//        {
-//        }
+// ReSharper disable CheckNamespace
 
-//        public override bool CreateOrUpdate(IDictionary<string, ClientSpanEntity> clientSpanCache)
-//        {
-//            var clientSpan = (ClientSpan)this.Args;
-//            var currentKey = clientSpan.ToLocateCurrentKey();
+namespace SimpleTrace.TraceClients.Commands
+{
+    public class StartSpanCommand : BaseCommandLogistic<StartSpanCommand>
+    {
+        public StartSpanCommand() : base(true, 1)
+        {
+        }
 
-//            var clientSpanEntity = new ClientSpanEntity();
-//            clientSpanEntity.With(clientSpan);
-//            clientSpanEntity.SetBags(clientSpan.Bags);
+        public override bool CreateOrUpdate(Command command, IDictionary<string, ClientSpanEntity> clientSpanCache)
+        {
+            var clientSpan = command.Args.As<ClientSpan>();
+            var currentKey = clientSpan.ToLocateCurrentKey();
 
-//            clientSpanCache[currentKey] = clientSpanEntity;
-//            return true;
-//        }
-//    }
-//}
+            var clientSpanEntity = new ClientSpanEntity();
+            MyModelHelper.SetProperties(clientSpanEntity, clientSpan);
+            clientSpanEntity.StartUtc = command.CreateUtc;
+
+            clientSpanCache[currentKey] = clientSpanEntity;
+            return true;
+        }
+    }
+}
