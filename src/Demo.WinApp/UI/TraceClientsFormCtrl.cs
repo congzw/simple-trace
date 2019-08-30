@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using SimpleTrace.Common;
@@ -14,7 +13,6 @@ namespace Demo.WinApp.UI
 {
     public class TraceClientsFormCtrl
     {
-
         public Task<QueueInfo> QueryQueue()
         {
             var apiProxy = ApiProxyContext.Current;
@@ -23,70 +21,83 @@ namespace Demo.WinApp.UI
 
         public async Task SaveQueue(QueueInfo queueInfo)
         {
-            var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
 
             var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand());
+            
+            var commandLogistics = new List<ICommandLogistic>();
+            commandLogistics.Add(new SaveSpansCommand());
+            commandLogistics.Add(new StartSpanCommand());
+            commandLogistics.Add(new LogCommand());
+            commandLogistics.Add(new SetTagCommand());
+            commandLogistics.Add(new FinishSpanCommand());
 
-            var clientSpanProcesses = new List<IClientSpanProcess>();
-            clientSpanProcesses.Add(new TraceSaveProcess(clientSpanRepository));
+            var commands = queueInfo.Commands.As<Command>().ToList();
+            
+            var clientSpanEntities = commandQueueTask.GetEntities(commandLogistics, commands, DateHelper.Instance.GetDateNow().AddSeconds(-100));
 
-            var commandQueue = new CommandQueue();
+            var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
+            await clientSpanRepository.Add(clientSpanEntities);
 
-            //var commands = FilterCommands<StartSpanCommand>(queueInfo);
-            var saveCommands = FilterCommands<SaveSpansCommand>(queueInfo).ToList();
-            foreach (var command in saveCommands)
-            {
-                await commandQueue.Enqueue(command);
-            }
-
-            await commandQueueTask.Process(clientSpanProcesses, commandQueue,
-                DateHelper.Instance.GetDateNow().AddSeconds(-100));
-        }
-
-        private IEnumerable<T> FilterCommands<T>(QueueInfo queueInfo) where T : ICommand
-        {
-            foreach (var queueInfoCommand in queueInfo.Commands)
-            {
-                if (queueInfoCommand is T theCommand)
-                {
-                    yield return theCommand;
-                }
-                else
-                {
-                    var propName = "CommandType";
-                    var tryGetProperty = queueInfoCommand.TryGetProperty(propName, true, out var propValue);
-
-                    if (tryGetProperty)
-                    {
-                        if (propValue.ToString() == typeof(T).Name)
-                        {
-                            yield return queueInfoCommand.As<T>();
-                        }
-                    }
-                }
-            }
+            //var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
+            //var clientSpanProcesses = new List<IClientSpanProcess>();
+            //clientSpanProcesses.Add(new TraceSaveProcess(clientSpanRepository));
+            //var commandQueue = new CommandQueue();
+            //await commandQueueTask.Process(clientSpanProcesses, commandLogistics, commandQueue,
+            //    DateHelper.Instance.GetDateNow().AddSeconds(-100));
 
 
-            //var dynamicCommands = queueInfo.Commands.Cast<dynamic>().ToList();
-            //foreach (var dynamicCommand in dynamicCommands)
+            ////var commands = FilterCommands<StartSpanCommand>(queueInfo);
+            //var saveCommands = FilterCommands<SaveSpansCommand>(queueInfo).ToList();
+            //foreach (var command in saveCommands)
             //{
-            //    if (dynamicCommand.CommandType == knownCommands.StartSpan())
-            //    {
-            //        commands.Add();
-            //    }
-            //}
-
-
-            //var commands = queueInfo.Commands.Cast<ICommand>().ToList();
-            //return commands;
-
-            //foreach (ICommand queueInfoCommand in queueInfo.Commands)
-            //{
-
-            //    var command = queueInfoCommand.As<ICommand>();
             //    await commandQueue.Enqueue(command);
             //}
         }
+
+        //private IEnumerable<T> FilterCommands<T>(QueueInfo queueInfo) where T : ICommand
+        //{
+        //    foreach (var queueInfoCommand in queueInfo.Commands)
+        //    {
+        //        if (queueInfoCommand is T theCommand)
+        //        {
+        //            yield return theCommand;
+        //        }
+        //        else
+        //        {
+        //            var propName = "CommandType";
+        //            var tryGetProperty = queueInfoCommand.TryGetProperty(propName, true, out var propValue);
+
+        //            if (tryGetProperty)
+        //            {
+        //                if (propValue.ToString() == typeof(T).Name)
+        //                {
+        //                    yield return queueInfoCommand.As<T>();
+        //                }
+        //            }
+        //        }
+        //    }
+
+
+        //    //var dynamicCommands = queueInfo.Commands.Cast<dynamic>().ToList();
+        //    //foreach (var dynamicCommand in dynamicCommands)
+        //    //{
+        //    //    if (dynamicCommand.CommandType == knownCommands.StartSpan())
+        //    //    {
+        //    //        commands.Add();
+        //    //    }
+        //    //}
+
+
+        //    //var commands = queueInfo.Commands.Cast<ICommand>().ToList();
+        //    //return commands;
+
+        //    //foreach (ICommand queueInfoCommand in queueInfo.Commands)
+        //    //{
+
+        //    //    var command = queueInfoCommand.As<ICommand>();
+        //    //    await commandQueue.Enqueue(command);
+        //    //}
+        //}
 
         public async Task CallTraceApi(CallTraceApiArgs args)
         {
@@ -129,6 +140,7 @@ namespace Demo.WinApp.UI
             if (withLogs)
             {
                 saveClientSpan.Logs.Add("foo-log-key", "foo-log-value");
+                saveClientSpan.Tags.Add("foo-tag-key", "foo-tag-value");
             }
             return saveClientSpan;
         }

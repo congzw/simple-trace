@@ -166,19 +166,16 @@ namespace SimpleTrace.Common
             {
                 return default(T);
             }
-
-            //try
-            //{
-            //    return (T)Convert.ChangeType(instance, typeof(T));
-            //}
-            //catch (InvalidCastException)
-            //{
-            //    return default(T);
-            //}
-
             throw new InvalidOperationException(string.Format("object can not cast from {0} to {1}", instance.GetType().Name, typeof(T).Name));
         }
-        
+        public static IEnumerable<T> As<T>(this IEnumerable<object> instances, bool throwEx = true)
+        {
+            foreach (var instance in instances)
+            {
+                yield return instance.As<T>(throwEx);
+            }
+        }
+
         public static bool TryGetProperty(this object instance, string propName, bool ignoreCase, out object propValue)
         {
             propValue = null;

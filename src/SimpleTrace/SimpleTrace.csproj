@@ -12,4 +12,8 @@
     <ProjectReference Include="..\SimpleTrace.Shared\SimpleTrace.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TraceClients\Commands\Logics\" />
+  </ItemGroup>
+
 </Project>

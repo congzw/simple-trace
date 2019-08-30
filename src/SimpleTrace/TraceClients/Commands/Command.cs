@@ -1,82 +1,82 @@
-﻿using System.Collections.Generic;
-using SimpleTrace.Common;
+﻿//using System.Collections.Generic;
+//using SimpleTrace.Common;
 
-namespace SimpleTrace.TraceClients.Commands
-{
-    public static class CommandExtensions
-    {
-        public static string GetDesc(this ICommand cmd)
-        {
-            if (cmd == null)
-            {
-                return null;
-            }
+//namespace SimpleTrace.TraceClients.Commands
+//{
+//    public static class CommandExtensions
+//    {
+//        public static string GetDesc(this ICommand cmd)
+//        {
+//            if (cmd == null)
+//            {
+//                return null;
+//            }
 
-            var argsDesc = string.Empty;
-            if (cmd.Args != null)
-            {
-                if (cmd.Args is IClientSpanLocate clientTraceLocate)
-                {
-                    argsDesc = clientTraceLocate.ToDisplayKey();
-                }
-                else if (cmd.Args is SaveSpansArgs saveSpansArgs)
-                {
-                    argsDesc = "saveSpans: " + saveSpansArgs.Items.Count;
-                }
-            }
-            return string.Format("{0} {1:yyyyMMdd-HH:mm:ss} {2}", cmd.CommandType, cmd.CreateUtc, argsDesc);
-        }
+//            var argsDesc = string.Empty;
+//            if (cmd.Args != null)
+//            {
+//                if (cmd.Args is IClientSpanLocate clientTraceLocate)
+//                {
+//                    argsDesc = clientTraceLocate.ToDisplayKey();
+//                }
+//                else if (cmd.Args is SaveSpansArgs saveSpansArgs)
+//                {
+//                    argsDesc = "saveSpans: " + saveSpansArgs.Items.Count;
+//                }
+//            }
+//            return string.Format("{0} {1:yyyyMMdd-HH:mm:ss} {2}", cmd.CommandType, cmd.CreateUtc, argsDesc);
+//        }
 
-        public static string TryGetTraceId(this ICommand cmd)
-        {
-            if (cmd?.Args == null)
-            {
-                return null;
-            }
+//        public static string TryGetTraceId(this ICommand cmd)
+//        {
+//            if (cmd?.Args == null)
+//            {
+//                return null;
+//            }
 
-            if (cmd.Args is IClientTraceLocate clientTraceLocate)
-            {
-                return clientTraceLocate.TraceId;
-            }
+//            if (cmd.Args is IClientTraceLocate clientTraceLocate)
+//            {
+//                return clientTraceLocate.TraceId;
+//            }
 
-            return null;
-        }
+//            return null;
+//        }
 
-        public static IList<IClientSpanLocate> TryGetIClientSpanLocates(this ICommand cmd)
-        {
-            if (cmd?.Args == null)
-            {
-                return new List<IClientSpanLocate>();
-            }
+//        public static IList<IClientSpanLocate> TryGetIClientSpanLocates(this ICommand cmd)
+//        {
+//            if (cmd?.Args == null)
+//            {
+//                return new List<IClientSpanLocate>();
+//            }
 
-            if (cmd.Args is IBatchClientSpanLocate<IClientSpanLocate> batchClientTraceLocate)
-            {
-                return batchClientTraceLocate.Items;
-            }
-            return new List<IClientSpanLocate>();
-        }
+//            if (cmd.Args is IBatchClientSpanLocate<IClientSpanLocate> batchClientTraceLocate)
+//            {
+//                return batchClientTraceLocate.Items;
+//            }
+//            return new List<IClientSpanLocate>();
+//        }
 
-        public static IEnumerable<T> FilterCommands<T>(IList<object> jsonCommands) where T : ICommand
-        {
-            foreach (var queueInfoCommand in jsonCommands)
-            {
-                if (queueInfoCommand is T theCommand)
-                {
-                    yield return theCommand;
-                }
-                else
-                {
-                    var propName = "CommandType";
-                    var tryGetProperty = queueInfoCommand.TryGetProperty(propName, true, out var propValue);
-                    if (tryGetProperty)
-                    {
-                        if (propValue.ToString() == typeof(T).Name)
-                        {
-                            yield return queueInfoCommand.As<T>();
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+//        public static IEnumerable<T> FilterCommands<T>(IList<object> jsonCommands) where T : ICommand
+//        {
+//            foreach (var queueInfoCommand in jsonCommands)
+//            {
+//                if (queueInfoCommand is T theCommand)
+//                {
+//                    yield return theCommand;
+//                }
+//                else
+//                {
+//                    var propName = "CommandType";
+//                    var tryGetProperty = queueInfoCommand.TryGetProperty(propName, true, out var propValue);
+//                    if (tryGetProperty)
+//                    {
+//                        if (propValue.ToString() == typeof(T).Name)
+//                        {
+//                            yield return queueInfoCommand.As<T>();
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}

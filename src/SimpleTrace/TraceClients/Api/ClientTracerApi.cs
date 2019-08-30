@@ -20,7 +20,7 @@ namespace SimpleTrace.TraceClients.Api
             {
                 return Task.FromResult(0);
             }
-            return _commandQueue.Enqueue(new StartSpanCommand(args));
+            return _commandQueue.Enqueue(StartSpanCommand.Create(args));
         }
 
         public Task Log(LogArgs args)
@@ -29,7 +29,7 @@ namespace SimpleTrace.TraceClients.Api
             {
                 return Task.FromResult(0);
             }
-            return _commandQueue.Enqueue(new LogCommand(args));
+            return _commandQueue.Enqueue(LogCommand.Create(args));
         }
 
         public Task SetTags(SetTagArgs args)
@@ -38,7 +38,7 @@ namespace SimpleTrace.TraceClients.Api
             {
                 return Task.FromResult(0);
             }
-            return _commandQueue.Enqueue(new SetTagCommand(args));
+            return _commandQueue.Enqueue(SetTagCommand.Create(args));
         }
 
         public Task FinishSpan(FinishSpanArgs args)
@@ -47,12 +47,12 @@ namespace SimpleTrace.TraceClients.Api
             {
                 return Task.FromResult(0);
             }
-            return _commandQueue.Enqueue(new FinishedCommand(args));
+            return _commandQueue.Enqueue(FinishSpanCommand.Create(args));
         }
 
         public Task SaveSpans(SaveSpansArgs args)
         {
-            return _commandQueue.Enqueue(new SaveSpansCommand(args));
+            return _commandQueue.Enqueue(SaveSpansCommand.Create(args));
         }
 
         public Task<QueueInfo> GetQueueInfo(GetQueueInfoArgs args)
