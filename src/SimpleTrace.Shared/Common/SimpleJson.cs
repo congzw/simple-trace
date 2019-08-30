@@ -178,8 +178,7 @@ namespace SimpleTrace.Common
 
             throw new InvalidOperationException(string.Format("object can not cast from {0} to {1}", instance.GetType().Name, typeof(T).Name));
         }
-
-
+        
         public static bool TryGetProperty(this object instance, string propName, bool ignoreCase, out object propValue)
         {
             propValue = null;
@@ -225,25 +224,6 @@ namespace SimpleTrace.Common
             }
             propValue = dic[theKey];
             return true;
-        }
-
-        public static bool HasProperty(this object instance, string propName, bool ignoreCase = false)
-        {
-            if (instance == null)
-            {
-                return false;
-            }
-
-            //JArray
-            //JObject
-            if (instance is JObject jObject)
-            {
-                var dic = (IDictionary<string, JToken>)jObject ;
-                return ignoreCase ? dic.Keys.Any(x => x.Equals(propName, StringComparison.OrdinalIgnoreCase)) : dic.Keys.Any(x => x.Equals(propName));
-            }
-
-            var propertyNames = MyModelHelper.GetPropertyNames(instance.GetType());
-            return ignoreCase ? propertyNames.Any(x => x.Equals(propName, StringComparison.OrdinalIgnoreCase)) : propertyNames.Any(x => x.Equals(propName));
         }
     }
 }

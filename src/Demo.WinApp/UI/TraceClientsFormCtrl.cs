@@ -33,9 +33,8 @@ namespace Demo.WinApp.UI
             var commandQueue = new CommandQueue();
 
             //var commands = FilterCommands<StartSpanCommand>(queueInfo);
-            var commands = FilterCommands<SaveSpansCommand>(queueInfo).ToList();
-
-            foreach (var command in commands)
+            var saveCommands = FilterCommands<SaveSpansCommand>(queueInfo).ToList();
+            foreach (var command in saveCommands)
             {
                 await commandQueue.Enqueue(command);
             }
@@ -89,21 +88,6 @@ namespace Demo.WinApp.UI
             //}
         }
 
-        //public bool IsCommand(dynamic dynamicCommand)
-        //{
-        //    if (dynamicCommand is ICommand theCommand)
-        //    {
-        //        return theCommand.CommandType == this.CommandType;
-        //    }
-
-        //    if (((IDictionary<string, Object>)dynamicCommand).ContainsKey("CommandType"))
-        //    {
-        //        //hack for Json JToken
-        //        return ((dynamic)dynamicCommand).CommandType == this.CommandType;
-        //    }
-
-        //    return false;
-        //}
         public async Task CallTraceApi(CallTraceApiArgs args)
         {
             var apiProxy = ApiProxyContext.Current;

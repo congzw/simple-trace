@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using SimpleTrace.Common;
 
 namespace SimpleTrace.TraceClients.Commands
@@ -56,6 +54,29 @@ namespace SimpleTrace.TraceClients.Commands
                 return batchClientTraceLocate.Items;
             }
             return new List<IClientSpanLocate>();
+        }
+
+        public static IEnumerable<T> FilterCommands<T>(IList<object> jsonCommands) where T : ICommand
+        {
+            foreach (var queueInfoCommand in jsonCommands)
+            {
+                if (queueInfoCommand is T theCommand)
+                {
+                    yield return theCommand;
+                }
+                else
+                {
+                    var propName = "CommandType";
+                    var tryGetProperty = queueInfoCommand.TryGetProperty(propName, true, out var propValue);
+                    if (tryGetProperty)
+                    {
+                        if (propValue.ToString() == typeof(T).Name)
+                        {
+                            yield return queueInfoCommand.As<T>();
+                        }
+                    }
+                }
+            }
         }
     }
 }

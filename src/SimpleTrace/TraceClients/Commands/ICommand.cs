@@ -29,33 +29,4 @@ namespace SimpleTrace.TraceClients.Commands
         public object Args { get; set; }
         public abstract bool CreateOrUpdate(IDictionary<string, ClientSpanEntity> clientSpanCache);
     }
-
-    //public interface ICommandLogic
-    //{
-    //    bool CreateOrUpdate(Command command, IDictionary<string, ClientSpanEntity> clientSpanCache);
-    //}
-
-    //public class Command
-    //{
-    //    public Command()
-    //    {
-    //        CreateUtc = DateHelper.Instance.GetDateNow();
-    //    }
-
-    //    public float ProcessSort { get; set; }
-    //    public string CommandType { get; set; }
-    //    public DateTime CreateUtc { get; set; }
-    //    public object Args { get; set; }
-
-    //    public static Command Create(object args, float processSort, string commandType)
-    //    {
-    //        var command = new Command();
-    //        command.Args = args;
-    //        command.ProcessSort = processSort;
-    //        command.CommandType = commandType;
-    //        return command;
-    //    }
-    //}
-
-
 }
