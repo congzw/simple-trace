@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using SimpleTrace.Common;
+
 // ReSharper disable CheckNamespace
 
 namespace SimpleTrace.TraceClients.Commands
@@ -12,7 +14,16 @@ namespace SimpleTrace.TraceClients.Commands
 
         public override bool CreateOrUpdate(IDictionary<string, ClientSpanEntity> clientSpanCache)
         {
-            throw new NotImplementedException();
+            var saveSpansArgs = (SaveSpansArgs)this.Args;
+
+            foreach (var item in saveSpansArgs.Items)
+            {
+                var clientSpanEntity = new ClientSpanEntity();
+                var currentKey = item.ToLocateCurrentKey();
+                MyModelHelper.SetProperties(clientSpanEntity, item);
+                clientSpanCache[currentKey] = clientSpanEntity;
+            }
+            return true;
         }
     }
 }

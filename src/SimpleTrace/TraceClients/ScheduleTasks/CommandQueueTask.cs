@@ -24,33 +24,37 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             //run process: send client spans
             //run process: ...
 
-            var currentCommands = await commandQueue.TryDequeueAll().ConfigureAwait(false);
-            _delayedGroupCacheCommand.AppendToGroups(currentCommands);
-
-            var expiredGroups = _delayedGroupCacheCommand.PopExpiredGroups(now).OrderBy(x => x.LastItemDate).ToList();
-            if (expiredGroups.Count == 0)
-            {
-                return;
-            }
-
-            var commands = new List<ICommand>();
-            foreach (var expiredGroup in expiredGroups)
-            {
-                foreach (var cmd in expiredGroup.Items)
-                {
-                    commands.Add(cmd);
-                }
-            }
-
             var spanCache = new Dictionary<string, ClientSpanEntity>();
-
-            var commandGroups = commands.GroupBy(x => x.ProcessSort).OrderBy(g => g.Key);
-            foreach (var commandGroup in commandGroups)
+            var currentCommands = await commandQueue.TryDequeueAll().ConfigureAwait(false);
+            var theType = typeof(SaveSpansCommand);
+            var noDelayCommands = currentCommands.Where(x => x.GetType() == theType).ToList();
+            foreach (var noDelayCommand in noDelayCommands)
             {
-                var theCommands = commandGroup.ToList();
-                foreach (var theCommand in theCommands)
+                noDelayCommand.CreateOrUpdate(spanCache);
+            }
+
+            var delayedCommands = currentCommands.Where(x => x.GetType() != theType).ToList();
+            _delayedGroupCacheCommand.AppendToGroups(delayedCommands);
+            var expiredGroups = _delayedGroupCacheCommand.PopExpiredGroups(now).OrderBy(x => x.LastItemDate).ToList();
+            if (expiredGroups.Count > 0)
+            {
+                var commands = new List<ICommand>();
+                foreach (var expiredGroup in expiredGroups)
                 {
-                    theCommand.CreateOrUpdate(spanCache);
+                    foreach (var cmd in expiredGroup.Items)
+                    {
+                        commands.Add(cmd);
+                    }
+                }
+                
+                var commandGroups = commands.GroupBy(x => x.ProcessSort).OrderBy(g => g.Key);
+                foreach (var commandGroup in commandGroups)
+                {
+                    var theCommands = commandGroup.ToList();
+                    foreach (var theCommand in theCommands)
+                    {
+                        theCommand.CreateOrUpdate(spanCache);
+                    }
                 }
             }
 

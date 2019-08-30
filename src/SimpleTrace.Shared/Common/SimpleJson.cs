@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SimpleTrace.Common
 {
@@ -123,6 +126,124 @@ namespace SimpleTrace.Common
         public static string ToJson(this object value, bool indented)
         {
             return SimpleJson.Resolve().SerializeObject(value, indented);
+        }
+
+        public static object FromJson(this string content, object defaultValue)
+        {
+            return SimpleJson.Resolve().DeserializeObject(content, defaultValue);
+        }
+
+        public static T FromJson<T>(this string content, T defaultValue)
+        {
+            var instance = SimpleJson.Resolve().DeserializeObject(content, defaultValue);
+            return (T)instance;
+        }
+
+        public static T As<T>(this object instance, bool throwEx = true)
+        {
+            if (instance == null)
+            {
+                return default(T);
+            }
+
+            //JObject is JToken?
+            //if (instance is JObject jObject)
+            //{
+            //    return jObject.ToObject<T>();
+            //}
+
+            if (instance is JToken token)
+            {
+                return token.ToObject<T>();
+            }
+
+            if (instance is T theValue)
+            {
+                return theValue;
+            }
+
+            if (!throwEx)
+            {
+                return default(T);
+            }
+
+            //try
+            //{
+            //    return (T)Convert.ChangeType(instance, typeof(T));
+            //}
+            //catch (InvalidCastException)
+            //{
+            //    return default(T);
+            //}
+
+            throw new InvalidOperationException(string.Format("object can not cast from {0} to {1}", instance.GetType().Name, typeof(T).Name));
+        }
+
+
+        public static bool TryGetProperty(this object instance, string propName, bool ignoreCase, out object propValue)
+        {
+            propValue = null;
+            if (instance == null)
+            {
+                return false;
+            }
+
+            //JArray
+            //JObject
+            if (instance is JObject jObject)
+            {
+                var dic = (IDictionary<string, JToken>)jObject;
+                var tryGetProperty = dic.TryGetValue(propName, ignoreCase, out propValue);
+                return tryGetProperty;
+            }
+
+            var dic2 = MyModelHelper.GetKeyValueDictionary(instance);
+            var tryGetProperty2 = dic2.TryGetValue(propName, ignoreCase, out propValue);
+            return tryGetProperty2;
+        }
+        
+        public static bool TryGetValue<T>(this IDictionary<string, T> dic, string propName, bool ignoreCase, out object propValue)
+        {
+            propValue = null;
+            if (dic == null)
+            {
+                return false;
+            }
+
+            var theKey = dic.Keys.SingleOrDefault(x => x.Equals(propName));
+            if (theKey == null)
+            {
+                if (ignoreCase)
+                {
+                    theKey = dic.Keys.SingleOrDefault(x => x.Equals(propName, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+
+            if (theKey == null)
+            {
+                return false;
+            }
+            propValue = dic[theKey];
+            return true;
+        }
+
+        public static bool HasProperty(this object instance, string propName, bool ignoreCase = false)
+        {
+            if (instance == null)
+            {
+                return false;
+            }
+
+            //JArray
+            //JObject
+            if (instance is JObject jObject)
+            {
+                var dic = (IDictionary<string, JToken>)jObject ;
+                return ignoreCase ? dic.Keys.Any(x => x.Equals(propName, StringComparison.OrdinalIgnoreCase)) : dic.Keys.Any(x => x.Equals(propName));
+            }
+
+            var propertyNames = MyModelHelper.GetPropertyNames(instance.GetType());
+            return ignoreCase ? propertyNames.Any(x => x.Equals(propName, StringComparison.OrdinalIgnoreCase)) : propertyNames.Any(x => x.Equals(propName));
         }
     }
 }

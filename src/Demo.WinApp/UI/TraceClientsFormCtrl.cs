@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
 using System.Threading.Tasks;
 using SimpleTrace.Common;
 using SimpleTrace.TraceClients;
 using SimpleTrace.TraceClients.ApiProxy;
+using SimpleTrace.TraceClients.Commands;
+using SimpleTrace.TraceClients.Repos;
+using SimpleTrace.TraceClients.ScheduleTasks;
 
 namespace Demo.WinApp.UI
 {
@@ -16,15 +21,89 @@ namespace Demo.WinApp.UI
             return apiProxy.GetQueueInfo(new GetQueueInfoArgs());
         }
 
-        //public Task<MessageResult> SaveQueue()
+        public async Task SaveQueue(QueueInfo queueInfo)
+        {
+            var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
+
+            var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand());
+
+            var clientSpanProcesses = new List<IClientSpanProcess>();
+            clientSpanProcesses.Add(new TraceSaveProcess(clientSpanRepository));
+
+            var commandQueue = new CommandQueue();
+
+            //var commands = FilterCommands<StartSpanCommand>(queueInfo);
+            var commands = FilterCommands<SaveSpansCommand>(queueInfo).ToList();
+
+            foreach (var command in commands)
+            {
+                await commandQueue.Enqueue(command);
+            }
+
+            await commandQueueTask.Process(clientSpanProcesses, commandQueue,
+                DateHelper.Instance.GetDateNow().AddSeconds(-100));
+        }
+
+        private IEnumerable<T> FilterCommands<T>(QueueInfo queueInfo) where T : ICommand
+        {
+            foreach (var queueInfoCommand in queueInfo.Commands)
+            {
+                if (queueInfoCommand is T theCommand)
+                {
+                    yield return theCommand;
+                }
+                else
+                {
+                    var propName = "CommandType";
+                    var tryGetProperty = queueInfoCommand.TryGetProperty(propName, true, out var propValue);
+
+                    if (tryGetProperty)
+                    {
+                        if (propValue.ToString() == typeof(T).Name)
+                        {
+                            yield return queueInfoCommand.As<T>();
+                        }
+                    }
+                }
+            }
+
+
+            //var dynamicCommands = queueInfo.Commands.Cast<dynamic>().ToList();
+            //foreach (var dynamicCommand in dynamicCommands)
+            //{
+            //    if (dynamicCommand.CommandType == knownCommands.StartSpan())
+            //    {
+            //        commands.Add();
+            //    }
+            //}
+
+
+            //var commands = queueInfo.Commands.Cast<ICommand>().ToList();
+            //return commands;
+
+            //foreach (ICommand queueInfoCommand in queueInfo.Commands)
+            //{
+
+            //    var command = queueInfoCommand.As<ICommand>();
+            //    await commandQueue.Enqueue(command);
+            //}
+        }
+
+        //public bool IsCommand(dynamic dynamicCommand)
         //{
-        //    var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand());
+        //    if (dynamicCommand is ICommand theCommand)
+        //    {
+        //        return theCommand.CommandType == this.CommandType;
+        //    }
 
-        //    var clientSpanProcesses = new List<IClientSpanProcess>();
-        //    clientSpanProcesses.Add(new TraceSaveProcess(new NullClientSpanRepository()));
-        //    commandQueueTask.Process(clientSpanProcesses)
+        //    if (((IDictionary<string, Object>)dynamicCommand).ContainsKey("CommandType"))
+        //    {
+        //        //hack for Json JToken
+        //        return ((dynamic)dynamicCommand).CommandType == this.CommandType;
+        //    }
+
+        //    return false;
         //}
-
         public async Task CallTraceApi(CallTraceApiArgs args)
         {
             var apiProxy = ApiProxyContext.Current;

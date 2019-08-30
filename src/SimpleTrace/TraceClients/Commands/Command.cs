@@ -40,6 +40,7 @@ namespace SimpleTrace.TraceClients.Commands
             {
                 return clientTraceLocate.TraceId;
             }
+
             return null;
         }
 

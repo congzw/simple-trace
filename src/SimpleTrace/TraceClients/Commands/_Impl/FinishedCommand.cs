@@ -12,7 +12,7 @@ namespace SimpleTrace.TraceClients.Commands
 
         public override bool CreateOrUpdate(IDictionary<string, ClientSpanEntity> clientSpanCache)
         {
-            throw new NotImplementedException();
+            return true;
         }
     }
 }

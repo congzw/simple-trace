@@ -90,9 +90,10 @@ namespace Demo.WinApp
             this.txtMessage.Text = queueInfo.ToJson(true);
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
-
+            var queueInfo = await Ctrl.QueryQueue();
+            await Ctrl.SaveQueue(queueInfo);
         }
 
         private void btnSend_Click(object sender, EventArgs e)

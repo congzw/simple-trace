@@ -149,8 +149,7 @@ namespace SimpleTrace.Common
                     propertyValues.Remove(excludeProperty);
                 }
             }
-
-
+            
             foreach (var propertyValue in propertyValues)
             {
                 var propertyInfo = propertyInfos.SingleOrDefault(x => propertyValue.Key.Equals(x.Name, StringComparison.OrdinalIgnoreCase));

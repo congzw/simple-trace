@@ -62,7 +62,7 @@
 //        {
 //            return instance.Create(saveSpans, args);
 //        }
-        
+
 //        ////是否需要缓冲处理
 //        //public static bool NeedDelay(this Command command)
 //        //{

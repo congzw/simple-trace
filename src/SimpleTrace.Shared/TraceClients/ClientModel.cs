@@ -158,6 +158,18 @@ namespace SimpleTrace.TraceClients
 
     public class QueueInfo
     {
+        //public QueueInfo()
+        //{
+        //    CommandSums = new List<CommandSum>();
+        //    //SaveClientSpans = new List<SaveClientSpan>();
+        //}
+
+        //public int TotalCommandCount { get; set; }
+        ////public int TotalEntitiesCount { get; set; }
+        ////public IList<SaveClientSpan> SaveClientSpans { get; set; }
+
+        //public IList<CommandSum> CommandSums { get; set; }
+
         public QueueInfo()
         {
             Commands = new List<object>();
@@ -166,6 +178,22 @@ namespace SimpleTrace.TraceClients
         public int TotalCount { get; set; }
         public IList<object> Commands { get; set; }
     }
+
+    //public class CommandInfo
+    //{
+    //    public float ProcessSort { get; set; }
+    //    public string CommandType { get; set; }
+    //    public DateTime CreateUtc { get; set; }
+    //    public object Args { get; set; }
+    //}
+
+    //public class CommandSum
+    //{
+    //    public string CommandType { get; set; }
+    //    public int CommandCount { get; set; }
+    //    public IList<ICommand> Commands { get; set; }
+
+    //}
 
     public class GetQueueInfoArgs
     {
