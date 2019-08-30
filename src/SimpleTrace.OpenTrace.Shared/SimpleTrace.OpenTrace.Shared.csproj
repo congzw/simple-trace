@@ -5,4 +5,8 @@
     <RootNamespace>SimpleTrace</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="OpenTrace\Shared\" />
+  </ItemGroup>
+
 </Project>

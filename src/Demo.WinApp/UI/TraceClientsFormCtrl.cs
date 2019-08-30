@@ -37,6 +37,12 @@ namespace Demo.WinApp.UI
             await clientSpanRepository.Add(clientSpanEntities);
         }
 
+        public async Task Send()
+        {
+            await 0.AsTask();
+            throw new NotImplementedException();
+        }
+
         public async Task CallTraceApi(CallTraceApiArgs args)
         {
             var apiProxy = ApiProxyContext.Current;
@@ -88,6 +94,7 @@ namespace Demo.WinApp.UI
             saveClientSpan.StartUtc = now.AddMilliseconds(delayStartMs);
             saveClientSpan.FinishUtc = saveClientSpan.StartUtc.AddMilliseconds(durationMs);
         }
+
     }
 
     public class CallTraceApiArgs

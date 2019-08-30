@@ -6,11 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleTrace\SimpleTrace.csproj" />
+    <PackageReference Include="OpenTracing" Version="0.12.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Jaeger\" />
+    <ProjectReference Include="..\SimpleTrace.OpenTrace\SimpleTrace.OpenTrace.csproj" />
+    <ProjectReference Include="..\SimpleTrace\SimpleTrace.csproj" />
   </ItemGroup>
 
 </Project>

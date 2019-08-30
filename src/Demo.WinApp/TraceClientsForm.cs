@@ -96,9 +96,9 @@ namespace Demo.WinApp
             await Ctrl.SaveQueue(queueInfo);
         }
 
-        private void btnSend_Click(object sender, EventArgs e)
+        private async void btnSend_Click(object sender, EventArgs e)
         {
-
+            await Ctrl.Send();
         }
 
         #region demo for async
