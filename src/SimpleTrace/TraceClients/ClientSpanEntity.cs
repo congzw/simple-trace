@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Common;
 
 namespace SimpleTrace.TraceClients
 {
@@ -8,8 +10,8 @@ namespace SimpleTrace.TraceClients
         public ClientSpanEntity()
         {
             Bags = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            Logs = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             Tags = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+            Logs = new Dictionary<string, KeyValueInfo>(StringComparer.OrdinalIgnoreCase);
         }
 
         public string TracerId { get; set; }
@@ -21,8 +23,8 @@ namespace SimpleTrace.TraceClients
         public DateTime FinishUtc { get; set; }
 
         public IDictionary<string, string> Bags { get; set; }
-        public IDictionary<string, object> Logs { get; set; }
         public IDictionary<string, object> Tags { get; set; }
+        public IDictionary<string, KeyValueInfo> Logs { get; set; }
 
         public void SetBags(IEnumerable<KeyValuePair<string, string>> bags)
         {
@@ -37,30 +39,65 @@ namespace SimpleTrace.TraceClients
             }
         }
 
-        public void SetLogs(IEnumerable<KeyValuePair<string, object>> logs)
+        public void SetLogs(IEnumerable<KeyValuePair<string, object>> logs, DateTime? createAt = null)
         {
             if (logs == null)
             {
                 return;
             }
 
-            foreach (var item in logs)
+            var keyValueInfos = KeyValueInfo.Create(logs, createAt);
+            foreach (var keyValueInfo in keyValueInfos)
             {
-                this.Logs[item.Key] = item.Value;
+                this.Logs[keyValueInfo.KeyValuePair.Key] = keyValueInfo;
             }
         }
 
-        public void SetTags(IEnumerable<KeyValuePair<string, object>> tags)
+        public void SetTags(IEnumerable<KeyValuePair<string, object>> tags, DateTime? createAt = null)
         {
             if (tags == null)
             {
                 return;
             }
 
-            foreach (var item in tags)
+            foreach (var tag in tags)
             {
-                this.Tags[item.Key] = item.Value;
+                this.Tags[tag.Key] = tag.Value;
             }
+        }
+    }
+
+    public class KeyValueInfo
+    {
+        public KeyValueInfo()
+        {
+            CreateAt = DateHelper.Instance.GetDateNow();
+        }
+
+        public DateTime CreateAt { get; set; }
+
+        public KeyValuePair<string, object> KeyValuePair { get; set; }
+
+        public static IList<KeyValueInfo> Create(IEnumerable<KeyValuePair<string, object>> infos, DateTime? createAt)
+        {
+            var keyValueInfos = new List<KeyValueInfo>();
+            foreach (var info in infos)
+            {
+                var keyValueInfo = Create(info, createAt);
+                keyValueInfos.Add(keyValueInfo);
+            }
+            return keyValueInfos;
+        }
+        public static KeyValueInfo Create(KeyValuePair<string, object> info, DateTime? createAt)
+        {
+            var keyValueInfo = new KeyValueInfo();
+            if (createAt != null)
+            {
+                keyValueInfo.CreateAt = createAt.Value;
+            }
+
+            keyValueInfo.KeyValuePair = new KeyValuePair<string, object>(info.Key, info.Value);
+            return keyValueInfo;
         }
     }
 }

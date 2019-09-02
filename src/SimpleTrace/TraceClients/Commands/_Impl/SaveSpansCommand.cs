@@ -16,12 +16,25 @@ namespace SimpleTrace.TraceClients.Commands
 
             foreach (var item in saveSpansArgs.Items)
             {
-                var clientSpanEntity = new ClientSpanEntity();
+                var clientSpanEntity = Create(item);
                 var currentKey = item.ToLocateCurrentKey();
-                MyModelHelper.SetProperties(clientSpanEntity, item);
                 clientSpanCache[currentKey] = clientSpanEntity;
             }
             return true;
+        }
+
+        private static ClientSpanEntity Create(SaveClientSpan saveClientSpan)
+        {
+            var clientSpanEntity = new ClientSpanEntity();
+            MyModelHelper.SetProperties(clientSpanEntity, saveClientSpan, new[] { "Logs" });
+
+            foreach (var log in saveClientSpan.Logs)
+            {
+                var keyValueInfo = KeyValueInfo.Create(log, saveClientSpan.StartUtc);
+                clientSpanEntity.Logs[keyValueInfo.KeyValuePair.Key] = keyValueInfo;
+            }
+
+            return clientSpanEntity;
         }
     }
 }

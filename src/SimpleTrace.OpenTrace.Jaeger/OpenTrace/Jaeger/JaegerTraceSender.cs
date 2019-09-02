@@ -58,7 +58,14 @@ namespace SimpleTrace.OpenTrace.Jaeger
                     scope.Span.SetTag(bag.Key, bag.Value);
                 }
 
-                scope.Span.Log(clientSpan.Logs);
+                var logGroups = clientSpan.Logs.GroupBy(x => x.Value.CreateAt).ToList();
+                foreach (var logGroup in logGroups)
+                {
+                    var createAt = logGroup.Key;
+                    var keyValueInfos = logGroup.Select(x => x.Value.KeyValuePair).ToList();
+                    scope.Span.Log(createAt, keyValueInfos);
+                }
+
 
                 foreach (var tag in clientSpan.Tags)
                 {
