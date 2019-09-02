@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using SimpleTrace.Common;
+using Common;
 
 namespace SimpleTrace.TraceClients.Repos
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SimpleTrace.Common;
+using Common;
 using SimpleTrace.OpenTrace.Jaeger;
 using SimpleTrace.TraceClients;
 using SimpleTrace.TraceClients.ApiProxy;

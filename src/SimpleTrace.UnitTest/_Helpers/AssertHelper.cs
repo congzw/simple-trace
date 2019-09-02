@@ -3,7 +3,7 @@ using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // ReSharper disable once CheckNamespace
-namespace SimpleTrace
+namespace Common
 {
     public class AssertHelper
     {

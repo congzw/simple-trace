@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SimpleTrace;
 
-namespace SimpleTrace.Common
+namespace Common
 {
     [TestClass]
     public class SimpleLogSpec

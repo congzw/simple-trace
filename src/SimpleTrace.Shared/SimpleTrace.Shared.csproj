@@ -10,4 +10,8 @@
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
+  <Import Project="..\SharedProject.Common\SharedProject.Common.projitems" Label="Shared" />
+
+  <Import Project="..\SharedProject.SimpleTrace\SharedProject.SimpleTrace.projitems" Label="Shared" />
+
 </Project>

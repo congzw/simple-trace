@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SimpleTrace.Common;
+using Common;
 using SimpleTrace.TraceClients.ScheduleTasks;
 
 namespace SimpleTrace.TraceClients.Commands

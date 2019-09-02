@@ -1,4 +1,4 @@
-﻿using SimpleTrace.Common;
+﻿using Common;
 
 namespace Demo.WinApp
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace SimpleTrace.Common
+namespace Common
 {
     [TestClass]
     public class DelayedGroupCacheSpec

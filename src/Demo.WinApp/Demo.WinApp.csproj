@@ -90,9 +90,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\SimpleTrace.Jaeger\SimpleTrace.Jaeger.csproj">
-      <Project>{8c6845e0-4110-481e-86fe-f15d4f7cf1ab}</Project>
-      <Name>SimpleTrace.Jaeger</Name>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{a0483866-91de-402c-9583-566a7f87cf42}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleTrace.OpenTrace.Jaeger\SimpleTrace.OpenTrace.Jaeger.csproj">
+      <Project>{2621d708-67e7-46c0-8c3c-e00143238265}</Project>
+      <Name>SimpleTrace.OpenTrace.Jaeger</Name>
     </ProjectReference>
     <ProjectReference Include="..\SimpleTrace.OpenTrace\SimpleTrace.OpenTrace.csproj">
       <Project>{8365dff1-0c98-4646-acb9-183b8137c1ed}</Project>

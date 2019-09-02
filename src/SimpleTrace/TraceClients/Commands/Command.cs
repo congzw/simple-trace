@@ -1,5 +1,5 @@
 ﻿using System;
-using SimpleTrace.Common;
+using Common;
 
 namespace SimpleTrace.TraceClients.Commands
 {

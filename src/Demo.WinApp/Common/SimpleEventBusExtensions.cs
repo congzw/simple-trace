@@ -1,4 +1,4 @@
-﻿using SimpleTrace.Common;
+﻿using Common;
 // ReSharper disable CheckNamespace
 
 namespace Common

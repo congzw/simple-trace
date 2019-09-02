@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>f9caaaae-547f-4595-9866-d511e6b62385</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SimpleTrace</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\ApiProxyConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\ApiProxyContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\CheckApiStatusSmart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\ClientTracerApiProxySmartWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\HttpClientTracerApiProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\IClientTracerApiProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\NullClientTracerApiProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\Api\IClientTracerApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\Api\ITestApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientSpanLocate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientSpanLocateExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\TraceResult.cs" />
+  </ItemGroup>
+</Project>

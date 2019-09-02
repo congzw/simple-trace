@@ -1,5 +1,4 @@
 ﻿using Common;
-using SimpleTrace.Common;
 using SimpleTrace.OpenTrace;
 using SimpleTrace.OpenTrace.Jaeger;
 using SimpleTrace.TraceClients.ApiProxy;

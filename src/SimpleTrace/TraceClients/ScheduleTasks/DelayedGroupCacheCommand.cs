@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using SimpleTrace.Common;
+using Common;
 using SimpleTrace.TraceClients.Commands;
 
 namespace SimpleTrace.TraceClients.ScheduleTasks

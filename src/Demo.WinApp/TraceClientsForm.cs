@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Common;
 using Demo.WinApp.UI;
-using SimpleTrace.Common;
 
 namespace Demo.WinApp
 {

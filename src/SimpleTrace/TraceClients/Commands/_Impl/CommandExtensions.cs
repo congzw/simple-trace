@@ -1,7 +1,7 @@
 ﻿//// ReSharper disable CheckNamespace
 
 //using System.Collections.Generic;
-//using SimpleTrace.Common;
+//using Common;
 
 //namespace SimpleTrace.TraceClients.Commands
 //{
