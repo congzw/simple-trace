@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleTrace.Shared\SimpleTrace.Shared.csproj" />
     <ProjectReference Include="..\SimpleTrace\SimpleTrace.csproj" />
   </ItemGroup>
 

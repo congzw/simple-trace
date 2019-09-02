@@ -98,10 +98,6 @@
       <Project>{8365dff1-0c98-4646-acb9-183b8137c1ed}</Project>
       <Name>SimpleTrace.OpenTrace</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimpleTrace.Shared\SimpleTrace.Shared.csproj">
-      <Project>{bdff52c0-4dff-44d8-a186-1fbe57633029}</Project>
-      <Name>SimpleTrace.Shared</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SimpleTrace\SimpleTrace.csproj">
       <Project>{4432c6b4-ea5d-43e3-acef-e8f7f8965b3e}</Project>
       <Name>SimpleTrace</Name>

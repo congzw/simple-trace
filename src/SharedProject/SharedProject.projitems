@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>79a9c87e-90ca-41ed-8301-432706245874</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SimpleTrace</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Common\AsyncFile.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\AsyncHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\CheckIfNotOkAndExpired.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\DateHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ExpiredIn.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\MessageResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\MyModelHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\SimpleJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\SimpleLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\TaskEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\WebApiHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\ApiProxyConfig.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\ApiProxyContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\CheckApiStatusSmart.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\ClientTracerApiProxySmartWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\HttpClientTracerApiProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\IClientTracerApiProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\NullClientTracerApiProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\Api\IClientTracerApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\Api\ITestApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientSpanLocate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientSpanLocateExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\TraceResult.cs" />
+  </ItemGroup>
+</Project>

@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{97D520FC-582
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTrace", "SimpleTrace\SimpleTrace.csproj", "{4432C6B4-EA5D-43E3-ACEF-E8F7F8965B3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTrace.Shared", "SimpleTrace.Shared\SimpleTrace.Shared.csproj", "{BDFF52C0-4DFF-44D8-A186-1FBE57633029}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTrace.UnitTest", "SimpleTrace.UnitTest\SimpleTrace.UnitTest.csproj", "{B66DE67B-B77A-4392-B25C-A71B08145FAD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTrace.Api", "SimpleTrace.Api\SimpleTrace.Api.csproj", "{CA998AB8-2B6E-414C-930A-D9E0A85674BB}"
@@ -24,11 +22,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTrace.Jaeger", "Simpl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "open trace", "open trace", "{32FDDF58-9533-4984-B7EA-C69E0510A84A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTrace.OpenTrace", "SimpleTrace.OpenTrace\SimpleTrace.OpenTrace.csproj", "{8365DFF1-0C98-4646-ACB9-183B8137C1ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTrace.OpenTrace", "SimpleTrace.OpenTrace\SimpleTrace.OpenTrace.csproj", "{8365DFF1-0C98-4646-ACB9-183B8137C1ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTrace.OpenTrace.Shared", "SimpleTrace.OpenTrace.Shared\SimpleTrace.OpenTrace.Shared.csproj", "{817DBDE2-7838-49D9-A266-8E067740C964}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTrace.OpenTrace.Shared", "SimpleTrace.OpenTrace.Shared\SimpleTrace.OpenTrace.Shared.csproj", "{817DBDE2-7838-49D9-A266-8E067740C964}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedProject", "SharedProject\SharedProject.shproj", "{79A9C87E-90CA-41ED-8301-432706245874}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTrace.Shared", "SimpleTrace.Shared\SimpleTrace.Shared.csproj", "{F6CB31F3-A577-4618-8C78-37AACC6BCF8C}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedProject\SharedProject.projitems*{79a9c87e-90ca-41ed-8301-432706245874}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -38,10 +43,6 @@ Global
 		{4432C6B4-EA5D-43E3-ACEF-E8F7F8965B3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4432C6B4-EA5D-43E3-ACEF-E8F7F8965B3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4432C6B4-EA5D-43E3-ACEF-E8F7F8965B3E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BDFF52C0-4DFF-44D8-A186-1FBE57633029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDFF52C0-4DFF-44D8-A186-1FBE57633029}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDFF52C0-4DFF-44D8-A186-1FBE57633029}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDFF52C0-4DFF-44D8-A186-1FBE57633029}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B66DE67B-B77A-4392-B25C-A71B08145FAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B66DE67B-B77A-4392-B25C-A71B08145FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B66DE67B-B77A-4392-B25C-A71B08145FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -66,6 +67,10 @@ Global
 		{817DBDE2-7838-49D9-A266-8E067740C964}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{817DBDE2-7838-49D9-A266-8E067740C964}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{817DBDE2-7838-49D9-A266-8E067740C964}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6CB31F3-A577-4618-8C78-37AACC6BCF8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6CB31F3-A577-4618-8C78-37AACC6BCF8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6CB31F3-A577-4618-8C78-37AACC6BCF8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6CB31F3-A577-4618-8C78-37AACC6BCF8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
