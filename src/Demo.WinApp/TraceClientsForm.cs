@@ -98,7 +98,8 @@ namespace Demo.WinApp
 
         private async void btnSend_Click(object sender, EventArgs e)
         {
-            await Ctrl.Send();
+            var queueInfo = await Ctrl.QueryQueue();
+            await Ctrl.Send(queueInfo);
         }
 
         #region demo for async

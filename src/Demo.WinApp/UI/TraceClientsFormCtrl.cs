@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SimpleTrace.Common;
+using SimpleTrace.OpenTrace.Jaeger;
 using SimpleTrace.TraceClients;
 using SimpleTrace.TraceClients.ApiProxy;
 using SimpleTrace.TraceClients.Commands;
@@ -21,26 +22,16 @@ namespace Demo.WinApp.UI
 
         public async Task SaveQueue(QueueInfo queueInfo)
         {
-            var knownCommands = KnownCommands.Instance;
-            knownCommands.Register(new SaveSpansCommand());
-            knownCommands.Register(new StartSpanCommand());
-            knownCommands.Register(new LogCommand());
-            knownCommands.Register(new SetTagCommand());
-            knownCommands.Register(new FinishSpanCommand());
-
-            var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand(), knownCommands);
-            var commands = queueInfo.Commands.As<Command>().ToList();
-            
-            var clientSpanEntities = commandQueueTask.GetEntities(commands, DateHelper.Instance.GetDateNow().AddSeconds(-100));
-
+            var clientSpanEntities = GetClientSpanEntities(queueInfo);
             var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
             await clientSpanRepository.Add(clientSpanEntities);
         }
 
-        public async Task Send()
+        public Task Send(QueueInfo queueInfo)
         {
-            await 0.AsTask();
-            throw new NotImplementedException();
+            var clientSpanEntities = GetClientSpanEntities(queueInfo);
+            var jaegerTraceSender = new JaegerTraceSender();
+            return jaegerTraceSender.Send(clientSpanEntities);
         }
 
         public async Task CallTraceApi(CallTraceApiArgs args)
@@ -74,6 +65,22 @@ namespace Demo.WinApp.UI
 
             var saveSpansArgs = SaveSpansArgs.Create(saveSpans.ToArray());
             await apiProxy.SaveSpans(saveSpansArgs);
+        }
+
+        private IList<ClientSpanEntity> GetClientSpanEntities(QueueInfo queueInfo)
+        {
+            var knownCommands = KnownCommands.Instance;
+            knownCommands.Register(new SaveSpansCommand());
+            knownCommands.Register(new StartSpanCommand());
+            knownCommands.Register(new LogCommand());
+            knownCommands.Register(new SetTagCommand());
+            knownCommands.Register(new FinishSpanCommand());
+
+            var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand(), knownCommands);
+            var commands = queueInfo.Commands.As<Command>().ToList();
+
+            var clientSpanEntities = commandQueueTask.GetEntities(commands, DateHelper.Instance.GetDateNow().AddSeconds(-100));
+            return clientSpanEntities;
         }
 
         private SaveClientSpan CreateSaveClientSpans(string tracerId, string traceId, string parentSpanId, string spanId, string opName, bool withLogs = false)

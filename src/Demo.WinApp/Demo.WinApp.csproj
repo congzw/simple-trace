@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Demo.WinApp</RootNamespace>
     <AssemblyName>Demo.WinApp</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -69,6 +70,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="TraceClientsForm.resx">
       <DependentUpon>TraceClientsForm.cs</DependentUpon>
@@ -88,6 +90,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\SimpleTrace.Jaeger\SimpleTrace.Jaeger.csproj">
+      <Project>{8c6845e0-4110-481e-86fe-f15d4f7cf1ab}</Project>
+      <Name>SimpleTrace.Jaeger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleTrace.OpenTrace\SimpleTrace.OpenTrace.csproj">
+      <Project>{8365dff1-0c98-4646-acb9-183b8137c1ed}</Project>
+      <Name>SimpleTrace.OpenTrace</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimpleTrace.Shared\SimpleTrace.Shared.csproj">
       <Project>{bdff52c0-4dff-44d8-a186-1fbe57633029}</Project>
       <Name>SimpleTrace.Shared</Name>
