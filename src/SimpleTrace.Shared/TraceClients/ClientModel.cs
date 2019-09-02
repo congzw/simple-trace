@@ -166,23 +166,7 @@ namespace SimpleTrace.TraceClients
         public int TotalCount { get; set; }
         public IList<object> Commands { get; set; }
     }
-
-    //public class CommandInfo
-    //{
-    //    public float ProcessSort { get; set; }
-    //    public string CommandType { get; set; }
-    //    public DateTime CreateUtc { get; set; }
-    //    public object Args { get; set; }
-    //}
-
-    //public class CommandSum
-    //{
-    //    public string CommandType { get; set; }
-    //    public int CommandCount { get; set; }
-    //    public IList<ICommand> Commands { get; set; }
-
-    //}
-
+    
     public class GetQueueInfoArgs
     {
         //todo
