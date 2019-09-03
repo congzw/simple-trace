@@ -11,6 +11,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Common\DateTimeRange.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\DictionaryHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Extensions\AppDomainExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\AsyncFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\AsyncHelper.cs" />

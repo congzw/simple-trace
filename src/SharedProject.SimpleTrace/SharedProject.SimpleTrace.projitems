@@ -21,6 +21,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientSpanLocate.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientSpanLocateExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientSpans.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\DictionaryHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\TraceResult.cs" />
   </ItemGroup>
 </Project>

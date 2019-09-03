@@ -52,7 +52,7 @@ namespace SimpleTrace.TraceClients
             }
         }
 
-        public void SetTags(IEnumerable<KeyValuePair<string, object>> tags, DateTime? createAt = null)
+        public void SetTags(IEnumerable<KeyValuePair<string, object>> tags)
         {
             if (tags == null)
             {
