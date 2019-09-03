@@ -6,13 +6,14 @@ namespace SimpleTrace.TraceClients.Repos
 {
     public interface IClientSpanRepository
     {
+        Task Clear(LoadArgs args);
         Task Add(IList<ClientSpanEntity> spans);
         Task<IList<ClientSpanEntity>> Read(LoadArgs args);
     }
 
     public class LoadArgs
     {
-        public DateTime Begin { get; set; }
+        public DateTime? Begin { get; set; }
         public DateTime? End { get; set; }
     }
 }

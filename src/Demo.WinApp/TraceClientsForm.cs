@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Common;
 using Demo.WinApp.UI;
+using SimpleTrace.TraceClients.Commands;
 
 namespace Demo.WinApp
 {
@@ -20,6 +22,8 @@ namespace Demo.WinApp
 
         private void MyInitializeComponent()
         {
+            this.txtMessage.ScrollBars = ScrollBars.Vertical;
+
             this.checkAutoLine.Checked = true;
             this.checkAutoDate.Checked = true;
 
@@ -67,7 +71,40 @@ namespace Demo.WinApp
             await Ctrl.CallTraceApi(args);
             //StartAsyncMessageDemo(args.Count, args.Interval);
         }
+        private async void btnSave_Click(object sender, EventArgs e)
+        {
+            AsyncMessageHelper.AutoAppendLine = this.checkAutoLine.Checked;
+            AsyncMessageHelper.WithDatePrefix = this.checkAutoDate.Checked;
+            AsyncMessageHelper.SafeUpdateUi("CallTraceApi()");
+            var args = GetCallTraceApiArgs();
 
+            var saveClientSpans = Ctrl.CreateSaveClientSpans(args);
+            var clientSpanEntities = saveClientSpans.Select(SaveSpansCommand.CreateClientSpanEntity).ToList();
+            await Ctrl.Save(clientSpanEntities);
+        }
+
+        private async void btnDelete_Click(object sender, EventArgs e)
+        {
+            await Ctrl.Delete(null);
+        }
+
+        private async void btnLoad_Click(object sender, EventArgs e)
+        {
+            var clientSpanEntities = await Ctrl.Load(null);
+            this.txtMessage.Text = clientSpanEntities.ToJson(true);
+        }
+        private async void btnSend_Click(object sender, EventArgs e)
+        {
+            var queueInfo = await Ctrl.QueryQueue();
+            await Ctrl.ProcessQueue(queueInfo);
+        }
+        
+        private async void btnQuery_Click(object sender, EventArgs e)
+        {
+            var queueInfo = await Ctrl.QueryQueue();
+            this.txtMessage.Text = queueInfo.ToJson(true);
+        }
+        
         private CallTraceApiArgs GetCallTraceApiArgs()
         {
             var callTraceApiArgs = new CallTraceApiArgs();
@@ -83,26 +120,8 @@ namespace Demo.WinApp
             this.txtMessage.Clear();
         }
 
-        private async void btnQuery_Click(object sender, EventArgs e)
-        {
-            var queueInfo = await Ctrl.QueryQueue();
-            this.txtMessage.Text = queueInfo.ToJson(true);
-        }
-
-        private async void btnSave_Click(object sender, EventArgs e)
-        {
-            var queueInfo = await Ctrl.QueryQueue();
-            await Ctrl.SaveQueue(queueInfo);
-        }
-
-        private async void btnSend_Click(object sender, EventArgs e)
-        {
-            var queueInfo = await Ctrl.QueryQueue();
-            await Ctrl.Send(queueInfo);
-        }
-
         #region demo for async
-        
+
         private bool _processing = false;
         private int _messageIndex = 0;
 

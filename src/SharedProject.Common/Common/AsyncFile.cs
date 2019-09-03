@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +21,26 @@ namespace Common
 
         public bool AutoCreateDirectoryIfNotExist { get; set; }
 
+        public Task Delete(string filePath)
+        {
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                return Task.FromResult(0);
+            }
+            return Task.Run(() =>
+            {
+                lock (_fileLocks.TryGetLock(filePath))
+                {
+                    if (!File.Exists(filePath))
+                    {
+                        return Task.FromResult(0);
+                    }
+                    File.Delete(filePath);
+                    return Task.FromResult(0);
+                }
+            });
+        }
+
         public Task<string> ReadAllText(string filePath)
         {
             if (string.IsNullOrWhiteSpace(filePath))
@@ -35,6 +56,27 @@ namespace Common
                         return Task.FromResult((string)null);
                     }
                     return Task.FromResult(File.ReadAllText(filePath));
+                }
+            });
+        }
+
+        public Task<string[]> ReadAllLines(string filePath)
+        {
+            var lines = new List<string>().ToArray();
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                return Task.FromResult(lines);
+            }
+
+            return Task.Run(() =>
+            {
+                lock (_fileLocks.TryGetLock(filePath))
+                {
+                    if (!File.Exists(filePath))
+                    {
+                        return Task.FromResult(lines);
+                    }
+                    return Task.FromResult(File.ReadAllLines(filePath));
                 }
             });
         }

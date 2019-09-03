@@ -11,6 +11,7 @@ namespace Common
     {
         string SerializeObject(object value, bool indented);
         T DeserializeObject<T>(string json);
+        T DeserializeObject<T>(string json, T defaultValue);
         object DeserializeObject(string json, object defaultValue);
     }
 
@@ -34,6 +35,15 @@ namespace Common
             if (string.IsNullOrWhiteSpace(json))
             {
                 return default(T);
+            }
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        public T DeserializeObject<T>(string json, T defaultValue)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return defaultValue;
             }
             return JsonConvert.DeserializeObject<T>(json);
         }
@@ -134,7 +144,7 @@ namespace Common
         public static T FromJson<T>(this string content, T defaultValue)
         {
             var instance = SimpleJson.Resolve().DeserializeObject(content, defaultValue);
-            return (T)instance;
+            return instance;
         }
 
         public static T As<T>(this object instance, bool throwEx = true)

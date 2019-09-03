@@ -5,6 +5,11 @@ namespace SimpleTrace.TraceClients.Repos
 {
     public class NullClientSpanRepository : IClientSpanRepository
     {
+        public Task Clear(LoadArgs args)
+        {
+            return Task.FromResult(0);
+        }
+
         public Task Add(IList<ClientSpanEntity> spans)
         {
             return Task.FromResult(0);
