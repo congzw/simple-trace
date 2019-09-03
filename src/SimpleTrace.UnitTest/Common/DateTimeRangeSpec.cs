@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 // ReSharper disable CheckNamespace
 
@@ -32,7 +34,46 @@ namespace Common
         {
             TestOverlaps(OverlapsInclude.Both, _mockNow);
         }
-        
+
+        [TestMethod]
+        public void DateTimeRangeArchive_Create_ShouldOk()
+        {
+            var mockDate = new DateTime(2019, 5, 5, 1, 0, 0);
+            var mockDate2 = mockDate.AddMinutes(30);
+            var mockDate3 = mockDate.AddMinutes(60);
+            var archive = DateTimeRangeArchive.Create(mockDate);
+            archive.Log();
+            archive.ArchiveId.ShouldEqual("2019050501");
+
+            var archive2 = DateTimeRangeArchive.Create(mockDate2);
+            archive2.Log();
+            archive2.ArchiveId.ShouldEqual("2019050501");
+
+            var archive3 = DateTimeRangeArchive.Create(mockDate3);
+            archive3.Log();
+            archive3.ArchiveId.ShouldEqual("2019050502");
+
+        }
+
+        [TestMethod]
+        public void DateTimeRangeArchive_TryParse_ShouldOk()
+        {
+            var archiveIds = new List<string>();
+            for (int i = 1; i <= 9; i++)
+            {
+                archiveIds.Add("201905050" + i);
+            }
+            var archives = DateTimeRangeArchive.TryParse(archiveIds).ToList();
+            archives.Log();
+            archives.Count.ShouldEqual(9);
+
+            var mockDate = new DateTime(2019, 5, 5, 1, 0, 0);
+            var dateTimeRangeArchives = archives.FilterOverlaps(mockDate.AddHours(0), mockDate.AddHours(1)).ToList();
+            dateTimeRangeArchives.Log();
+            dateTimeRangeArchives.Count.ShouldEqual(1);
+            dateTimeRangeArchives.Single().ArchiveId.ShouldEqual("2019050501");
+        }
+
         private void TestOverlaps(OverlapsInclude overlapsInclude, DateTime now)
         {
             //current   =>          |****|

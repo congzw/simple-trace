@@ -108,12 +108,12 @@ namespace Common
         {
             if (value == null)
             {
-                Debug.WriteLine("null");
+                Trace.WriteLine("null");
             }
 
             if (value is string)
             {
-                Debug.WriteLine(value);
+                Trace.WriteLine(value);
                 return value;
             }
 
@@ -122,11 +122,11 @@ namespace Common
             {
                 foreach (var item in items)
                 {
-                    Debug.WriteLine(item);
+                    Trace.WriteLine(item);
                 }
                 return value;
             }
-            Debug.WriteLine(value);
+            Trace.WriteLine(value);
             return value;
         }
 

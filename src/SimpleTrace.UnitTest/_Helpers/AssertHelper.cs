@@ -43,15 +43,15 @@ namespace Common
         }
         public static void WriteLineOk(string message)
         {
-            Debug.WriteLine(PrefixOk(message));
+            WriteLine(PrefixOk(message));
         }
         public static void WriteLineKo(string message)
         {
-            Debug.WriteLine(PrefixKo(message));
+            WriteLine(PrefixKo(message));
         }
         public static void WriteLine(string message)
         {
-            Debug.WriteLine(message);
+            WriteLine(message, null);
         }
         public static void WriteLineForShouldBeTrue(bool result)
         {
@@ -99,6 +99,18 @@ namespace Common
             else
             {
                 WriteLineKo(message + ": null");
+            }
+        }
+
+        public static void WriteLine(string message, string prefix)
+        {
+            if (string.IsNullOrWhiteSpace(prefix))
+            {
+                Trace.WriteLine(message);
+            }
+            else
+            {
+                Trace.WriteLine(prefix + message);
             }
         }
     }

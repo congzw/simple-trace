@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Common
 {
@@ -24,6 +25,16 @@ namespace Common
         {
             var hourDate = dateTime.Date;
             return hourDate;
+        }
+
+        public static DateTime? TryParseDate(this string date, string dateFormat)
+        {
+            var tryParse = DateTime.TryParseExact(date, dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result);
+            if (tryParse)
+            {
+                return result;
+            }
+            return null;
         }
     }
 }
