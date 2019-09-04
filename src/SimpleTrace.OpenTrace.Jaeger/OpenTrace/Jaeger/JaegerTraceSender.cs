@@ -62,8 +62,8 @@ namespace SimpleTrace.OpenTrace.Jaeger
                 foreach (var logGroup in logGroups)
                 {
                     var createAt = logGroup.Key;
-                    var keyValueInfos = logGroup.Select(x => new KeyValuePair<string, object>(x.Key, x.Value)).ToList();
-                    scope.Span.Log(createAt, keyValueInfos);
+                    var logInfos = logGroup.Select(x => new KeyValuePair<string, object>(x.Key, x.Value.Value)).ToList();
+                    scope.Span.Log(createAt, logInfos);
                 }
 
 

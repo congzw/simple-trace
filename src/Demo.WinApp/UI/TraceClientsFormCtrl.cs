@@ -116,6 +116,11 @@ namespace Demo.WinApp.UI
         private void MockDuration(IClientSpan saveClientSpan, DateTime now, int delayStartMs, int durationMs)
         {
             saveClientSpan.StartUtc = now.AddMilliseconds(delayStartMs);
+
+            foreach (var logItem in saveClientSpan.Logs)
+            {
+                logItem.Value.CreateAt = now.AddMilliseconds(delayStartMs);
+            }
             saveClientSpan.FinishUtc = saveClientSpan.StartUtc.AddMilliseconds(durationMs);
         }
     }
