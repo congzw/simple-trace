@@ -16,26 +16,22 @@ namespace SimpleTrace.TraceClients.Repos
             _asyncFile = asyncFile;
         }
         
-        public Task Clear(LoadArgs args)
-        {
-            var archives = GetArchives(args);
-            
-            var tasks = new List<Task>();
-            foreach (var archive in archives)
-            {
-                var filePath = CreateFilePath(archive.ArchiveId);
-                tasks.Add(_asyncFile.Delete(filePath));
-            }
-            return Task.WhenAll(tasks);
-        }
-
         public Task Add(IList<IClientSpan> spans)
         {
             if (spans == null || spans.Count == 0)
             {
                 return 0.AsTask();
             }
-            var jsonLine = spans.ToJson(false);
+
+            var entities = new List<ClientSpanEntity>();
+            foreach (var span in spans)
+            {
+                var spanEntity = new ClientSpanEntity();
+                MyModelHelper.SetProperties(spanEntity, span);
+                entities.Add(spanEntity);
+            }
+            
+            var jsonLine = entities.ToJson(false);
 
             var now = spans.Min(x => x.StartUtc);
             var archive = DateTimeRangeArchive.Create(now);
@@ -56,7 +52,7 @@ namespace SimpleTrace.TraceClients.Repos
                 {
                     foreach (var jsonLine in jsonLines)
                     {
-                        var result = jsonLine.FromJson<IList<ClientSpan>>(null);
+                        var result = jsonLine.FromJson<IList<ClientSpanEntity>>(null);
                         if (result != null)
                         {
                             results.AddRange(result);
@@ -65,6 +61,19 @@ namespace SimpleTrace.TraceClients.Repos
                 }
             }
             return results;
+        }
+
+        public Task Clear(LoadArgs args)
+        {
+            var archives = GetArchives(args);
+            
+            var tasks = new List<Task>();
+            foreach (var archive in archives)
+            {
+                var filePath = CreateFilePath(archive.ArchiveId);
+                tasks.Add(_asyncFile.Delete(filePath));
+            }
+            return Task.WhenAll(tasks);
         }
 
         private IList<DateTimeRangeArchive> GetArchives(LoadArgs args)

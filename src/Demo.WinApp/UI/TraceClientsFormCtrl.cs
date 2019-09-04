@@ -17,7 +17,9 @@ namespace Demo.WinApp.UI
         public Task<QueueInfo> QueryQueue()
         {
             var apiProxy = ApiProxyContext.Current;
-            return apiProxy.GetQueueInfo(new GetQueueInfoArgs());
+            var getQueueInfoArgs = new GetQueueInfoArgs();
+            getQueueInfoArgs.SetIncludes(GetQueueInfoArgs.Commands, GetQueueInfoArgs.CommandSums);
+            return apiProxy.GetQueueInfo(getQueueInfoArgs);
         }
         
         public IList<ClientSpan> CreateSaveClientSpans(CallTraceApiArgs args)

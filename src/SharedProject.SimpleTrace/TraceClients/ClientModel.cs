@@ -173,12 +173,31 @@ namespace SimpleTrace.TraceClients
 
     public class GetQueueInfoArgs
     {
-        public bool? WithCommands { get; set; }
-        public bool? WithCommandSums { get; set; }
-        
-        public bool IsTrue(bool? value)
+        public static string CommandSums = "CommandSums";
+        public static string Commands = "Commands";
+
+        private readonly IncludeProperties _includeProperties = IncludeProperties.Create();
+
+        public string Includes { get; set; }
+
+        public bool Include(string name)
         {
-            return value != null && value.Value;
+            _includeProperties.Properties = Includes;
+            return _includeProperties.HasProperty(name);
+        }
+
+        public GetQueueInfoArgs SetInclude(string name)
+        {
+            _includeProperties.SetProperty(name, true);
+            Includes = _includeProperties.Properties;
+            return this;
+        }
+        
+        public GetQueueInfoArgs SetIncludes(params string[] names)
+        {
+            _includeProperties.SetProperties( true, names);
+            Includes = _includeProperties.Properties;
+            return this;
         }
     }
 }

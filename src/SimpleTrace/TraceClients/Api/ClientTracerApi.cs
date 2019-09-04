@@ -60,13 +60,13 @@ namespace SimpleTrace.TraceClients.Api
             var commands = _commandQueue.Items.ToList();
             queueInfo.TotalCount = commands.Count;
 
-            if (args.IsTrue(args.WithCommands))
+            if (args.Include(GetQueueInfoArgs.Commands))
             {
                 //(IList<object>)xxx => InvalidCastException: 'IList<ICommand>' to type 'IList<Object>'.
                 queueInfo.Commands = commands.Cast<object>().ToList();
             }
 
-            if (args.IsTrue(args.WithCommandSums))
+            if (args.Include(GetQueueInfoArgs.CommandSums))
             {
                 var commandSums = commands.GroupBy(x => x.CommandType).Select(g =>
                 {

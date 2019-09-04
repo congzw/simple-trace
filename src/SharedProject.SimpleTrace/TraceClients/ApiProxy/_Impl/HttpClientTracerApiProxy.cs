@@ -61,6 +61,11 @@ namespace SimpleTrace.TraceClients.ApiProxy
         public Task<QueueInfo> GetQueueInfo(GetQueueInfoArgs args)
         {
             var requestUri = _config.GetRequestUri(nameof(GetQueueInfo));
+
+            if (!string.IsNullOrWhiteSpace(args.Includes))
+            {
+                requestUri = requestUri + "?Includes=" + args.Includes;
+            }
             return _webApiHelper.GetAsJson<QueueInfo>(requestUri, null);
         }
     }
