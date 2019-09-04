@@ -51,7 +51,6 @@
     <Compile Include="Common\AsyncUiHelperForMessageEventBus.cs" />
     <Compile Include="Common\SimpleEventBus.cs" />
     <Compile Include="Common\SimpleEventBusExtensions.cs" />
-    <Compile Include="SimpleLogSingleton.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TempForm.cs">
@@ -67,6 +66,7 @@
       <DependentUpon>TraceClientsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AppInit.cs" />
+    <Compile Include="UI\SimpleLoopTaskCtrl.cs" />
     <Compile Include="UI\TempFormCtrl.cs" />
     <Compile Include="UI\TraceClientsFormCtrl.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

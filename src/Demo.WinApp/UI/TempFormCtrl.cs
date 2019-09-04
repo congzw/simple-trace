@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Common;
 
 namespace Demo.WinApp.UI
@@ -32,7 +33,7 @@ namespace Demo.WinApp.UI
 
             Log.LogInfo(mySpan.ToJson(false));
         }
-        
+
         public ISimpleLog Log { get; set; }
     }
 

@@ -254,8 +254,16 @@ namespace Common
         }
     }
 
+    public class SimpleLogSingleton<T>
+    {
+        private ISimpleLog _simpleLog;
+        public ISimpleLog Logger => _simpleLog ?? (_simpleLog = SimpleLogFactory.Resolve().GetOrCreateLogFor<T>());
+
+        public static SimpleLogSingleton<T> Instance = new SimpleLogSingleton<T>();
+    }
+
     #endregion
-    
+
     #region for simple extensions used
 
     public class LogMessageActions : Dictionary<string, LogMessageAction>

@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\SimpleIoc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SimpleJson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SimpleLog.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\SimpleLoopTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TaskEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\WebApiHelper.cs" />
   </ItemGroup>

@@ -33,8 +33,12 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnLoopTaskStart = new System.Windows.Forms.Button();
+            this.btnLoopTaskStop = new System.Windows.Forms.Button();
+            this.cbxLoopSpanSeconds = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
@@ -88,12 +92,48 @@
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.cbxLoopSpanSeconds);
+            this.splitContainer1.Panel1.Controls.Add(this.btnLoopTaskStop);
+            this.splitContainer1.Panel1.Controls.Add(this.btnLoopTaskStart);
+            // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtMessage);
             this.splitContainer1.Size = new System.Drawing.Size(800, 407);
             this.splitContainer1.SplitterDistance = 161;
             this.splitContainer1.TabIndex = 39;
+            // 
+            // btnLoopTaskStart
+            // 
+            this.btnLoopTaskStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoopTaskStart.Location = new System.Drawing.Point(692, 40);
+            this.btnLoopTaskStart.Name = "btnLoopTaskStart";
+            this.btnLoopTaskStart.Size = new System.Drawing.Size(96, 23);
+            this.btnLoopTaskStart.TabIndex = 37;
+            this.btnLoopTaskStart.Text = "LoopTaskStart";
+            this.btnLoopTaskStart.UseVisualStyleBackColor = true;
+            this.btnLoopTaskStart.Click += new System.EventHandler(this.btnLoopTaskStart_Click);
+            // 
+            // btnLoopTaskStop
+            // 
+            this.btnLoopTaskStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoopTaskStop.Location = new System.Drawing.Point(692, 69);
+            this.btnLoopTaskStop.Name = "btnLoopTaskStop";
+            this.btnLoopTaskStop.Size = new System.Drawing.Size(96, 23);
+            this.btnLoopTaskStop.TabIndex = 38;
+            this.btnLoopTaskStop.Text = "LoopTaskStop";
+            this.btnLoopTaskStop.UseVisualStyleBackColor = true;
+            this.btnLoopTaskStop.Click += new System.EventHandler(this.btnLoopTaskStop_Click);
+            // 
+            // cbxLoopSpanSeconds
+            // 
+            this.cbxLoopSpanSeconds.FormattingEnabled = true;
+            this.cbxLoopSpanSeconds.Location = new System.Drawing.Point(692, 12);
+            this.cbxLoopSpanSeconds.Name = "cbxLoopSpanSeconds";
+            this.cbxLoopSpanSeconds.Size = new System.Drawing.Size(96, 20);
+            this.cbxLoopSpanSeconds.TabIndex = 39;
             // 
             // TempForm
             // 
@@ -105,6 +145,7 @@
             this.Name = "TempForm";
             this.Text = "TempForm";
             this.groupBox1.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -120,5 +161,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Button btnLoopTaskStart;
+        private System.Windows.Forms.Button btnLoopTaskStop;
+        private System.Windows.Forms.ComboBox cbxLoopSpanSeconds;
     }
 }
