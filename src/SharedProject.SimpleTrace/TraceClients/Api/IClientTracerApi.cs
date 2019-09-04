@@ -12,6 +12,7 @@ namespace SimpleTrace.TraceClients.Api
         //save multi spans with only one call
         Task SaveSpans(SaveSpansArgs args);
 
+        //for peek current queue infos
         Task<QueueInfo> GetQueueInfo(GetQueueInfoArgs args);
     }
 }

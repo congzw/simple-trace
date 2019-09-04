@@ -11,11 +11,10 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\ApiProxyConfig.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\ApiProxyContext.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\CheckApiStatusSmart.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\ClientTracerApiProxySmartWrapper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\HttpClientTracerApiProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\_Impl\HttpClientTracerApiProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\IClientTracerApiProxy.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\NullClientTracerApiProxy.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\_Impl\NullClientTracerApiProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\Api\IClientTracerApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\Api\ITestApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientModel.cs" />
@@ -24,5 +23,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\ClientSpans.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\DictionaryHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\TraceResult.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\_Impl\" />
   </ItemGroup>
 </Project>
