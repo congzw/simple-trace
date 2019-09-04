@@ -8,19 +8,23 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
 {
     public class CommandQueueTask
     {
-        private readonly DelayedGroupCacheCommand _delayedGroupCacheCommand;
-        private readonly KnownCommands _knownCommands;
-
-        public CommandQueueTask(DelayedGroupCacheCommand delayedGroupCacheCommand, KnownCommands knownCommands)
+        public CommandQueueTask()
         {
-            _delayedGroupCacheCommand = delayedGroupCacheCommand;
-            _knownCommands = knownCommands;
+            DelayedGroupCache = new DelayedGroupCacheCommand();
         }
 
-        public IList<IClientSpan> GetEntities(IList<Command> allCommands, DateTime now)
+        public DelayedGroupCacheCommand DelayedGroupCache { get; set; }
+
+        #region for process step by step
+
+        public Task<IList<Command>> DequeueCommands(CommandQueue commandQueue)
+        {
+            return commandQueue.TryDequeueAll();
+        }
+
+        public IList<IClientSpan> GetEntities(IList<ICommandLogistic> commandLogistics, IList<Command> allCommands, DateTime now)
         {
             var spanCache = new Dictionary<string, IClientSpan>();
-            var commandLogistics = _knownCommands.CommandLogistics;
             var logistics = commandLogistics.OrderBy(x => x.ProcessSort).ToList();
 
             //process no delay
@@ -39,10 +43,10 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             foreach (var delayLogistic in delayLogistics)
             {
                 var delayCommands = allCommands.Where(x => delayLogistic.IsForCommand(x)).ToList();
-                _delayedGroupCacheCommand.AppendToGroups(delayCommands);
+                DelayedGroupCache.AppendToGroups(delayCommands);
             }
 
-            var expiredGroups = _delayedGroupCacheCommand.PopExpiredGroups(now).OrderBy(x => x.LastItemDate).ToList();
+            var expiredGroups = DelayedGroupCache.PopExpiredGroups(now).OrderBy(x => x.LastItemDate).ToList();
             if (expiredGroups.Count > 0)
             {
                 foreach (var expiredGroup in expiredGroups)
@@ -61,18 +65,26 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             return clientSpanEntities;
         }
 
-        public async Task Process(IList<IClientSpanProcess> processes, CommandQueue commandQueue, DateTime now)
+        public Task ProcessEntities(IList<IClientSpanProcess> processes, IList<IClientSpan> clientSpans)
+        {
+            var orderedProcesses = processes.OrderBy(x => x.SortNum).ToList();
+            return Task.WhenAll(orderedProcesses.Select(x => x.Process(clientSpans)));
+        }
+
+        #endregion
+
+        public async Task ProcessQueue(CommandQueue commandQueue, IList<ICommandLogistic> commandLogistics, IList<IClientSpanProcess> processes, DateTime now)
         {
             //process steps:
             //dequeue all commands to groupCache
             //get expired entities from commands
-            //run process: save client spans
-            //run process: send client spans
-            //run process: ...
-
-            var currentCommands = await commandQueue.TryDequeueAll().ConfigureAwait(false);
-            var spanEntities = GetEntities(currentCommands, now);
-
+            //run processes:
+            //  process => save client spans
+            //  process => send client spans
+            //  process => ...
+            
+            var currentCommands = await DequeueCommands(commandQueue).ConfigureAwait(false);
+            var spanEntities = GetEntities(commandLogistics, currentCommands, now);
             var orderedProcesses = processes.OrderBy(x => x.SortNum).ToList();
             await Task.WhenAll(orderedProcesses.Select(x => x.Process(spanEntities)));
         }

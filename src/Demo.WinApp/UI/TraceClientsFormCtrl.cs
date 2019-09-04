@@ -61,11 +61,29 @@ namespace Demo.WinApp.UI
             return apiProxy.GetQueueInfo(getQueueInfoArgs);
         }
 
-        public Task ProcessQueue(QueueInfo queueInfo)
+        public Task ProcessQueueInfo(QueueInfo queueInfo)
         {
             var clientSpanEntities = GetClientSpanEntities(queueInfo);
             var jaegerTraceSender = new JaegerTraceSender();
             return jaegerTraceSender.Send(clientSpanEntities);
+        }
+
+        public async Task ProcessQueue(QueueInfo queueInfo)
+        {
+            var simpleIoc = SimpleIoc.Instance;
+            var commandQueueTask = simpleIoc.Resolve<CommandQueueTask>();
+            var knownCommands = simpleIoc.Resolve<KnownCommands>();
+            var commandQueue = simpleIoc.Resolve<CommandQueue>();
+            var clientSpanProcesses = simpleIoc.Resolve<IList<IClientSpanProcess>>();
+
+            //var dequeueCommands = await commandQueueTask.DequeueCommands(commandQueue);
+            //var clientSpanEntities = commandQueueTask.GetEntities(knownCommands.CommandLogistics, dequeueCommands, DateHelper.Instance.GetDateNow().AddSeconds(-100));
+            //await commandQueueTask.ProcessEntities(clientSpanProcesses, clientSpanEntities);
+
+            await commandQueueTask.ProcessQueue(commandQueue, 
+                knownCommands.CommandLogistics, 
+                clientSpanProcesses, 
+                DateHelper.Instance.GetDateNow().AddSeconds(-100));
         }
 
         public Task Save(IList<ClientSpan> clientSpanEntities)
@@ -89,10 +107,11 @@ namespace Demo.WinApp.UI
         
         private IList<IClientSpan> GetClientSpanEntities(QueueInfo queueInfo)
         {
-            var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand(), KnownCommands.Instance);
+            var simpleIoc = SimpleIoc.Instance;
+            var commandQueueTask = simpleIoc.Resolve<CommandQueueTask>();
+            var knownCommands = simpleIoc.Resolve<KnownCommands>();
             var commands = queueInfo.Commands.FromJTokenOrObject<Command>().ToList();
-
-            var clientSpanEntities = commandQueueTask.GetEntities(commands, DateHelper.Instance.GetDateNow().AddSeconds(-100));
+            var clientSpanEntities = commandQueueTask.GetEntities(knownCommands.CommandLogistics, commands, DateHelper.Instance.GetDateNow().AddSeconds(-100));
             return clientSpanEntities;
         }
 

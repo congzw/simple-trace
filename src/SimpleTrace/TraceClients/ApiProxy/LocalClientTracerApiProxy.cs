@@ -59,12 +59,9 @@ namespace SimpleTrace.TraceClients.ApiProxy
 
     public class LocalClientTracerApiProxyConfig
     {
-        public static void Setup()
+        public static void Setup(ClientTracerApi clientTracerApi)
         {
-            //services.AddSingleton<IClientTracerApi, ClientTracerApi>();
-            //services.AddSingleton<CommandQueue>();
-
-            var clientTracerApiProxy = new LocalClientTracerApiProxy(new ClientTracerApi(new CommandQueue()));
+            var clientTracerApiProxy = new LocalClientTracerApiProxy(clientTracerApi);
             ApiProxyInit.Reset(clientTracerApiProxy, null, null);
             //todo CommandQueueTask Config
         }

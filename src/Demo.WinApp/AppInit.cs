@@ -1,8 +1,14 @@
-﻿using Common;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Common;
 using SimpleTrace.OpenTrace;
 using SimpleTrace.OpenTrace.Jaeger;
+using SimpleTrace.TraceClients.Api;
 using SimpleTrace.TraceClients.ApiProxy;
 using SimpleTrace.TraceClients.Commands;
+using SimpleTrace.TraceClients.Repos;
+using SimpleTrace.TraceClients.ScheduleTasks;
+using SimpleTrace.TraceClients.Sends;
 
 namespace Demo.WinApp
 {
@@ -38,11 +44,31 @@ namespace Demo.WinApp
 
             //var httpClientTracerApiProxy = new HttpClientTracerApiProxy(webApiHelper, apiProxyConfig);
             //ApiProxyInit.Reset(httpClientTracerApiProxy, null, null);
-            //without api
-            LocalClientTracerApiProxyConfig.Setup();
+
+            var simpleIoc = SimpleIoc.Instance;
 
             var knownCommands = KnownCommands.Instance;
             knownCommands.Setup();
+            simpleIoc.Register(() => knownCommands);
+
+            var commandQueue = new CommandQueue();
+            simpleIoc.Register(() => commandQueue);
+
+            var commandQueueTask = new CommandQueueTask();
+            simpleIoc.Register(() => commandQueueTask);
+
+            var clientTracerApi = new ClientTracerApi(commandQueue);
+            simpleIoc.Register(() => clientTracerApi);
+            simpleIoc.Register(() =>
+            {
+                var clientSpanProcesses = new List<IClientSpanProcess>();
+                clientSpanProcesses.Add(new TraceSendProcess(new JaegerTraceSender()));
+                clientSpanProcesses.Add(new TraceSaveProcess(new ClientSpanRepository(AsyncFile.Instance)));
+                return clientSpanProcesses;
+            });
+
+            //without api
+            LocalClientTracerApiProxyConfig.Setup(clientTracerApi);
         }
 
         private static ISimpleLogFactory SetupAsyncLog()
