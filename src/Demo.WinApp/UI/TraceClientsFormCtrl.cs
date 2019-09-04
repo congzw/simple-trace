@@ -85,22 +85,11 @@ namespace Demo.WinApp.UI
             return jaegerTraceSender.Send(clientSpanEntities);
         }
 
-        //public Task SaveQueue(QueueInfo queueInfo)
-        //{
-        //    var clientSpanEntities = GetClientSpanEntities(queueInfo);
-        //    var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
-        //    return clientSpanRepository.SaveOrUpdate(clientSpanEntities);
-        //}
-
 
         private IList<IClientSpan> GetClientSpanEntities(QueueInfo queueInfo)
         {
             var knownCommands = KnownCommands.Instance;
-            knownCommands.Register(new SaveSpansCommand());
-            knownCommands.Register(new StartSpanCommand());
-            knownCommands.Register(new LogCommand());
-            knownCommands.Register(new SetTagCommand());
-            knownCommands.Register(new FinishSpanCommand());
+            knownCommands.Setup();
 
             var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand(), knownCommands);
             var commands = queueInfo.Commands.As<Command>().ToList();
@@ -127,7 +116,6 @@ namespace Demo.WinApp.UI
             saveClientSpan.StartUtc = now.AddMilliseconds(delayStartMs);
             saveClientSpan.FinishUtc = saveClientSpan.StartUtc.AddMilliseconds(durationMs);
         }
-
     }
 
     public class CallTraceApiArgs
