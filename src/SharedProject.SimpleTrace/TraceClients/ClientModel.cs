@@ -98,9 +98,9 @@ namespace SimpleTrace.TraceClients
         }
         public IList<ClientSpan> Items { get; set; }
 
-        public static SaveSpansArgs Create(params ClientSpan[] saveClientSpans)
+        public static SaveSpansArgs Create(params ClientSpan[] clientSpans)
         {
-            var saveSpansArgs = new SaveSpansArgs { Items = saveClientSpans.ToList() };
+            var saveSpansArgs = new SaveSpansArgs { Items = clientSpans.ToList() };
             return saveSpansArgs;
         }
     }

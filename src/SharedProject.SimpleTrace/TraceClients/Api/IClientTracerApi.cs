@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace SimpleTrace.TraceClients.Api
 {
@@ -10,11 +9,7 @@ namespace SimpleTrace.TraceClients.Api
         Task SetTags(SetTagArgs args);
         Task FinishSpan(FinishSpanArgs args);
 
-        /// <summary>
-        /// save multi spans with only one call
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
+        //save multi spans with only one call
         Task SaveSpans(SaveSpansArgs args);
 
         Task<QueueInfo> GetQueueInfo(GetQueueInfoArgs args);
