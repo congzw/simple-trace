@@ -12,7 +12,7 @@ namespace SimpleTrace.TraceClients.Commands
         bool NeedDelay { get; }
         float ProcessSort { get; }
         bool IsForCommand(Command command);
-        bool CreateOrUpdate(Command command, IDictionary<string, ClientSpanEntity> clientSpanCache);
+        bool CreateOrUpdate(Command command, IDictionary<string, IClientSpan> clientSpanCache);
     }
 
     public abstract class BaseCommandLogistic<T>: ICommandLogistic where T : ICommandLogistic
@@ -32,7 +32,7 @@ namespace SimpleTrace.TraceClients.Commands
             return CommandType.Name == command.CommandType;
         }
         public bool NeedDelay { get; }
-        public abstract bool CreateOrUpdate(Command command, IDictionary<string, ClientSpanEntity> clientSpanCache);
+        public abstract bool CreateOrUpdate(Command command, IDictionary<string, IClientSpan> clientSpanCache);
 
         public static Command Create(object args)
         {

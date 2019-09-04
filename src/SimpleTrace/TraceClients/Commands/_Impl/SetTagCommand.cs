@@ -11,7 +11,7 @@ namespace SimpleTrace.TraceClients.Commands
         public SetTagCommand() : base(true, 3)
         {
         }
-        public override bool CreateOrUpdate(Command command, IDictionary<string, ClientSpanEntity> clientSpanCache)
+        public override bool CreateOrUpdate(Command command, IDictionary<string, IClientSpan> clientSpanCache)
         {
             var setTagArgs = command.Args.As<SetTagArgs>();
             var currentKey = setTagArgs.ToLocateCurrentKey();

@@ -79,8 +79,7 @@ namespace Demo.WinApp
             var args = GetCallTraceApiArgs();
 
             var saveClientSpans = Ctrl.CreateSaveClientSpans(args);
-            var clientSpanEntities = saveClientSpans.Select(SaveSpansCommand.CreateClientSpanEntity).ToList();
-            await Ctrl.Save(clientSpanEntities);
+            await Ctrl.Save(saveClientSpans);
         }
 
         private async void btnDelete_Click(object sender, EventArgs e)

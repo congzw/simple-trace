@@ -30,11 +30,11 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedProject.Common", "Sha
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedProject.SimpleTrace", "SharedProject.SimpleTrace\SharedProject.SimpleTrace.shproj", "{F9CAAAAE-547F-4595-9866-D511E6B62385}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTrace.OpenTrace.Jaeger", "SimpleTrace.OpenTrace.Jaeger\SimpleTrace.OpenTrace.Jaeger.csproj", "{2621D708-67E7-46C0-8C3C-E00143238265}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTrace.OpenTrace.Jaeger", "SimpleTrace.OpenTrace.Jaeger\SimpleTrace.OpenTrace.Jaeger.csproj", "{2621D708-67E7-46C0-8C3C-E00143238265}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{8EAF578E-B5E3-4520-89F7-EACD861BDC99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{A0483866-91DE-402C-9583-566A7F87CF42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{A0483866-91DE-402C-9583-566A7F87CF42}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

@@ -5,6 +5,6 @@ namespace SimpleTrace.TraceClients.Sends
 {
     public interface ITraceSender
     {
-        Task Send(IList<ClientSpanEntity> entities);
+        Task Send(IList<IClientSpan> entities);
     }
 }

@@ -16,7 +16,7 @@ namespace SimpleTrace.TraceClients.Sends
 
         public float SortNum { get; set; }
 
-        public Task Process(IList<ClientSpanEntity> entities)
+        public Task Process(IList<IClientSpan> entities)
         {
             return _traceSender.Send(entities);
         }

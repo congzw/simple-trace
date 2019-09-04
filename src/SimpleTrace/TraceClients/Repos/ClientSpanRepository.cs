@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +29,7 @@ namespace SimpleTrace.TraceClients.Repos
             return Task.WhenAll(tasks);
         }
 
-        public Task Add(IList<ClientSpanEntity> spans)
+        public Task Add(IList<IClientSpan> spans)
         {
             if (spans == null || spans.Count == 0)
             {
@@ -44,11 +43,11 @@ namespace SimpleTrace.TraceClients.Repos
             return _asyncFile.AppendAllText(filePath, jsonLine, true);
         }
 
-        public async Task<IList<ClientSpanEntity>> Read(LoadArgs args)
+        public async Task<IList<IClientSpan>> Read(LoadArgs args)
         {
             var archives = GetArchives(args);
 
-            var results = new List<ClientSpanEntity>();
+            var results = new List<IClientSpan>();
             foreach (var archive in archives)
             {
                 var filePath = CreateFilePath(archive.ArchiveId);
@@ -57,7 +56,7 @@ namespace SimpleTrace.TraceClients.Repos
                 {
                     foreach (var jsonLine in jsonLines)
                     {
-                        var result = jsonLine.FromJson<IList<ClientSpanEntity>>(null);
+                        var result = jsonLine.FromJson<IList<ClientSpan>>(null);
                         if (result != null)
                         {
                             results.AddRange(result);

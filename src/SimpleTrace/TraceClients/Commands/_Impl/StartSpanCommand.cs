@@ -11,16 +11,17 @@ namespace SimpleTrace.TraceClients.Commands
         {
         }
 
-        public override bool CreateOrUpdate(Command command, IDictionary<string, ClientSpanEntity> clientSpanCache)
+        public override bool CreateOrUpdate(Command command, IDictionary<string, IClientSpan> clientSpanCache)
         {
             var clientSpan = command.Args.As<ClientSpan>();
             var currentKey = clientSpan.ToLocateCurrentKey();
 
-            var clientSpanEntity = new ClientSpanEntity();
-            MyModelHelper.SetProperties(clientSpanEntity, clientSpan);
-            clientSpanEntity.StartUtc = command.CreateUtc;
+            //var clientSpanEntity = new ClientSpanEntity();
+            //MyModelHelper.SetProperties(clientSpanEntity, clientSpan);
+            //clientSpanEntity.StartUtc = command.CreateUtc;
 
-            clientSpanCache[currentKey] = clientSpanEntity;
+            clientSpan.StartUtc = command.CreateUtc;
+            clientSpanCache[currentKey] = clientSpan;
             return true;
         }
     }

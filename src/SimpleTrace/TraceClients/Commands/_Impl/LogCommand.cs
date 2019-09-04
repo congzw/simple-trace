@@ -10,7 +10,7 @@ namespace SimpleTrace.TraceClients.Commands
         public LogCommand() : base(true, 2)
         {
         }
-        public override bool CreateOrUpdate(Command command, IDictionary<string, ClientSpanEntity> clientSpanCache)
+        public override bool CreateOrUpdate(Command command, IDictionary<string, IClientSpan> clientSpanCache)
         {
             var logArgs = command.Args.As<LogArgs>();
             var currentKey = logArgs.ToLocateCurrentKey();

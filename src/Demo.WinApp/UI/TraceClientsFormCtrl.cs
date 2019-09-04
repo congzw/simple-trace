@@ -20,9 +20,9 @@ namespace Demo.WinApp.UI
             return apiProxy.GetQueueInfo(new GetQueueInfoArgs());
         }
         
-        public IList<SaveClientSpan> CreateSaveClientSpans(CallTraceApiArgs args)
+        public IList<ClientSpan> CreateSaveClientSpans(CallTraceApiArgs args)
         {
-            var saveSpans = new List<SaveClientSpan>();
+            var saveSpans = new List<ClientSpan>();
 
             var dateHelper = DateHelper.Instance;
 
@@ -60,10 +60,11 @@ namespace Demo.WinApp.UI
             await apiProxy.SaveSpans(saveSpansArgs);
         }
 
-        public Task Save(IList<ClientSpanEntity> clientSpanEntities)
+        public Task Save(IList<ClientSpan> clientSpanEntities)
         {
             var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
-            return clientSpanRepository.Add(clientSpanEntities);
+            var clientSpans = clientSpanEntities.Cast<IClientSpan>().ToList();
+            return clientSpanRepository.Add(clientSpans);
         }
 
         public Task Delete(LoadArgs args)
@@ -71,7 +72,7 @@ namespace Demo.WinApp.UI
             var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
             return clientSpanRepository.Clear(args);
         }
-        public Task<IList<ClientSpanEntity>> Load(LoadArgs args)
+        public Task<IList<IClientSpan>> Load(LoadArgs args)
         {
             var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
             return clientSpanRepository.Read(args);
@@ -92,7 +93,7 @@ namespace Demo.WinApp.UI
         //}
 
 
-        private IList<ClientSpanEntity> GetClientSpanEntities(QueueInfo queueInfo)
+        private IList<IClientSpan> GetClientSpanEntities(QueueInfo queueInfo)
         {
             var knownCommands = KnownCommands.Instance;
             knownCommands.Register(new SaveSpansCommand());
@@ -108,20 +109,20 @@ namespace Demo.WinApp.UI
             return clientSpanEntities;
         }
 
-        private SaveClientSpan CreateSaveClientSpans(string tracerId, string traceId, string parentSpanId, string spanId, string opName, bool withLogs = false)
+        private ClientSpan CreateSaveClientSpans(string tracerId, string traceId, string parentSpanId, string spanId, string opName, bool withLogs = false)
         {
             var clientSpan = ClientSpan.Create(tracerId, traceId, parentSpanId, spanId, opName);
-            var saveClientSpan = new SaveClientSpan();
+            var saveClientSpan = new ClientSpan();
             MyModelHelper.SetProperties(saveClientSpan, clientSpan);
             if (withLogs)
             {
-                saveClientSpan.Logs.Add("foo-log-key", "foo-log-value");
+                saveClientSpan.Logs.Add("foo-log-key", LogItem.Create("foo-log-key", "foo-log-value", null));
                 saveClientSpan.Tags.Add("foo-tag-key", "foo-tag-value");
             }
             return saveClientSpan;
         }
 
-        private void MockDuration(SaveClientSpan saveClientSpan, DateTime now, int delayStartMs, int durationMs)
+        private void MockDuration(IClientSpan saveClientSpan, DateTime now, int delayStartMs, int durationMs)
         {
             saveClientSpan.StartUtc = now.AddMilliseconds(delayStartMs);
             saveClientSpan.FinishUtc = saveClientSpan.StartUtc.AddMilliseconds(durationMs);

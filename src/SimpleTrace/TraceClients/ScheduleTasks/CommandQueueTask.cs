@@ -17,9 +17,9 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             _knownCommands = knownCommands;
         }
 
-        public IList<ClientSpanEntity> GetEntities(IList<Command> allCommands, DateTime now)
+        public IList<IClientSpan> GetEntities(IList<Command> allCommands, DateTime now)
         {
-            var spanCache = new Dictionary<string, ClientSpanEntity>();
+            var spanCache = new Dictionary<string, IClientSpan>();
             var commandLogistics = _knownCommands.CommandLogistics;
             var logistics = commandLogistics.OrderBy(x => x.ProcessSort).ToList();
 

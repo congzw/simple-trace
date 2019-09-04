@@ -10,7 +10,7 @@ namespace SimpleTrace.OpenTrace.Jaeger
 {
     public class JaegerTraceSender : ITraceSender
     {
-        public Task Send(IList<ClientSpanEntity> entities)
+        public Task Send(IList<IClientSpan> entities)
         {
             //1 group and convert trace span trees
             //2 send spans by relations
@@ -38,7 +38,7 @@ namespace SimpleTrace.OpenTrace.Jaeger
             return Task.FromResult(0);
         }
 
-        private void SendSpanTree(TracerContext tracerContext, MyTree<ClientSpanEntity> spanTree)
+        private void SendSpanTree(TracerContext tracerContext, MyTree<IClientSpan> spanTree)
         {
             var clientSpan = spanTree.Value;
             var tracer = tracerContext.Current(clientSpan.TracerId);
@@ -62,7 +62,7 @@ namespace SimpleTrace.OpenTrace.Jaeger
                 foreach (var logGroup in logGroups)
                 {
                     var createAt = logGroup.Key;
-                    var keyValueInfos = logGroup.Select(x => x.Value.KeyValuePair).ToList();
+                    var keyValueInfos = logGroup.Select(x => new KeyValuePair<string, object>(x.Key, x.Value)).ToList();
                     scope.Span.Log(createAt, keyValueInfos);
                 }
 
@@ -95,7 +95,12 @@ namespace SimpleTrace.OpenTrace.Jaeger
                 {
                     SendSpanTree(tracerContext, childTree);
                 }
-                scope.Span.Finish(clientSpan.FinishUtc);
+
+                if (clientSpan.FinishUtc != null)
+                {
+                    //throw ex?
+                    scope.Span.Finish(clientSpan.FinishUtc.Value);
+                }
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using SimpleTrace.TraceClients.Commands;
 
@@ -61,21 +60,24 @@ namespace SimpleTrace.TraceClients.Api
             var commands = _commandQueue.Items.ToList();
             queueInfo.TotalCount = commands.Count;
 
-            //queueInfo.TotalCommandCount = commands.Count;
+            if (args.IsTrue(args.WithCommands))
+            {
+                //(IList<object>)xxx => InvalidCastException: 'IList<ICommand>' to type 'IList<Object>'.
+                queueInfo.Commands = commands.Cast<object>().ToList();
+            }
 
-            //var commandSums = commands.GroupBy(x => x.CommandType).Select(g =>
-            //{
-            //    var commandSum = new CommandSum();
-            //    commandSum.CommandType = g.Key;
-            //    commandSum.CommandCount = g.Count();
-            //    commandSum.Commands = g.ToList();
-            //}).ToList();
+            if (args.IsTrue(args.WithCommandSums))
+            {
+                var commandSums = commands.GroupBy(x => x.CommandType).Select(g =>
+                {
+                    var commandSum = new CommandSum();
+                    commandSum.CommandType = g.Key;
+                    commandSum.CommandCount = g.Count();
+                    return commandSum;
+                }).ToList();
 
-            //queueInfo.CommandSums = commandSums;
-
-            //InvalidCastException: 'IList<ICommand>' to type 'IList<Object>'.
-            //commandQueueInfo.Commands = commands.OfType<object>().ToList();
-            queueInfo.Commands = commands.Cast<object>().ToList();
+                queueInfo.CommandSums = commandSums;
+            }
             return Task.FromResult(queueInfo);
         }
     }

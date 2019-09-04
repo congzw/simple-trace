@@ -7,8 +7,8 @@ namespace SimpleTrace.TraceClients.Repos
     public interface IClientSpanRepository
     {
         Task Clear(LoadArgs args);
-        Task Add(IList<ClientSpanEntity> spans);
-        Task<IList<ClientSpanEntity>> Read(LoadArgs args);
+        Task Add(IList<IClientSpan> spans);
+        Task<IList<IClientSpan>> Read(LoadArgs args);
     }
 
     public class LoadArgs

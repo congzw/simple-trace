@@ -10,14 +10,14 @@ namespace SimpleTrace.TraceClients.Repos
             return Task.FromResult(0);
         }
 
-        public Task Add(IList<ClientSpanEntity> spans)
+        public Task Add(IList<IClientSpan> spans)
         {
             return Task.FromResult(0);
         }
 
-        public Task<IList<ClientSpanEntity>> Read(LoadArgs args)
+        public Task<IList<IClientSpan>> Read(LoadArgs args)
         {
-            return Task.FromResult(new List<ClientSpanEntity>() as IList<ClientSpanEntity>);
+            return Task.FromResult(new List<IClientSpan>() as IList<IClientSpan>);
         }
     }
 }

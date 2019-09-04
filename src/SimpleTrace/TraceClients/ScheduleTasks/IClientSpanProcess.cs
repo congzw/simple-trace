@@ -6,6 +6,6 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
     public interface IClientSpanProcess
     {
         float SortNum { get; set; }
-        Task Process(IList<ClientSpanEntity> entities);
+        Task Process(IList<IClientSpan> entities);
     }
 }

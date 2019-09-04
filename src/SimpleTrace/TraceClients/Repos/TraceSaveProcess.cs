@@ -15,7 +15,7 @@ namespace SimpleTrace.TraceClients.Repos
         }
 
         public float SortNum { get; set; }
-        public Task Process(IList<ClientSpanEntity> entities)
+        public Task Process(IList<IClientSpan> entities)
         {
             return _clientSpanRepository.Add(entities);
         }

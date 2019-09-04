@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Common;
 
-namespace SimpleTrace.TraceClients.V2
+namespace SimpleTrace.TraceClients
 {
     public interface IClientSpan : IClientSpanLocate
     {
@@ -98,29 +98,5 @@ namespace SimpleTrace.TraceClients.V2
             }
             return item;
         }
-    }
-
-    public class ClientSpan : IClientSpanLocate
-    {
-        public ClientSpan()
-        {
-            Bags = DictionaryHelper.CreateDictionary<string>();
-            Tags = DictionaryHelper.CreateDictionary<object>();
-            Logs = DictionaryHelper.CreateDictionary<LogItem>();
-        }
-
-        public string TracerId { get; set; }
-        public string TraceId { get; set; }
-        public string SpanId { get; set; }
-        public string ParentSpanId { get; set; }
-
-        public string OpName { get; set; }
-        public DateTime StartUtc { get; set; }
-        public DateTime? FinishUtc { get; set; }
-
-        public IDictionary<string, string> Bags { get; set; }
-        public IDictionary<string, object> Tags { get; set; }
-        public IDictionary<string, LogItem> Logs { get; set; }
-
     }
 }
