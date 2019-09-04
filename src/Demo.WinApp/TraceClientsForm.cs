@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Common;
 using Demo.WinApp.UI;
-using SimpleTrace.TraceClients.Commands;
 
 namespace Demo.WinApp
 {
@@ -15,7 +13,7 @@ namespace Demo.WinApp
             InitializeComponent();
             MyInitializeComponent();
         }
-        //public AsyncUiHelper AsyncMessageHelper { get; set; }
+
         public AsyncUiHelperForMessageEventBus AsyncMessageHelper { get; set; }
 
         public TraceClientsFormCtrl Ctrl { get; set; }
@@ -62,29 +60,30 @@ namespace Demo.WinApp
 
         }
 
-        private async void btnStart_Click(object sender, EventArgs e)
+        private async void btnCallApi_Click(object sender, EventArgs e)
         {
-            AsyncMessageHelper.AutoAppendLine = this.checkAutoLine.Checked;
-            AsyncMessageHelper.WithDatePrefix = this.checkAutoDate.Checked;
-            AsyncMessageHelper.SafeUpdateUi("CallTraceApi()");
             var args = GetCallTraceApiArgs();
+            AsyncMessageHelper.SafeUpdateUi("CallTraceApi()");
             await Ctrl.CallTraceApi(args);
-            //StartAsyncMessageDemo(args.Count, args.Interval);
         }
+
+        private async void btnQuery_Click(object sender, EventArgs e)
+        {
+            var queueInfo = await Ctrl.QueryQueue();
+            this.txtMessage.Text = queueInfo.ToJson(true);
+        }
+
+        private async void btnProcess_Click(object sender, EventArgs e)
+        {
+            var queueInfo = await Ctrl.QueryQueue();
+            await Ctrl.ProcessQueue(queueInfo);
+        }
+
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            AsyncMessageHelper.AutoAppendLine = this.checkAutoLine.Checked;
-            AsyncMessageHelper.WithDatePrefix = this.checkAutoDate.Checked;
-            AsyncMessageHelper.SafeUpdateUi("CallTraceApi()");
             var args = GetCallTraceApiArgs();
-
             var saveClientSpans = Ctrl.CreateSaveClientSpans(args);
             await Ctrl.Save(saveClientSpans);
-        }
-
-        private async void btnDelete_Click(object sender, EventArgs e)
-        {
-            await Ctrl.Delete(null);
         }
 
         private async void btnLoad_Click(object sender, EventArgs e)
@@ -92,24 +91,10 @@ namespace Demo.WinApp
             var clientSpanEntities = await Ctrl.Load(null);
             this.txtMessage.Text = clientSpanEntities.ToJson(true);
         }
-        private async void btnSend_Click(object sender, EventArgs e)
+
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
-            var queueInfo = await Ctrl.QueryQueue();
-            await Ctrl.ProcessQueue(queueInfo);
-        }
-        
-        private async void btnQuery_Click(object sender, EventArgs e)
-        {
-            var queueInfo = await Ctrl.QueryQueue();
-            this.txtMessage.Text = queueInfo.ToJson(true);
-        }
-        
-        private CallTraceApiArgs GetCallTraceApiArgs()
-        {
-            var callTraceApiArgs = new CallTraceApiArgs();
-            callTraceApiArgs.Count = (int)this.cbxCount.SelectedItem;
-            callTraceApiArgs.IntervalMs = (int)this.cbxInterval.SelectedItem;
-            return callTraceApiArgs;
+            await Ctrl.Delete(null);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -117,6 +102,17 @@ namespace Demo.WinApp
             StopAsyncMessageDemo();
             Task.Delay(100).Wait();
             this.txtMessage.Clear();
+        }
+        
+        private CallTraceApiArgs GetCallTraceApiArgs()
+        {
+            AsyncMessageHelper.AutoAppendLine = this.checkAutoLine.Checked;
+            AsyncMessageHelper.WithDatePrefix = this.checkAutoDate.Checked;
+
+            var callTraceApiArgs = new CallTraceApiArgs();
+            callTraceApiArgs.Count = (int)this.cbxCount.SelectedItem;
+            callTraceApiArgs.IntervalMs = (int)this.cbxInterval.SelectedItem;
+            return callTraceApiArgs;
         }
 
         #region demo for async

@@ -28,7 +28,7 @@ namespace Demo.WinApp.UI
 
             var dateHelper = DateHelper.Instance;
 
-            var tracerId = "DemoCallApi-Tracer";
+            var tracerId = "DemoTracer-" + DateHelper.Instance.GetNowAsFormat("yyyyMMddHHmm");
 
             for (int i = 0; i < args.Count; i++)
             {

@@ -24,7 +24,4 @@
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\DictionaryHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TraceClients\TraceResult.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)TraceClients\ApiProxy\_Impl\" />
-  </ItemGroup>
 </Project>

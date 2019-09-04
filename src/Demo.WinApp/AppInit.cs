@@ -10,14 +10,15 @@ namespace Demo.WinApp
         public static void Init()
         {
             SetupAsyncLog();
-            SetupTraceApi();
+            LocalClientTracerApiProxyConfig.Setup();
+            //SetupTraceApi();
             SetupJaeger();
         }
 
         private static void SetupJaeger()
         {
             var jaegerTracerConfig = new JaegerTracerConfig();
-            jaegerTracerConfig.DefaultTracerId = "DemoWinApp-Tracer";
+            jaegerTracerConfig.DefaultTracerId = "Default-Tracer";
             jaegerTracerConfig.TraceEndPoint = "http://localhost:14268/api/traces";
             var tracerFactory = new JaegerTracerFactory(jaegerTracerConfig);
 
@@ -37,7 +38,7 @@ namespace Demo.WinApp
             var httpClientTracerApiProxy = new HttpClientTracerApiProxy(webApiHelper, apiProxyConfig);
             ApiProxyInit.Reset(httpClientTracerApiProxy, null, null);
         }
-
+        
         private static ISimpleLogFactory SetupAsyncLog()
         {
             var simpleLogFactory = SimpleLogFactory.Resolve();
