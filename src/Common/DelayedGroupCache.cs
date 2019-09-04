@@ -21,21 +21,6 @@ namespace Common
         
         public void AppendToGroups(IList<T> items, Func<T, string> getGroupKey, Func<T, DateTime> getAppendAt)
         {
-            //在 System.Collections.Concurrent.ConcurrentDictionary`2.TryGetValue(TKey key, TValue & value)
-            //在 Common.DelayedGroupCache`1.AppendToGroups(IList`1 items, Func`2 getGroupKey, Func`2 getAppendAt)
-            //在 SimpleTrace.TraceClients.ScheduleTasks.DelayedGroupCacheCommand.AppendToGroups(IList`1 items)
-            //在 SimpleTrace.TraceClients.ScheduleTasks.CommandQueueTask.< Process > d__2.MoveNext()
-            //        -- - 引发异常的上一位置中堆栈跟踪的末尾-- -
-            //    在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-            //在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-            //在 System.Runtime.CompilerServices.TaskAwaiter.GetResult()
-            //在 Demo.WinApp.UI.TraceClientsFormCtrl.< SaveQueue > d__1.MoveNext() 位置 D:\WS_Github\congzw\simple - trace\src\Demo.WinApp\UI\TraceClientsFormCtrl.cs:行号 43
-            //        -- - 引发异常的上一位置中堆栈跟踪的末尾-- -
-            //    在 System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
-            //在 System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
-            //在 System.Runtime.CompilerServices.TaskAwaiter.GetResult()
-            //在 Demo.WinApp.TraceClientsForm.< btnSave_Click > d__15.MoveNext() 位置 D:\WS_Github\congzw\simple - trace\src\Demo.WinApp\TraceClientsForm.cs:行号 96
-
             if (getGroupKey == null)
             {
                 throw new ArgumentNullException(nameof(getGroupKey));
