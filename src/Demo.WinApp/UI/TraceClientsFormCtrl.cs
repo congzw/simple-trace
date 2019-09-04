@@ -14,20 +14,11 @@ namespace Demo.WinApp.UI
 {
     public class TraceClientsFormCtrl
     {
-        public Task<QueueInfo> QueryQueue()
-        {
-            var apiProxy = ApiProxyContext.Current;
-            var getQueueInfoArgs = new GetQueueInfoArgs();
-            getQueueInfoArgs.SetIncludes(GetQueueInfoArgs.Commands, GetQueueInfoArgs.CommandSums);
-            return apiProxy.GetQueueInfo(getQueueInfoArgs);
-        }
-        
         public IList<ClientSpan> CreateSaveClientSpans(CallTraceApiArgs args)
         {
             var saveSpans = new List<ClientSpan>();
 
             var dateHelper = DateHelper.Instance;
-
             var tracerId = "DemoTracer-" + DateHelper.Instance.GetNowAsFormat("yyyyMMddHHmm");
 
             for (int i = 0; i < args.Count; i++)
@@ -62,24 +53,14 @@ namespace Demo.WinApp.UI
             await apiProxy.SaveSpans(saveSpansArgs);
         }
 
-        public Task Save(IList<ClientSpan> clientSpanEntities)
+        public Task<QueueInfo> QueryQueue()
         {
-            var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
-            var clientSpans = clientSpanEntities.Cast<IClientSpan>().ToList();
-            return clientSpanRepository.Add(clientSpans);
+            var apiProxy = ApiProxyContext.Current;
+            var getQueueInfoArgs = new GetQueueInfoArgs();
+            getQueueInfoArgs.SetIncludes(GetQueueInfoArgs.Commands, GetQueueInfoArgs.CommandSums);
+            return apiProxy.GetQueueInfo(getQueueInfoArgs);
         }
 
-        public Task Delete(LoadArgs args)
-        {
-            var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
-            return clientSpanRepository.Clear(args);
-        }
-        public Task<IList<IClientSpan>> Load(LoadArgs args)
-        {
-            var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
-            return clientSpanRepository.Read(args);
-        }
-        
         public Task ProcessQueue(QueueInfo queueInfo)
         {
             var clientSpanEntities = GetClientSpanEntities(queueInfo);
@@ -87,14 +68,29 @@ namespace Demo.WinApp.UI
             return jaegerTraceSender.Send(clientSpanEntities);
         }
 
+        public Task Save(IList<ClientSpan> clientSpanEntities)
+        {
+            var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
+            var clientSpans = clientSpanEntities.Cast<IClientSpan>().ToList();
+            return clientSpanRepository.Add(clientSpans);
+        }
 
+        public Task<IList<IClientSpan>> Load(LoadArgs args)
+        {
+            var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
+            return clientSpanRepository.Read(args);
+        }
+
+        public Task Delete(LoadArgs args)
+        {
+            var clientSpanRepository = new ClientSpanRepository(AsyncFile.Instance);
+            return clientSpanRepository.Clear(args);
+        }
+        
         private IList<IClientSpan> GetClientSpanEntities(QueueInfo queueInfo)
         {
-            var knownCommands = KnownCommands.Instance;
-            knownCommands.Setup();
-
-            var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand(), knownCommands);
-            var commands = queueInfo.Commands.As<Command>().ToList();
+            var commandQueueTask = new CommandQueueTask(new DelayedGroupCacheCommand(), KnownCommands.Instance);
+            var commands = queueInfo.Commands.FromJTokenOrObject<Command>().ToList();
 
             var clientSpanEntities = commandQueueTask.GetEntities(commands, DateHelper.Instance.GetDateNow().AddSeconds(-100));
             return clientSpanEntities;

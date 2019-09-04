@@ -12,7 +12,7 @@ namespace SimpleTrace.TraceClients.Commands
 
         public override bool CreateOrUpdate(Command command, IDictionary<string, IClientSpan> clientSpanCache)
         {
-            var saveSpansArgs = command.Args.As<SaveSpansArgs>();
+            var saveSpansArgs = command.Args.FromJTokenOrObject<SaveSpansArgs>();
 
             foreach (var item in saveSpansArgs.Items)
             {

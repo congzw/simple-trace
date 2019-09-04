@@ -2,6 +2,7 @@
 using SimpleTrace.OpenTrace;
 using SimpleTrace.OpenTrace.Jaeger;
 using SimpleTrace.TraceClients.ApiProxy;
+using SimpleTrace.TraceClients.Commands;
 
 namespace Demo.WinApp
 {
@@ -10,8 +11,7 @@ namespace Demo.WinApp
         public static void Init()
         {
             SetupAsyncLog();
-            LocalClientTracerApiProxyConfig.Setup();
-            //SetupTraceApi();
+            SetupTraceApi();
             SetupJaeger();
         }
 
@@ -29,16 +29,22 @@ namespace Demo.WinApp
 
         private static void SetupTraceApi()
         {
-            //todo read from config
-            var apiProxyConfig = new ApiProxyConfig();
-            apiProxyConfig.BaseUri = "http://localhost:16685/api/trace";
-            apiProxyConfig.FailTimeoutMilliseconds = 200;
-            var webApiHelper = WebApiHelper.Resolve();
+            ////with api
+            ////todo read from config
+            //var apiProxyConfig = new ApiProxyConfig();
+            //apiProxyConfig.BaseUri = "http://localhost:16685/api/trace";
+            //apiProxyConfig.FailTimeoutMilliseconds = 200;
+            //var webApiHelper = WebApiHelper.Resolve();
 
-            var httpClientTracerApiProxy = new HttpClientTracerApiProxy(webApiHelper, apiProxyConfig);
-            ApiProxyInit.Reset(httpClientTracerApiProxy, null, null);
+            //var httpClientTracerApiProxy = new HttpClientTracerApiProxy(webApiHelper, apiProxyConfig);
+            //ApiProxyInit.Reset(httpClientTracerApiProxy, null, null);
+            //without api
+            LocalClientTracerApiProxyConfig.Setup();
+
+            var knownCommands = KnownCommands.Instance;
+            knownCommands.Setup();
         }
-        
+
         private static ISimpleLogFactory SetupAsyncLog()
         {
             var simpleLogFactory = SimpleLogFactory.Resolve();

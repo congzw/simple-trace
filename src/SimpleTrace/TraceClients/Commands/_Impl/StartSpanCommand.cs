@@ -13,7 +13,7 @@ namespace SimpleTrace.TraceClients.Commands
 
         public override bool CreateOrUpdate(Command command, IDictionary<string, IClientSpan> clientSpanCache)
         {
-            var clientSpan = command.Args.As<ClientSpan>();
+            var clientSpan = command.Args.FromJTokenOrObject<ClientSpan>();
             var currentKey = clientSpan.ToLocateCurrentKey();
 
             //var clientSpanEntity = new ClientSpanEntity();

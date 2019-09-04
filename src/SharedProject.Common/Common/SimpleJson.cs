@@ -147,9 +147,10 @@ namespace Common
             return instance;
         }
 
-        public static T As<T>(this object instance, bool throwEx = true)
+        //from JToken or object
+        public static T FromJTokenOrObject<T>(this object jTokenOrObject, bool throwEx = true)
         {
-            if (instance == null)
+            if (jTokenOrObject == null)
             {
                 return default(T);
             }
@@ -160,12 +161,12 @@ namespace Common
             //    return jObject.ToObject<T>();
             //}
 
-            if (instance is JToken token)
+            if (jTokenOrObject is JToken token)
             {
                 return token.ToObject<T>();
             }
 
-            if (instance is T theValue)
+            if (jTokenOrObject is T theValue)
             {
                 return theValue;
             }
@@ -174,13 +175,14 @@ namespace Common
             {
                 return default(T);
             }
-            throw new InvalidOperationException(string.Format("object can not cast from {0} to {1}", instance.GetType().Name, typeof(T).Name));
+            throw new InvalidOperationException(string.Format("object can not cast from {0} to {1}", jTokenOrObject.GetType().Name, typeof(T).Name));
         }
-        public static IEnumerable<T> As<T>(this IEnumerable<object> instances, bool throwEx = true)
+
+        public static IEnumerable<T> FromJTokenOrObject<T>(this IEnumerable<object> instances, bool throwEx = true)
         {
             foreach (var instance in instances)
             {
-                yield return instance.As<T>(throwEx);
+                yield return instance.FromJTokenOrObject<T>(throwEx);
             }
         }
 

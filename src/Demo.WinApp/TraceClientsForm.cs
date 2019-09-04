@@ -63,7 +63,6 @@ namespace Demo.WinApp
         private async void btnCallApi_Click(object sender, EventArgs e)
         {
             var args = GetCallTraceApiArgs();
-            AsyncMessageHelper.SafeUpdateUi("CallTraceApi()");
             await Ctrl.CallTraceApi(args);
         }
 
