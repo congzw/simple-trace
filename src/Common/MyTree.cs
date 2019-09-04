@@ -70,6 +70,9 @@ namespace Common
             return rootNodes;
         }
 
+        #region helpers
+
+        public static MyTreeConvert Instance = new MyTreeConvert();
         private IList<MyTree<T>> ConvertMyTrees<T>(IEnumerable<T> models, Func<T, string> getId, Func<T, string> getParentId)
         {
             var trees = new List<MyTree<T>>();
@@ -122,11 +125,7 @@ namespace Common
 
             return key1.Equals(key2, stringComparison);
         }
-
-        #region helpers
-
-        public static MyTreeConvert Instance = new MyTreeConvert();
-
+        
         #endregion
     }
 }
