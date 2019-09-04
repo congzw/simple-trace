@@ -23,7 +23,7 @@ namespace Demo.WinApp.UI
 
             for (int i = 0; i < args.Count; i++)
             {
-                Task.Delay(TimeSpan.FromMilliseconds(args.IntervalMs)).Wait();
+                //Task.Delay(TimeSpan.FromMilliseconds(args.IntervalMs)).Wait();
 
                 var now = dateHelper.GetDateNow();
                 var traceId = "Trace_" + now.Ticks;
