@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\DateHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\Extensions\DateTimeExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\ExpiredIn.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\ObjectCounter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\IncludeProperties.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\MessageResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\MyModelHelper.cs" />
@@ -32,8 +33,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\SimpleLoopTask.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\TaskEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\WebApiHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Common\Extensions\" />
   </ItemGroup>
 </Project>

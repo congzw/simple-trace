@@ -84,10 +84,11 @@ namespace Common
         ISimpleLog GetOrCreate(string category);
     }
 
-    public class SimpleLogFactory : ISimpleLogFactory
+    public class SimpleLogFactory : ISimpleLogFactory, IDisposable
     {
         public SimpleLogFactory(SimpleLogSettings settings, LogMessageActions actions)
         {
+            this.ReportAdd();
             Settings = settings;
             LogActions = actions;
             SimpleLogs = new ConcurrentDictionary<string, ISimpleLog>(StringComparer.OrdinalIgnoreCase);
@@ -123,6 +124,11 @@ namespace Common
         public static Func<ISimpleLogFactory> Resolve { get; set; } = () => LazyInstance.Value;
 
         #endregion
+
+        public void Dispose()
+        {
+            this.ReportAdd();
+        }
     }
 
     public class SimpleLogSettings

@@ -21,8 +21,13 @@ namespace Common
         Task SaveFile<T>(string filePath, IList<T> list, bool indented);
     }
 
-    public class SimpleJson : ISimpleJson, ISimpleJsonFile
+    public class SimpleJson : ISimpleJson, ISimpleJsonFile, IDisposable
     {
+        public SimpleJson()
+        {
+            this.ReportAdd();
+        }
+
         private readonly AsyncFile _asyncFile = AsyncFile.Instance;
 
         public string SerializeObject(object value, bool indented)
@@ -92,6 +97,11 @@ namespace Common
         public static Func<ISimpleJsonFile> ResolveSimpleJsonFile { get; set; } = () => Instance.Value;
 
         #endregion
+
+        public void Dispose()
+        {
+            this.ReportDelete();
+        }
     }
 
     public static class SimpleJsonExtensions
