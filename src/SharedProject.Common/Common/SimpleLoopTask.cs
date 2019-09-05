@@ -81,7 +81,7 @@ namespace Common
                         LogInfo(string.Format("fail {0} more then max: {1}, exit", errorCount, MaxTryFailCount));
                         break;
                     }
-                    LogInfo(string.Format("fail time: {0}/{1}, ex:{2}", errorCount, MaxTryFailCount, e.Message));
+                    LogEx(e, string.Format("fail time: {0}/{1}", errorCount, MaxTryFailCount));
                 }
                 TaskEx.Delay(LoopSpan).Wait();
             }
@@ -113,6 +113,12 @@ namespace Common
         {
             var logger = SimpleLogSingleton<SimpleLoopTask>.Instance.Logger;
             logger.LogInfo(message);
+        }
+
+        private void LogEx(Exception ex, string message = null)
+        {
+            var logger = SimpleLogSingleton<SimpleLoopTask>.Instance.Logger;
+            logger.LogEx(ex, message);
         }
     }
 }

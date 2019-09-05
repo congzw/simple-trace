@@ -21,7 +21,9 @@ namespace SimpleTrace.OpenTrace.Jaeger
 
             foreach (var sameTraceSpanGroup in sameTraceSpanGroups)
             {
-                Console.WriteLine("{0}: {1}", sameTraceSpanGroup.Key, sameTraceSpanGroup.Count());
+                var logger = SimpleLogSingleton<JaegerTracerFactory>.Instance.Logger;
+                logger.LogInfo(string.Format("Send ClientSpans => {0}: {1}", sameTraceSpanGroup.Key, sameTraceSpanGroup.Count()));
+
                 //var groupKey = sameTraceSpanGroup.Key;
                 var sameTraceSpans = sameTraceSpanGroup.ToList();
                 var myTreeConvert = MyTreeConvert.Instance;

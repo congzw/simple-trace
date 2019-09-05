@@ -85,6 +85,10 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             
             var currentCommands = await DequeueCommands(commandQueue).ConfigureAwait(false);
             var spanEntities = GetEntities(commandLogistics, currentCommands, now);
+            if (spanEntities.Count == 0)
+            {
+                return;
+            }
             var orderedProcesses = processes.OrderBy(x => x.SortNum).ToList();
             await Task.WhenAll(orderedProcesses.Select(x => x.Process(spanEntities)));
         }

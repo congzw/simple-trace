@@ -35,40 +35,40 @@ namespace Demo.WinApp
 
         private static void SetupTraceApi()
         {
-            ////with api
-            ////todo read from config
-            //var apiProxyConfig = new ApiProxyConfig();
-            //apiProxyConfig.BaseUri = "http://localhost:16685/api/trace";
-            //apiProxyConfig.FailTimeoutMilliseconds = 200;
-            //var webApiHelper = WebApiHelper.Resolve();
+            //with api
+            //todo read from config
+            var apiProxyConfig = new ApiProxyConfig();
+            apiProxyConfig.BaseUri = "http://localhost:16685/api/trace";
+            apiProxyConfig.FailTimeoutMilliseconds = 200;
+            var webApiHelper = WebApiHelper.Resolve();
 
-            //var httpClientTracerApiProxy = new HttpClientTracerApiProxy(webApiHelper, apiProxyConfig);
-            //ApiProxyInit.Reset(httpClientTracerApiProxy, null, null);
+            var httpClientTracerApiProxy = new HttpClientTracerApiProxy(webApiHelper, apiProxyConfig);
+            ApiProxyInit.Reset(httpClientTracerApiProxy, null, null);
 
-            var simpleIoc = SimpleIoc.Instance;
+            //var simpleIoc = SimpleIoc.Instance;
 
-            var knownCommands = KnownCommands.Instance;
-            knownCommands.Setup();
-            simpleIoc.Register(() => knownCommands);
+            //var knownCommands = KnownCommands.Instance;
+            //knownCommands.Setup();
+            //simpleIoc.Register(() => knownCommands);
 
-            var commandQueue = new CommandQueue();
-            simpleIoc.Register(() => commandQueue);
+            //var commandQueue = new CommandQueue();
+            //simpleIoc.Register(() => commandQueue);
 
-            var commandQueueTask = new CommandQueueTask();
-            simpleIoc.Register(() => commandQueueTask);
+            //var commandQueueTask = new CommandQueueTask();
+            //simpleIoc.Register(() => commandQueueTask);
 
-            var clientTracerApi = new ClientTracerApi(commandQueue);
-            simpleIoc.Register(() => clientTracerApi);
-            simpleIoc.Register(() =>
-            {
-                var clientSpanProcesses = new List<IClientSpanProcess>();
-                clientSpanProcesses.Add(new TraceSendProcess(new JaegerTraceSender()));
-                clientSpanProcesses.Add(new TraceSaveProcess(new ClientSpanRepository(AsyncFile.Instance)));
-                return clientSpanProcesses;
-            });
+            //var clientTracerApi = new ClientTracerApi(commandQueue);
+            //simpleIoc.Register(() => clientTracerApi);
+            //simpleIoc.Register(() =>
+            //{
+            //    var clientSpanProcesses = new List<IClientSpanProcess>();
+            //    clientSpanProcesses.Add(new TraceSendProcess(new JaegerTraceSender()));
+            //    clientSpanProcesses.Add(new TraceSaveProcess(new ClientSpanRepository(AsyncFile.Instance)));
+            //    return clientSpanProcesses;
+            //});
 
-            //without api
-            LocalClientTracerApiProxyConfig.Setup(clientTracerApi);
+            ////without api
+            //LocalClientTracerApiProxyConfig.Setup(clientTracerApi);
         }
 
         private static ISimpleLogFactory SetupAsyncLog()

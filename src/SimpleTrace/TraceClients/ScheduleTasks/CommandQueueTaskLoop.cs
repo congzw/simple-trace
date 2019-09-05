@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Common;
+using SimpleTrace.TraceClients.Commands;
 
 namespace SimpleTrace.TraceClients.ScheduleTasks
 {
@@ -10,27 +13,17 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
         public CommandQueueTaskLoop()
         {
             this.ReportAdd();
-            //Log = SimpleLogSingleton<CommandQueueLoopTask>.Instance.Logger;
-            CacheMessages = new List<string>();
+            Log = SimpleLogSingleton<CommandQueueTaskLoop>.Instance.Logger;
         }
 
         public SimpleLoopTask LoopTask { get; set; }
 
-        private void Init()
-        {
-            LoopTask = new SimpleLoopTask();
-            LoopTask.LoopSpan = TimeSpan.FromSeconds(3);
-            LoopTask.LoopAction = () =>
-            {
-                LogInfo(string.Format(">>> demo long running task is running at {0:yyyy-MM-dd HH:mm:ss:fff} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
-            };
-            LoopTask.AfterExitLoopAction = () =>
-            {
-                LogInfo(string.Format(">>> demo long running task is stopping at {0:yyyy-MM-dd HH:mm:ss:fff} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
-            };
-        }
-
-        public void Start(TimeSpan? loopSpan)
+        public void Init(TimeSpan? loopSpan,
+            CommandQueueTask commandQueueTask,
+            Func<CommandQueue> getCommandQueue,
+            Func<IEnumerable<ICommandLogistic>> getCommandLogistics,
+            Func<IEnumerable<IClientSpanProcess>> getClientSpanProcesses,
+            Func<DateTime> getNow)
         {
             if (LoopTask != null)
             {
@@ -38,41 +31,87 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
                 return;
             }
 
-            Init();
+            if (commandQueueTask == null)
+            {
+                throw new ArgumentNullException(nameof(commandQueueTask));
+            }
 
+            if (getCommandQueue == null)
+            {
+                throw new ArgumentNullException(nameof(getCommandQueue));
+            }
+
+            if (getCommandLogistics == null)
+            {
+                throw new ArgumentNullException(nameof(getCommandLogistics));
+            }
+
+            if (getClientSpanProcesses == null)
+            {
+                throw new ArgumentNullException(nameof(getClientSpanProcesses));
+            }
+
+            if (getNow == null)
+            {
+                throw new ArgumentNullException(nameof(getNow));
+            }
+            
+            LoopTask = new SimpleLoopTask();
             if (loopSpan != null)
             {
                 LoopTask.LoopSpan = loopSpan.Value;
             }
-            LoopTask.Start();
+
+            LoopTask.LoopTask = () =>
+            {
+                LogInfo(string.Format(">>> CommandQueueTaskLoop is looping at {0:yyyy-MM-dd HH:mm:ss:fff} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
+                var commandQueue = getCommandQueue();
+                var commandLogistics = getCommandLogistics();
+                var processes = getClientSpanProcesses();
+                var now = getNow();
+                return commandQueueTask.ProcessQueue(commandQueue, commandLogistics.ToList(), processes.ToList(), now);
+            };
+
+            LoopTask.AfterExitLoopTask = () =>
+            {
+                LogInfo(string.Format(">>> CommandQueueTaskLoop is stopping at {0:yyyy-MM-dd HH:mm:ss:fff} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
+                return Task.FromResult(0);
+            };
         }
 
-        public void Stop()
+        protected bool Started { get; set; }
+
+        public void Start()
         {
             if (LoopTask == null)
             {
-                LogInfo("LoopTask already stopped!!!");
+                LogInfo("LoopTask is not init!!!");
                 return;
             }
 
-            LoopTask.Stop();
-            LoopTask.Dispose();
-            LoopTask = null;
+            if (Started)
+            {
+                LogInfo("LoopTask is already started!!!");
+                return;
+            }
+
+            LoopTask.Start();
+            Started = true;
         }
-
-        public IList<string> CacheMessages { get; set; }
-
+        
         private void LogInfo(string message)
         {
-            CacheMessages.Add(message);
-            //Log.LogInfo(message);
+            Log.LogInfo(message);
         }
 
-        //public ISimpleLog Log { get; set; }
+        public ISimpleLog Log { get; set; }
+
         public void Dispose()
         {
-            this.ReportDelete();
             LoopTask?.Dispose();
+            this.ReportDelete();
         }
+
+        public static CommandQueueTaskLoop Instance = new CommandQueueTaskLoop();
     }
 }

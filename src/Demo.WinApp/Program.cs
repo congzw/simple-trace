@@ -14,8 +14,8 @@ namespace Demo.WinApp
             AppInit.Init();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new TraceClientsForm());
-            Application.Run(new TempForm());
+            Application.Run(new TraceClientsForm());
+            //Application.Run(new TempForm());
         }
     }
 }

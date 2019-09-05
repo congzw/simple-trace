@@ -23,7 +23,7 @@ namespace SimpleTrace.Api
 
             //todo set by config
             ObjectCounter.Instance.Enabled = true;
-            services.AddSimpleTrace();
+            services.AddSimpleTrace(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
