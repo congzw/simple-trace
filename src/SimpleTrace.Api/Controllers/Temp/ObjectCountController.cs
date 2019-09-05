@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common;
 using Microsoft.AspNetCore.Mvc;
+// ReSharper disable CheckNamespace
 
 namespace SimpleTrace.Api.Controllers
 {

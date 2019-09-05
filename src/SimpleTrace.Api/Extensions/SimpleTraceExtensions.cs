@@ -1,10 +1,12 @@
-﻿using Common;
+﻿using System;
+using Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleTrace.TraceClients.Api;
 using SimpleTrace.TraceClients.Commands;
+using SimpleTrace.TraceClients.ScheduleTasks;
 
 namespace SimpleTrace.Api.Extensions
 {
