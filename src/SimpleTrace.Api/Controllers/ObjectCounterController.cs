@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace SimpleTrace.Api.Controllers
 {
     [Route("api/oc")]
-    public class ObjectCountController : ControllerBase
+    public class ObjectCountController : ControllerBase, IDisposable
     {
         private readonly ISimpleJson _simpleJson;
         private readonly ISimpleJsonFile _simpleJsonFile;
@@ -15,6 +16,7 @@ namespace SimpleTrace.Api.Controllers
 
         public ObjectCountController(ISimpleJson simpleJson, ISimpleJsonFile simpleJsonFile, ISimpleLogFactory simpleLogFactory, SimpleLogFactory simpleLogFactory2)
         {
+            this.ReportAdd();
             _simpleJson = simpleJson;
             _simpleJsonFile = simpleJsonFile;
             _simpleLogFactory = simpleLogFactory;
@@ -31,6 +33,16 @@ namespace SimpleTrace.Api.Controllers
 
             var objectCountInfos = ObjectCountInfo.Create(ObjectCounter.Instance);
             return Task.FromResult(objectCountInfos);
+        }
+
+        public void Dispose()
+        {
+            ////for test only
+            //if (DateTime.Now.Second % 2 == 0)
+            //{
+            //    this.ReportDelete();
+            //}
+            this.ReportDelete();
         }
     }
 
