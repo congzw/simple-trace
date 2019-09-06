@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Common
 {
-    public class ObjectCounter: IDisposable
+    public sealed class ObjectCounter: IDisposable
     {
         private readonly object _lock = new object();
 
@@ -14,7 +14,6 @@ namespace Common
         {
             Enabled = enabled;
             Items = new ConcurrentDictionary<Type, int>();
-            RecordAdd(this);
         }
 
         public IDictionary<Type, int> Items { get; set; }
@@ -44,7 +43,7 @@ namespace Common
                     count = Items[theType] - 1;
                 }
                 Items[theType] = count;
-                System.Diagnostics.Trace.WriteLine(string.Format("[RecordDelete]:{0} <<{1}:{2}>>", count, theType.Name, instance.GetHashCode()));
+                LogInfo(string.Format("[RecordDelete]:{0} <<{1}:{2}>>", count, theType.Name, instance.GetHashCode()));
             }
         }
 
@@ -73,7 +72,7 @@ namespace Common
                     count = Items[theType] + 1;
                 }
                 Items[theType] = count;
-                System.Diagnostics.Trace.WriteLine(string.Format("[RecordAdd]:{0} <<{1}:{2}>>", count, theType.Name, instance.GetHashCode()));
+                LogInfo(string.Format("[RecordAdd]:{0} <<{1}:{2}>>", count, theType.Name, instance.GetHashCode()));
             }
         }
 
@@ -83,8 +82,16 @@ namespace Common
 
         public void Dispose()
         {
-            RecordDelete(this);
         }
+
+        private void LogInfo(string info)
+        {
+            //dead loop!
+            //var logger = SimpleLogSingleton<Object>.Instance.Logger;
+            //logger.LogInfo(info);
+            System.Diagnostics.Trace.WriteLine(info);
+        }
+
     }
 
     public static class ObjectCounterExtensions
