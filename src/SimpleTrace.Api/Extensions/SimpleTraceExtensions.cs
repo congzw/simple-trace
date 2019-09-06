@@ -84,6 +84,8 @@ namespace SimpleTrace.Api.Extensions
 
                 return commandQueueTaskLoop;
             });
+            services.AddSingleton(CommandQueueProcessLogs.Instance);
+            
 
             //IClientSpanRepository
             if (traceConfig.TraceSaveProcessEnabled)

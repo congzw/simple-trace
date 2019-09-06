@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -83,13 +84,13 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             //  process => save client spans
             //  process => send client spans
             //  process => ...
-            
+
             var currentCommands = await DequeueCommands(commandQueue).ConfigureAwait(false);
             var spanEntities = GetEntities(commandLogistics, currentCommands, now);
             LogInfo(string.Format("ProcessQueue at {3:yyyyMMddHHmmss} => DequeueCommands: {0}, ClientSpans: {1}, Processes:{2} ", 
-                currentCommands.Count, 
-                spanEntities.Count, 
-                processes.Count, now));
+                currentCommands.Count,
+                spanEntities.Count,
+                processes.Count, now), now);
             if (spanEntities.Count == 0)
             {
                 return;
@@ -98,10 +99,50 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             await Task.WhenAll(orderedProcesses.Select(x => x.Process(spanEntities)));
         }
 
-        private void LogInfo(string message)
+        private void LogInfo(string message, DateTime processAt)
         {
             var logger = SimpleLogSingleton<CommandQueueTask>.Instance.Logger;
             logger.LogInfo(message);
+            CommandQueueProcessLogs.Instance.SetRecord(processAt, message);
         }
     }
+
+    #region for debug
+    
+    public class CommandQueueProcessLog
+    {
+        public DateTime ProcessAt { get; set; }
+        public string Info { get; set; }
+    }
+
+    public class CommandQueueProcessLogs
+    {
+        public CommandQueueProcessLogs()
+        {
+            Enabled = false;
+            Items = new ConcurrentDictionary<DateTime, CommandQueueProcessLog>();
+        }
+
+        public bool Enabled { get; set; }
+
+        public IDictionary<DateTime, CommandQueueProcessLog> Items { get; set; }
+
+        public void SetRecord(DateTime processAt, string info)
+        {
+            if (!Enabled)
+            {
+                return;
+            }
+            Items[processAt] = new CommandQueueProcessLog() { ProcessAt = processAt, Info = info };
+        }
+
+        public void Clear()
+        {
+            Items.Clear();
+        }
+
+        public static CommandQueueProcessLogs Instance = new CommandQueueProcessLogs();
+    }
+
+    #endregion
 }
