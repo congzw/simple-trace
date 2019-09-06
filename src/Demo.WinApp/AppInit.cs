@@ -1,14 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Common;
+﻿using Common;
 using SimpleTrace.OpenTrace;
 using SimpleTrace.OpenTrace.Jaeger;
-using SimpleTrace.TraceClients.Api;
 using SimpleTrace.TraceClients.ApiProxy;
-using SimpleTrace.TraceClients.Commands;
-using SimpleTrace.TraceClients.Repos;
-using SimpleTrace.TraceClients.ScheduleTasks;
-using SimpleTrace.TraceClients.Sends;
 
 namespace Demo.WinApp
 {
@@ -38,7 +31,8 @@ namespace Demo.WinApp
             //with api
             //todo read from config
             var apiProxyConfig = new ApiProxyConfig();
-            apiProxyConfig.BaseUri = "http://localhost:16685/api/trace";
+            //apiProxyConfig.BaseUri = "http://localhost:16685/api/trace";
+            apiProxyConfig.BaseUri = "http://192.168.1.133:16685/api/trace";
             apiProxyConfig.FailTimeoutMilliseconds = 200;
             var webApiHelper = WebApiHelper.Resolve();
 
