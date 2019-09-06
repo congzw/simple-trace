@@ -25,53 +25,67 @@ namespace SimpleTrace.Api.Extensions
             AddTraceClients(services, configuration);
         }
 
-
         public static void ConfigSimpleTrace(this IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
         {
-            ConfigLoopTask(app);
-        }
-
-        private static void ConfigLoopTask(IApplicationBuilder app)
-        {
-            var traceConfig = app.ApplicationServices.GetService<TraceConfig>();
-
-            var queueTask = app.ApplicationServices.GetService<CommandQueueTask>();
-            var knownCommands = app.ApplicationServices.GetService<KnownCommands>();
-            var commandLogistics = app.ApplicationServices.GetServices<ICommandLogistic>().ToList();
-            foreach (var commandLogistic in commandLogistics)
-            {
-                knownCommands.Register(commandLogistic);
-            }
-            
             var queueTaskLoop = app.ApplicationServices.GetService<CommandQueueTaskLoop>();
-            queueTaskLoop.Init(
-                TimeSpan.FromSeconds(traceConfig.FlushIntervalSecond),
-                queueTask,
-                app.ApplicationServices.GetService<CommandQueue>,
-                app.ApplicationServices.GetServices<ICommandLogistic>,
-                app.ApplicationServices.GetServices<IClientSpanProcess>,
-                DateHelper.Instance.GetDateNow);
-
             queueTaskLoop.Start();
         }
+
         private static void AddTraceClients(IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IClientTracerApi, ClientTracerApi>();
             services.AddSingleton<CommandQueue>();
             services.AddSingleton<CommandQueueTask>();
-            services.AddSingleton(CommandQueueTaskLoop.Instance);
-
-            services.AddSingleton(KnownCommands.Instance);
 
             //SimpleTrace.dll
-            var assemblyToScan = Assembly.GetAssembly(typeof(ICommandLogistic)); 
-            services.AddSingletonFromAssembly(assemblyToScan, typeof(ICommandLogistic));
+            var assemblyToScan = Assembly.GetAssembly(typeof(ICommandLogistic));
+
+            //All IClientSpanProcess
             services.AddSingletonFromAssembly(assemblyToScan, typeof(IClientSpanProcess));
-            
+            //All ICommandLogistic and KnownCommands
+            services.AddSingletonFromAssembly(assemblyToScan, typeof(ICommandLogistic));
+            services.AddSingleton(sp =>
+            {
+                var knownCommands = KnownCommands.Instance;
+
+                var commandLogistics = sp.GetServices<ICommandLogistic>().ToList();
+                foreach (var commandLogistic in commandLogistics)
+                {
+                    knownCommands.Register(commandLogistic);
+                }
+
+                return knownCommands;
+            });
+
+            //TraceConfig
             var traceConfig = TryLoadTraceConfig(configuration);
             services.AddSingleton(traceConfig);
 
-            //setup trace by config
+            //CommandQueueTaskLoop
+            services.AddSingleton(sp =>
+            {
+                var commandQueueTaskLoop = new CommandQueueTaskLoop();
+                
+                var queueTask = sp.GetService<CommandQueueTask>();
+                var knownCommands = sp.GetService<KnownCommands>();
+                var commandLogistics = sp.GetServices<ICommandLogistic>().ToList();
+                foreach (var commandLogistic in commandLogistics)
+                {
+                    knownCommands.Register(commandLogistic);
+                }
+
+                commandQueueTaskLoop.Init(
+                    TimeSpan.FromSeconds(traceConfig.FlushIntervalSecond),
+                    queueTask,
+                    sp.GetService<CommandQueue>(),
+                    sp.GetServices<ICommandLogistic>(),
+                    sp.GetServices<IClientSpanProcess>(),
+                    DateHelper.Instance.GetDateNow);
+
+                return commandQueueTaskLoop;
+            });
+
+            //IClientSpanRepository
             if (traceConfig.TraceSaveProcessEnabled)
             {
                 services.AddSingleton<IClientSpanRepository, ClientSpanRepository>();
@@ -81,23 +95,29 @@ namespace SimpleTrace.Api.Extensions
                 services.AddSingleton<IClientSpanRepository, NullClientSpanRepository>();
             }
 
+            //TracerContext
             var tracerContext = TracerContext.Resolve();
             services.AddSingleton<TracerContext>(tracerContext);
 
             if (traceConfig.TraceSendProcessEnabled)
             {
+                //JaegerTracerConfig
                 var jaegerTracerConfig = new JaegerTracerConfig();
                 jaegerTracerConfig.DefaultTracerId = traceConfig.DefaultTracerId;
                 jaegerTracerConfig.TraceEndPoint = traceConfig.TraceEndPoint;
                 services.AddSingleton(jaegerTracerConfig);
 
+                //ITracerFactory and TracerContext
                 var tracerFactory = new JaegerTracerFactory(jaegerTracerConfig);
                 services.AddSingleton<ITracerFactory>(tracerFactory);
-                services.AddSingleton<ITraceSender, JaegerTraceSender>();
                 tracerContext.Factory = tracerFactory;
-                
+
+                //ITraceSender
+                services.AddSingleton<ITraceSender, JaegerTraceSender>();
+
+                //log TraceConfig
                 var tracer = tracerContext.Current();
-                using (var scope = tracer.BuildSpan("ShowInfo").StartActive(true))
+                using (var scope = tracer.BuildSpan("LogObject").StartActive(true))
                 {
                     scope.Span.SetTag("Name", "TraceConfig");
                     var dictionary = MyModelHelper.GetKeyValueDictionary(traceConfig);

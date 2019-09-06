@@ -17,12 +17,17 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
         }
 
         public SimpleLoopTask LoopTask { get; set; }
+        public CommandQueueTask CommandQueueTask { get; set; }
+        public CommandQueue CommandQueue { get; set; }
+        public IList<ICommandLogistic> CommandLogistics { get; set; }
+        public IList<IClientSpanProcess> ClientSpanProcesses { get; set; }
+
 
         public void Init(TimeSpan? loopSpan,
             CommandQueueTask commandQueueTask,
-            Func<CommandQueue> getCommandQueue,
-            Func<IEnumerable<ICommandLogistic>> getCommandLogistics,
-            Func<IEnumerable<IClientSpanProcess>> getClientSpanProcesses,
+            CommandQueue commandQueue,
+            IEnumerable<ICommandLogistic> commandLogistics,
+            IEnumerable<IClientSpanProcess> clientSpanProcesses,
             Func<DateTime> getNow)
         {
             if (LoopTask != null)
@@ -35,21 +40,27 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             {
                 throw new ArgumentNullException(nameof(commandQueueTask));
             }
+            CommandQueueTask = commandQueueTask;
 
-            if (getCommandQueue == null)
+
+            if (commandQueue == null)
             {
-                throw new ArgumentNullException(nameof(getCommandQueue));
+                throw new ArgumentNullException(nameof(commandQueue));
+            }
+            CommandQueue = commandQueue;
+
+            if (commandLogistics == null)
+            {
+                throw new ArgumentNullException(nameof(commandLogistics));
             }
 
-            if (getCommandLogistics == null)
-            {
-                throw new ArgumentNullException(nameof(getCommandLogistics));
-            }
+            CommandLogistics = commandLogistics.ToList();
 
-            if (getClientSpanProcesses == null)
+            if (clientSpanProcesses == null)
             {
-                throw new ArgumentNullException(nameof(getClientSpanProcesses));
+                throw new ArgumentNullException(nameof(clientSpanProcesses));
             }
+            ClientSpanProcesses = clientSpanProcesses.ToList();
 
             if (getNow == null)
             {
@@ -67,11 +78,8 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             LoopTask.LoopTask = () =>
             {
                 LogInfo(string.Format(">>> CommandQueueTaskLoop is looping at {0:yyyy-MM-dd HH:mm:ss} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
-                var commandQueue = getCommandQueue();
-                var commandLogistics = getCommandLogistics();
-                var processes = getClientSpanProcesses();
                 var now = getNow();
-                return commandQueueTask.ProcessQueue(commandQueue, commandLogistics.ToList(), processes.ToList(), now);
+                return commandQueueTask.ProcessQueue(commandQueue, CommandLogistics, ClientSpanProcesses, now);
             };
 
             LoopTask.AfterExitLoopTask = () =>
