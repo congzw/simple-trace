@@ -23,6 +23,7 @@ namespace SimpleTrace.Api
 
             //todo set by config
             ObjectCounter.Instance.Enabled = true;
+            services.AddCommon(Configuration);
             services.AddSimpleTrace(Configuration);
         }
 

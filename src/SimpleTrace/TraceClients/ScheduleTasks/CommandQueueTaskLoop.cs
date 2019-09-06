@@ -62,9 +62,11 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
                 LoopTask.LoopSpan = loopSpan.Value;
             }
 
+            LogInfo(string.Format(">>> LoopSpanSeconds: {0}", LoopTask.LoopSpan.TotalSeconds));
+
             LoopTask.LoopTask = () =>
             {
-                LogInfo(string.Format(">>> CommandQueueTaskLoop is looping at {0:yyyy-MM-dd HH:mm:ss:fff} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
+                LogInfo(string.Format(">>> CommandQueueTaskLoop is looping at {0:yyyy-MM-dd HH:mm:ss} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
                 var commandQueue = getCommandQueue();
                 var commandLogistics = getCommandLogistics();
                 var processes = getClientSpanProcesses();
@@ -74,7 +76,7 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
 
             LoopTask.AfterExitLoopTask = () =>
             {
-                LogInfo(string.Format(">>> CommandQueueTaskLoop is stopping at {0:yyyy-MM-dd HH:mm:ss:fff} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
+                LogInfo(string.Format(">>> CommandQueueTaskLoop is stopping at {0:yyyy-MM-dd HH:mm:ss} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
                 return Task.FromResult(0);
             };
         }

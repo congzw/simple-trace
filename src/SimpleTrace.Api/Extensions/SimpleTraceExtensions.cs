@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleTrace.OpenTrace;
 using SimpleTrace.OpenTrace.Jaeger;
+using SimpleTrace.TraceClients;
 using SimpleTrace.TraceClients.Api;
 using SimpleTrace.TraceClients.Commands;
 using SimpleTrace.TraceClients.Repos;
@@ -20,9 +22,9 @@ namespace SimpleTrace.Api.Extensions
     {
         public static void AddSimpleTrace(this IServiceCollection services, IConfiguration configuration)
         {
-            AddCommon(services);
             AddTraceClients(services, configuration);
         }
+
 
         public static void ConfigSimpleTrace(this IApplicationBuilder app, IHostingEnvironment env, IConfiguration configuration)
         {
@@ -31,6 +33,8 @@ namespace SimpleTrace.Api.Extensions
 
         private static void ConfigLoopTask(IApplicationBuilder app)
         {
+            var traceConfig = app.ApplicationServices.GetService<TraceConfig>();
+
             var queueTask = app.ApplicationServices.GetService<CommandQueueTask>();
             var knownCommands = app.ApplicationServices.GetService<KnownCommands>();
             var commandLogistics = app.ApplicationServices.GetServices<ICommandLogistic>().ToList();
@@ -41,7 +45,7 @@ namespace SimpleTrace.Api.Extensions
             
             var queueTaskLoop = app.ApplicationServices.GetService<CommandQueueTaskLoop>();
             queueTaskLoop.Init(
-                TimeSpan.FromSeconds(3),
+                TimeSpan.FromSeconds(traceConfig.FlushIntervalSecond),
                 queueTask,
                 app.ApplicationServices.GetService<CommandQueue>,
                 app.ApplicationServices.GetServices<ICommandLogistic>,
@@ -49,23 +53,6 @@ namespace SimpleTrace.Api.Extensions
                 DateHelper.Instance.GetDateNow);
 
             queueTaskLoop.Start();
-        }
-        private static void AddCommon(IServiceCollection services)
-        {
-            services.AddSingleton(SimpleJson.Resolve() as SimpleJson);
-            services.AddSingleton(SimpleJson.Resolve());
-            services.AddSingleton(SimpleJson.ResolveSimpleJsonFile());
-
-            services.AddSingleton(SimpleLogFactory.Resolve() as SimpleLogFactory);
-            services.AddSingleton(SimpleLogFactory.Resolve());
-
-            services.AddSingleton(WebApiHelper.Resolve() as WebApiHelper);
-            services.AddSingleton(WebApiHelper.Resolve());
-
-            //also can use like this: 
-            //services.AddSingleton<WebApiHelper>();
-            //services.AddSingleton<IWebApiHelper>(sp => sp.GetService<WebApiHelper>());
-            //WebApiHelper.Resolve = () => app.ApplicationServices.GetService<IWebApiHelper>(); //in Config process
         }
         private static void AddTraceClients(IServiceCollection services, IConfiguration configuration)
         {
@@ -75,52 +62,107 @@ namespace SimpleTrace.Api.Extensions
             services.AddSingleton(CommandQueueTaskLoop.Instance);
 
             services.AddSingleton(KnownCommands.Instance);
-            var assemblyToScan = Assembly.GetAssembly(typeof(ICommandLogistic)); //..or assembly you need
+
+            //SimpleTrace.dll
+            var assemblyToScan = Assembly.GetAssembly(typeof(ICommandLogistic)); 
             services.AddSingletonFromAssembly(assemblyToScan, typeof(ICommandLogistic));
+            services.AddSingletonFromAssembly(assemblyToScan, typeof(IClientSpanProcess));
+            
+            var traceConfig = TryLoadTraceConfig(configuration);
+            services.AddSingleton(traceConfig);
 
-            services.AddSingleton(AsyncFile.Instance);
-            services.AddSingleton<IClientSpanRepository, ClientSpanRepository>();
-            services.AddSingleton<IClientSpanProcess, TraceSaveProcess>();
+            //setup trace by config
+            if (traceConfig.TraceSaveProcessEnabled)
+            {
+                services.AddSingleton<IClientSpanRepository, ClientSpanRepository>();
+            }
+            else
+            {
+                services.AddSingleton<IClientSpanRepository, NullClientSpanRepository>();
+            }
 
-            //by config
+            var tracerContext = TracerContext.Resolve();
+            services.AddSingleton<TracerContext>(tracerContext);
 
-            var tracerSection = configuration.GetSection("Tracer");
-            var traceEndPoint = tracerSection["TraceEndPoint"];
-            var defaultTracerId = tracerSection["DefaultTracerId"];
-            var traceEnabledValue = tracerSection["Enabled"] ?? "false";
-            var traceArchiveFolder = tracerSection["TraceArchiveFolder"];
-            var flushIntervalSecondInt = int.Parse(tracerSection["FlushIntervalSecond"]);
-            var flushIntervalSecond = TimeSpan.FromSeconds(flushIntervalSecondInt);
-            bool.TryParse(traceEnabledValue, out var traceEnabled);
-            if (traceEnabled)
+            if (traceConfig.TraceSendProcessEnabled)
             {
                 var jaegerTracerConfig = new JaegerTracerConfig();
-                jaegerTracerConfig.DefaultTracerId = defaultTracerId;
-                jaegerTracerConfig.TraceEndPoint = traceEndPoint;
+                jaegerTracerConfig.DefaultTracerId = traceConfig.DefaultTracerId;
+                jaegerTracerConfig.TraceEndPoint = traceConfig.TraceEndPoint;
                 services.AddSingleton(jaegerTracerConfig);
 
                 var tracerFactory = new JaegerTracerFactory(jaegerTracerConfig);
                 services.AddSingleton<ITracerFactory>(tracerFactory);
-
-                var tracerContext = TracerContext.Resolve();
-                tracerContext.Factory = tracerFactory;
-                services.AddSingleton<TracerContext>(tracerContext);
-
-                var tracer = tracerContext.Current();
-
                 services.AddSingleton<ITraceSender, JaegerTraceSender>();
-                services.AddSingleton<IClientSpanProcess, TraceSendProcess>();
-
-
-                using (var scope = tracer.BuildSpan("Setup").StartActive(true))
+                tracerContext.Factory = tracerFactory;
+                
+                var tracer = tracerContext.Current();
+                using (var scope = tracer.BuildSpan("ShowInfo").StartActive(true))
                 {
-                    scope.Span.SetTag("ITracerFactory", "JaegerFactory");
-                    scope.Span.Log("DefaultTracerId: " + defaultTracerId);
-                    scope.Span.Log("TraceEndPoint: " + traceEndPoint);
-                    scope.Span.Log("FlushIntervalSecond: " + flushIntervalSecondInt);
-                    scope.Span.Log("TraceArchiveFolder: " + traceArchiveFolder);
+                    scope.Span.SetTag("Name", "TraceConfig");
+                    var dictionary = MyModelHelper.GetKeyValueDictionary(traceConfig);
+                    foreach (var kv in dictionary)
+                    {
+                        scope.Span.Log(kv.Key + " : " + kv.Value);
+                    }
                 }
             }
+            else
+            {
+                services.AddSingleton<ITracerFactory, NullTracerFactory>();
+                services.AddSingleton<ITraceSender, NullTraceSender>();
+            }
+        }
+        private static TraceConfig TryLoadTraceConfig(IConfiguration configuration)
+        {
+            var isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+            var traceConfig = isLinux ? TraceConfig.CreateDefaultForLinux() : TraceConfig.CreateDefaultForWindows();
+
+
+            var tracerSection = configuration.GetSection("Tracer");
+            if (tracerSection != null)
+            {
+                ////not use this to process nullable props
+                //var config = tracerSection.Get<TraceConfig>();
+
+                var traceSaveProcessEnabled = tracerSection.GetValue<bool?>("TraceSaveProcessEnabled", null);
+                if (traceSaveProcessEnabled != null)
+                {
+                    traceConfig.TraceSaveProcessEnabled = traceSaveProcessEnabled.Value;
+                }
+
+                var traceSendProcessEnabled = tracerSection.GetValue<bool?>("TraceSendProcessEnabled", null);
+                if (traceSendProcessEnabled != null)
+                {
+                    traceConfig.TraceSendProcessEnabled = traceSendProcessEnabled.Value;
+                }
+
+                var traceEndPoint = tracerSection.GetValue<string>("TraceEndPoint", null);
+                if (!string.IsNullOrWhiteSpace(traceEndPoint))
+                {
+                    traceConfig.TraceEndPoint = traceEndPoint.Trim();
+                }
+
+                var defaultTracerId = tracerSection.GetValue<string>("DefaultTracerId", null);
+                if (!string.IsNullOrWhiteSpace(defaultTracerId))
+                {
+                    traceConfig.DefaultTracerId = defaultTracerId.Trim();
+                }
+
+                var flushIntervalSecond = tracerSection.GetValue<int?>("FlushIntervalSecond", null);
+                if (flushIntervalSecond != null)
+                {
+                    traceConfig.FlushIntervalSecond = flushIntervalSecond.Value;
+                }
+
+                var traceArchiveFolder = tracerSection.GetValue<string>("TraceArchiveFolder", null);
+                if (!string.IsNullOrWhiteSpace(traceArchiveFolder))
+                {
+                    traceConfig.TraceArchiveFolder = traceArchiveFolder.Trim();
+                }
+            }
+
+            return traceConfig;
         }
 
         public static void AddSingletonFromAssembly(this IServiceCollection services, Assembly assembly, Type interfaceType)
