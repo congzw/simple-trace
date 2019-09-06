@@ -21,9 +21,10 @@ namespace SimpleTrace.Api.Controllers
             return Task.FromResult(queueProcessLogs);
         }
 
+        //use get for easy test only, todo: replace with ui and post
         [Route("QueueProcessLogs_Set")]
         [HttpGet]
-        public Task<string> QueueProcessLogs_Set(bool? enabled, bool? clear)
+        public Task<MessageResult> QueueProcessLogs_Set(bool? enabled, bool? clear)
         {
             var commandQueueProcessLogs = CommandQueueProcessLogs.Instance;
             commandQueueProcessLogs.Enabled = enabled ?? false;
@@ -33,7 +34,8 @@ namespace SimpleTrace.Api.Controllers
                 commandQueueProcessLogs.Clear();
             }
             var result = string.Format("Set at:{0} enabled:{1}, clear:{2}", DateHelper.Instance.GetDateNow(), commandQueueProcessLogs.Enabled, needClear);
-            return Task.FromResult(result);
+
+            return MessageResult.Create(true, result).AsTask();
         }
     }
 }

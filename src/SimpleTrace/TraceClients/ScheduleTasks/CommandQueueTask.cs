@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Common;
 using SimpleTrace.TraceClients.Commands;
@@ -87,10 +88,13 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
 
             var currentCommands = await DequeueCommands(commandQueue).ConfigureAwait(false);
             var spanEntities = GetEntities(commandLogistics, currentCommands, now);
-            LogInfo(string.Format("ProcessQueue at {3:yyyyMMddHHmmss} => DequeueCommands: {0}, ClientSpans: {1}, Processes:{2} ", 
+            LogInfo(string.Format("ProcessQueue at {0:yyyyMMddHHmmss} => Commands: {1}, Spans: {2}, Processes:{3} Thread:{4}", 
+                now,
                 currentCommands.Count,
                 spanEntities.Count,
-                processes.Count, now), now);
+                processes.Count, 
+                Thread.CurrentThread.ManagedThreadId), now);
+
             if (spanEntities.Count == 0)
             {
                 return;
@@ -101,9 +105,7 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
 
         private void LogInfo(string message, DateTime processAt)
         {
-            var logger = SimpleLogSingleton<CommandQueueTask>.Instance.Logger;
-            logger.LogInfo(message);
-            CommandQueueProcessLogs.Instance.SetRecord(processAt, message);
+            CommandQueueProcessLogs.Instance.LogInfo(processAt, message);
         }
     }
 
@@ -127,13 +129,16 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
 
         public IDictionary<DateTime, CommandQueueProcessLog> Items { get; set; }
 
-        public void SetRecord(DateTime processAt, string info)
+        public void LogInfo(DateTime now, string info)
         {
             if (!Enabled)
             {
                 return;
             }
-            Items[processAt] = new CommandQueueProcessLog() { ProcessAt = processAt, Info = info };
+
+            var logger = SimpleLogSingleton<CommandQueueProcessLogs>.Instance.Logger;
+            logger.LogInfo(info);
+            Items[now] = new CommandQueueProcessLog() { ProcessAt = now, Info = info };
         }
 
         public void Clear()
