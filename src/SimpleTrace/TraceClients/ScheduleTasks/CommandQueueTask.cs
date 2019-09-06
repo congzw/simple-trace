@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Common;
 using SimpleTrace.TraceClients.Commands;
 
 namespace SimpleTrace.TraceClients.ScheduleTasks
@@ -85,12 +86,22 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
             
             var currentCommands = await DequeueCommands(commandQueue).ConfigureAwait(false);
             var spanEntities = GetEntities(commandLogistics, currentCommands, now);
+            LogInfo(string.Format("ProcessQueue at {3:yyyyMMddHHmmss} => DequeueCommands: {0}, ClientSpans: {1}, Processes:{2} ", 
+                currentCommands.Count, 
+                spanEntities.Count, 
+                processes.Count, now));
             if (spanEntities.Count == 0)
             {
                 return;
             }
             var orderedProcesses = processes.OrderBy(x => x.SortNum).ToList();
             await Task.WhenAll(orderedProcesses.Select(x => x.Process(spanEntities)));
+        }
+
+        private void LogInfo(string message)
+        {
+            var logger = SimpleLogSingleton<CommandQueueTask>.Instance.Logger;
+            logger.LogInfo(message);
         }
     }
 }

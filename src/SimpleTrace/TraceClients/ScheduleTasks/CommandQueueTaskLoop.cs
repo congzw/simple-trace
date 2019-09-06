@@ -36,31 +36,13 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
                 return;
             }
 
-            if (commandQueueTask == null)
-            {
-                throw new ArgumentNullException(nameof(commandQueueTask));
-            }
-            CommandQueueTask = commandQueueTask;
+            CommandQueueTask = commandQueueTask ?? throw new ArgumentNullException(nameof(commandQueueTask));
 
+            CommandQueue = commandQueue ?? throw new ArgumentNullException(nameof(commandQueue));
 
-            if (commandQueue == null)
-            {
-                throw new ArgumentNullException(nameof(commandQueue));
-            }
-            CommandQueue = commandQueue;
+            CommandLogistics = commandLogistics == null ? throw new ArgumentNullException(nameof(commandQueue)) : commandLogistics.ToList();
 
-            if (commandLogistics == null)
-            {
-                throw new ArgumentNullException(nameof(commandLogistics));
-            }
-
-            CommandLogistics = commandLogistics.ToList();
-
-            if (clientSpanProcesses == null)
-            {
-                throw new ArgumentNullException(nameof(clientSpanProcesses));
-            }
-            ClientSpanProcesses = clientSpanProcesses.ToList();
+            ClientSpanProcesses = clientSpanProcesses == null ? throw new ArgumentNullException(nameof(clientSpanProcesses)) : clientSpanProcesses.ToList();
 
             if (getNow == null)
             {
@@ -77,14 +59,14 @@ namespace SimpleTrace.TraceClients.ScheduleTasks
 
             LoopTask.LoopTask = () =>
             {
-                LogInfo(string.Format(">>> CommandQueueTaskLoop is looping at {0:yyyy-MM-dd HH:mm:ss} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
+                LogInfo(string.Format(">>> looping at {0:yyyy-MM-dd HH:mm:ss} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
                 var now = getNow();
                 return commandQueueTask.ProcessQueue(commandQueue, CommandLogistics, ClientSpanProcesses, now);
             };
 
             LoopTask.AfterExitLoopTask = () =>
             {
-                LogInfo(string.Format(">>> CommandQueueTaskLoop is stopping at {0:yyyy-MM-dd HH:mm:ss} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
+                LogInfo(string.Format(">>> stopping at {0:yyyy-MM-dd HH:mm:ss} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));
                 return Task.FromResult(0);
             };
         }
