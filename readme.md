@@ -10,6 +10,7 @@ a simple trace solution for all client language use HTTP protocol.
 
 ### simple trace libs
 
+- Common
 - SimpleTrace
 - SimpleTrace.Api
 - SimpleTrace.Shared
