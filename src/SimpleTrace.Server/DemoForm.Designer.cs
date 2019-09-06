@@ -1,6 +1,6 @@
 ﻿namespace SimpleTrace.Server
 {
-    partial class ServicesForm
+    partial class DemoForm
     {
         /// <summary>
         /// Required designer variable.
@@ -125,15 +125,15 @@
             this.btnSingleton.UseVisualStyleBackColor = true;
             this.btnSingleton.Click += new System.EventHandler(this.btnSingleton_Click);
             // 
-            // ServicesForm
+            // DemoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "ServicesForm";
-            this.Text = "ServicesForm";
+            this.Name = "DemoForm";
+            this.Text = "DemoForm";
             this.Load += new System.EventHandler(this.ServicesForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);

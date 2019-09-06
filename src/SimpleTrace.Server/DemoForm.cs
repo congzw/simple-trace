@@ -6,11 +6,11 @@ using SimpleTrace.Server.UI;
 
 namespace SimpleTrace.Server
 {
-    public partial class ServicesForm : Form
+    public partial class DemoForm : Form
     {
-        public ServicesForm(ServicesFormCtrl servicesFormCtrl)
+        public DemoForm(DemoFormCtrl demoFormCtrl)
         {
-            Ctrl = servicesFormCtrl;
+            Ctrl = demoFormCtrl;
             InitializeComponent();
             MyInitializeComponent();
         }
@@ -24,7 +24,7 @@ namespace SimpleTrace.Server
         public AsyncUiHelperForMessageEventBus AsyncMessageHelper { get; set; }
 
 
-        public ServicesFormCtrl Ctrl { get; set; }
+        public DemoFormCtrl Ctrl { get; set; }
 
         private void ServicesForm_Load(object sender, EventArgs e)
         {

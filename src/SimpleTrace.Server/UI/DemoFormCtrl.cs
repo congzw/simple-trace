@@ -7,7 +7,7 @@ using SimpleTrace.Server.Demo;
 
 namespace SimpleTrace.Server.UI
 {
-    public class ServicesFormCtrl
+    public class DemoFormCtrl
     {
         public void ShowInfos(ServiceLifetime lifetime)
         {

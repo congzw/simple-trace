@@ -7,8 +7,8 @@ namespace SimpleTrace.Server.Init.Extensions
     {
         public static IServiceCollection AddServicesForm(this IServiceCollection services)
         {
-            services.AddTransient<ServicesFormCtrl>();
-            services.AddTransient<ServicesForm>();
+            services.AddTransient<DemoFormCtrl>();
+            services.AddTransient<DemoForm>();
             return services;
         }
     }
