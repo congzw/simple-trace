@@ -2,9 +2,9 @@
 
 namespace SimpleTrace.Server
 {
-    public partial class MainForm : Form
+    public partial class ServiceManageForm : Form
     {
-        public MainForm()
+        public ServiceManageForm()
         {
             InitializeComponent();
         }

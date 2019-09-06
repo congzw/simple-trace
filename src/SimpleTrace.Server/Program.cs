@@ -17,7 +17,6 @@ namespace SimpleTrace.Server
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new MainForm());
             Application.Run(myContainer.GetService<ServicesForm>());
         }
     }

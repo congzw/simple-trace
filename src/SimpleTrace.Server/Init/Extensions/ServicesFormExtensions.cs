@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SimpleTrace.Server.UI;
 
-namespace SimpleTrace.Server.Demo
+namespace SimpleTrace.Server.Init.Extensions
 {
-    public static class FooExtensions
+    public static class ServicesFormExtensions
     {
-        public static IServiceCollection AddFoo(this IServiceCollection services)
+        public static IServiceCollection AddServicesForm(this IServiceCollection services)
         {
-            //todo
             services.AddTransient<ServicesFormCtrl>();
             services.AddTransient<ServicesForm>();
             return services;

@@ -58,15 +58,15 @@
     <Compile Include="Common\SimpleEventBusExtensions.cs" />
     <Compile Include="Demo\FooService.cs" />
     <Compile Include="Init\Extensions\CommonExtensions.cs" />
-    <Compile Include="Demo\FooExtensions.cs" />
+    <Compile Include="Init\Extensions\ServicesFormExtensions.cs" />
     <Compile Include="Init\Extensions\SimpleTraceExtensions.cs" />
     <Compile Include="Init\MyContainer.cs" />
     <Compile Include="Init\Startup.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="ServiceManageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="ServiceManageForm.Designer.cs">
+      <DependentUpon>ServiceManageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,9 +86,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ServiceManageForm.resx">
+      <DependentUpon>ServiceManageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ServicesForm.resx">
       <DependentUpon>ServicesForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="SimpleTrace.ini" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
