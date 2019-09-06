@@ -27,5 +27,4 @@ SharedProject.SimpleTrace
 ## change list
 
 - 
-- todo: check arm or x86 for auto config log mode
 - 20190827 init projects
