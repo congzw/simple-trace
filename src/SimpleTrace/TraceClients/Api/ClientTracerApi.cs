@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Common;
 using SimpleTrace.TraceClients.Commands;
 
 namespace SimpleTrace.TraceClients.Api
@@ -51,6 +52,7 @@ namespace SimpleTrace.TraceClients.Api
 
         public Task SaveSpans(SaveSpansArgs args)
         {
+            LogInfo(args.Items.Count.ToString(), "SaveSpans");
             return _commandQueue.Enqueue(SaveSpansCommand.Create(args));
         }
 
@@ -79,6 +81,12 @@ namespace SimpleTrace.TraceClients.Api
                 queueInfo.CommandSums = commandSums;
             }
             return Task.FromResult(queueInfo);
+        }
+
+        private void LogInfo(string message, string append = null)
+        {
+            var logger = SimpleLogSingleton<ClientTracerApi>.Instance.Logger;
+            logger.LogInfo(string.Format("{0} {1} {2}" , append, DateHelper.Instance.GetNowAsFormat(), message));
         }
     }
 }

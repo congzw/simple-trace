@@ -21,11 +21,11 @@ namespace Demo.WinApp.UI
             var dateHelper = DateHelper.Instance;
             var tracerId = "DemoTracer-" + DateHelper.Instance.GetNowAsFormat("yyyyMMddHHmm");
 
+            var theTime = dateHelper.GetDateNow();
             for (int i = 0; i < args.Count; i++)
             {
                 //Task.Delay(TimeSpan.FromMilliseconds(args.IntervalMs)).Wait();
-
-                var now = dateHelper.GetDateNow();
+                var now = theTime.AddMilliseconds(args.IntervalMs * i);
                 var traceId = "Trace_" + now.Ticks;
 
                 var apiSpan1 = CreateSaveClientSpans(tracerId, traceId, null, "SPAN_001", "FooApi");

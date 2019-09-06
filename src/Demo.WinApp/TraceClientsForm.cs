@@ -11,6 +11,10 @@ namespace Demo.WinApp
         public TraceClientsForm()
         {
             InitializeComponent();
+            if (DesignMode)
+            {
+                return;
+            }
             MyInitializeComponent();
         }
 
