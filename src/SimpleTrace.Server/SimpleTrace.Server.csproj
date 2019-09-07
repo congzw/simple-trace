@@ -58,7 +58,8 @@
     <Compile Include="Common\SimpleEventBusExtensions.cs" />
     <Compile Include="Demo\FooService.cs" />
     <Compile Include="Init\Extensions\CommonExtensions.cs" />
-    <Compile Include="Init\Extensions\DemoFormExtensions.cs" />
+    <Compile Include="Init\Extensions\DemoExtensions.cs" />
+    <Compile Include="Init\Extensions\ServiceManageExtensions.cs" />
     <Compile Include="Init\Extensions\SimpleTraceExtensions.cs" />
     <Compile Include="Init\MyContainer.cs" />
     <Compile Include="Init\Startup.cs" />

@@ -8,7 +8,8 @@ namespace SimpleTrace.Server.Init
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCommon();
-            services.AddDemoForm();
+            services.AddDemo();
+            services.AddServiceManage();
             services.AddSimpleTrace();
         }
     }

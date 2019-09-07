@@ -1,11 +1,15 @@
 ﻿using System.Windows.Forms;
+using SimpleTrace.Server.UI;
 
 namespace SimpleTrace.Server
 {
     public partial class ServiceManageForm : Form
     {
-        public ServiceManageForm()
+        public ServiceManageFormCtrl Ctrl { get; }
+
+        public ServiceManageForm(ServiceManageFormCtrl ctrl)
         {
+            Ctrl = ctrl;
             InitializeComponent();
         }
 

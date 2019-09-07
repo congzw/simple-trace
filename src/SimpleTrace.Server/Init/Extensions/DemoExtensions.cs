@@ -3,9 +3,9 @@ using SimpleTrace.Server.UI;
 
 namespace SimpleTrace.Server.Init.Extensions
 {
-    public static class DemoFormExtensions
+    public static class DemoExtensions
     {
-        public static IServiceCollection AddDemoForm(this IServiceCollection services)
+        public static IServiceCollection AddDemo(this IServiceCollection services)
         {
             services.AddTransient<DemoFormCtrl>();
             services.AddTransient<DemoForm>();
