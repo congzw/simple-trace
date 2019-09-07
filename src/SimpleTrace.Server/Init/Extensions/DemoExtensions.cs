@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SimpleTrace.Server.UI;
+using SimpleTrace.Server.Demos;
 
 namespace SimpleTrace.Server.Init.Extensions
 {

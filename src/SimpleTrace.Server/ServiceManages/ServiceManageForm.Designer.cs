@@ -1,4 +1,4 @@
-﻿namespace SimpleTrace.Server
+﻿namespace SimpleTrace.Server.ServiceManages
 {
     partial class ServiceManageForm
     {

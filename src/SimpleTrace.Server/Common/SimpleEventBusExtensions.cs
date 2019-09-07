@@ -1,4 +1,4 @@
-﻿using Common;
+﻿
 // ReSharper disable CheckNamespace
 
 namespace Common

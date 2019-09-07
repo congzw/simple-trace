@@ -1,7 +1,7 @@
 ﻿using System;
 using Common;
 
-namespace SimpleTrace.Server.Demo
+namespace SimpleTrace.Server.Demos
 {
     public interface IFooService : IDisposable
     {

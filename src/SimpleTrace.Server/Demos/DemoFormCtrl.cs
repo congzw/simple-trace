@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 using Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using SimpleTrace.Server.Demo;
 
-namespace SimpleTrace.Server.UI
+namespace SimpleTrace.Server.Demos
 {
     public class DemoFormCtrl
     {

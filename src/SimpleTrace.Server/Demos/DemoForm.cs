@@ -2,9 +2,8 @@
 using System.Windows.Forms;
 using Common;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleTrace.Server.UI;
 
-namespace SimpleTrace.Server
+namespace SimpleTrace.Server.Demos
 {
     public partial class DemoForm : Form
     {

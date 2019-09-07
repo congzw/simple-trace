@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SimpleTrace.Server.CallApis;
 
-namespace SimpleTrace.Server.CallApis
+namespace SimpleTrace.Server.Init.Extensions
 {
     public static class CallApiExtensions
     {

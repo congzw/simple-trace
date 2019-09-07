@@ -1,15 +1,13 @@
 ﻿using System.Windows.Forms;
 using Common;
-using SimpleTrace.Server.CallApis;
-using SimpleTrace.Server.UI;
 
-namespace SimpleTrace.Server
+namespace SimpleTrace.Server.ServiceManages
 {
     public partial class ServiceManageForm : Form
     {
-        public CallApiFormCtrl Ctrl { get; }
+        public ServiceManageFormCtrl Ctrl { get; }
 
-        public ServiceManageForm(CallApiFormCtrl ctrl)
+        public ServiceManageForm(ServiceManageFormCtrl ctrl)
         {
             Ctrl = ctrl;
             InitializeComponent();
@@ -26,16 +24,14 @@ namespace SimpleTrace.Server
 
         private async void btnRead_Click(object sender, System.EventArgs e)
         {
-            var clientSpans = await Ctrl.ReadClientSpanEntities();
-            AsyncMessageHelper.SafeUpdateUi("ReadSpans: " + clientSpans.Count);
+            await Ctrl.ToDo();
+            AsyncMessageHelper.SafeUpdateUi("ToDo");
         }
 
         private async void btnLoad_Click(object sender, System.EventArgs e)
         {
-            var clientSpans = await Ctrl.ReadClientSpanEntities();
-            AsyncMessageHelper.SafeUpdateUi("ReadSpans: " + clientSpans.Count);
-            await Ctrl.SendApiSpans(clientSpans);
-            AsyncMessageHelper.SafeUpdateUi("LoadSpans: " + clientSpans.Count);
+            await Ctrl.ToDo();
+            AsyncMessageHelper.SafeUpdateUi("ToDo");
         }
 
         private void btnClear_Click(object sender, System.EventArgs e)

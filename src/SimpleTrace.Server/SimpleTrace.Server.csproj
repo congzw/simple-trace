@@ -62,31 +62,33 @@
     <Compile Include="Common\AsyncUiHelperForMessageEventBus.cs" />
     <Compile Include="Common\SimpleEventBus.cs" />
     <Compile Include="Common\SimpleEventBusExtensions.cs" />
-    <Compile Include="Demo\FooService.cs" />
+    <Compile Include="Demos\FooService.cs" />
+    <Compile Include="Init\AppHelper.cs" />
     <Compile Include="Init\Extensions\CommonExtensions.cs" />
     <Compile Include="Init\Extensions\DemoExtensions.cs" />
     <Compile Include="Init\Extensions\CallApiExtensions.cs" />
     <Compile Include="Init\Extensions\SimpleTraceExtensions.cs" />
     <Compile Include="Init\MyContainer.cs" />
     <Compile Include="Init\Startup.cs" />
-    <Compile Include="ServiceManageForm.cs">
+    <Compile Include="ServiceManages\ServiceManageForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServiceManageForm.Designer.cs">
+    <Compile Include="ServiceManages\ServiceManageForm.Designer.cs">
       <DependentUpon>ServiceManageForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Demo\DemoForm.cs">
+    <Compile Include="Demos\DemoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Demo\DemoForm.Designer.cs">
+    <Compile Include="Demos\DemoForm.Designer.cs">
       <DependentUpon>DemoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\ThreadExceptionHandler.cs" />
     <Compile Include="CallApis\ClientSpanRepos.cs" />
     <Compile Include="CallApis\CallApiFormCtrl.cs" />
-    <Compile Include="Demo\DemoFormCtrl.cs" />
+    <Compile Include="Demos\DemoFormCtrl.cs" />
+    <Compile Include="ServiceManages\ServiceManageFormCtrl.cs" />
     <EmbeddedResource Include="CallApis\CallApiForm.resx">
       <DependentUpon>CallApiForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -99,10 +101,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ServiceManageForm.resx">
+    <EmbeddedResource Include="ServiceManages\ServiceManageForm.resx">
       <DependentUpon>ServiceManageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Demo\DemoForm.resx">
+    <EmbeddedResource Include="Demos\DemoForm.resx">
       <DependentUpon>DemoForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="SimpleTrace.ini" />
