@@ -76,6 +76,7 @@
     <Compile Include="DemoForm.Designer.cs">
       <DependentUpon>DemoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Common\ThreadExceptionHandler.cs" />
     <Compile Include="UI\ServiceManageFormCtrl.cs" />
     <Compile Include="UI\DemoFormCtrl.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

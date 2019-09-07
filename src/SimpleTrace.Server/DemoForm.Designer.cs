@@ -35,6 +35,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnTransient = new System.Windows.Forms.Button();
             this.btnSingleton = new System.Windows.Forms.Button();
+            this.btnThrowEx = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -93,6 +94,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnThrowEx);
             this.splitContainer1.Panel1.Controls.Add(this.btnTransient);
             this.splitContainer1.Panel1.Controls.Add(this.btnSingleton);
             // 
@@ -125,6 +127,17 @@
             this.btnSingleton.UseVisualStyleBackColor = true;
             this.btnSingleton.Click += new System.EventHandler(this.btnSingleton_Click);
             // 
+            // btnThrowEx
+            // 
+            this.btnThrowEx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnThrowEx.Location = new System.Drawing.Point(590, 12);
+            this.btnThrowEx.Name = "btnThrowEx";
+            this.btnThrowEx.Size = new System.Drawing.Size(96, 23);
+            this.btnThrowEx.TabIndex = 39;
+            this.btnThrowEx.Text = "ThrowEx";
+            this.btnThrowEx.UseVisualStyleBackColor = true;
+            this.btnThrowEx.Click += new System.EventHandler(this.btnThrowEx_Click);
+            // 
             // DemoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -154,5 +167,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button btnSingleton;
         private System.Windows.Forms.Button btnTransient;
+        private System.Windows.Forms.Button btnThrowEx;
     }
 }

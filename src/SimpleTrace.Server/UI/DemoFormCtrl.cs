@@ -31,5 +31,10 @@ namespace SimpleTrace.Server.UI
                 }
             }
         }
+
+        public void ThrowEx(string message)
+        {
+            throw new Exception(message);
+        }
     }
 }

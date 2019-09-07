@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
+using Common;
 using SimpleTrace.Server.Init;
 
 namespace SimpleTrace.Server
@@ -17,7 +19,25 @@ namespace SimpleTrace.Server
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(myContainer.GetService<DemoForm>());
+            Application.ThreadException += Application_ThreadException;
+
+            var form = myContainer.GetService<DemoForm>();
+            //var form = myContainer.GetService<ServiceManageForm>();
+            Application.Run(form);
+        }
+
+        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            //https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.application.threadexception
+            //ThreadException event to handle UI thread exceptions
+            //UnhandledException event to handle non-UI thread exceptions.
+            //UnhandledException cannot prevent an application from terminating
+
+            if (e.Exception is Exception ex)
+            {
+                var logger = MyContainer.Instance.GetService<ISimpleLogFactory>().GetOrCreate(null);
+                logger.LogEx(ex);
+            }
         }
     }
 }

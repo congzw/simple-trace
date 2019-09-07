@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Common;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleTrace.Server.Init;
 using SimpleTrace.Server.UI;
 
 namespace SimpleTrace.Server
@@ -39,6 +40,11 @@ namespace SimpleTrace.Server
         private void btnTransient_Click(object sender, EventArgs e)
         {
             Ctrl.ShowInfos(ServiceLifetime.Transient);
+        }
+
+        private void btnThrowEx_Click(object sender, EventArgs e)
+        {
+            Ctrl.ThrowEx("App Ex At: " + DateTime.Now);
         }
 
         private void btnRun_Click(object sender, EventArgs e)
