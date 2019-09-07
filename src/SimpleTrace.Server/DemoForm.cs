@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using Common;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleTrace.Server.Init;
 using SimpleTrace.Server.UI;
 
 namespace SimpleTrace.Server

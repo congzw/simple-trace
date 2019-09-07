@@ -8,5 +8,15 @@ namespace SimpleTrace.Server
         {
             InitializeComponent();
         }
+
+        private void btnRead_Click(object sender, System.EventArgs e)
+        {
+
+        }
+
+        private void btnLoad_Click(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }

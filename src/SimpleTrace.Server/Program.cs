@@ -21,8 +21,13 @@ namespace SimpleTrace.Server
             Application.SetCompatibleTextRenderingDefault(false);
             Application.ThreadException += Application_ThreadException;
 
-            var form = myContainer.GetService<DemoForm>();
-            //var form = myContainer.GetService<ServiceManageForm>();
+            //var form = myContainer.GetService<DemoForm>();
+            var form = myContainer.GetService<ServiceManageForm>();
+            if (form == null)
+            {
+                MessageBox.Show(@"Fail to create entry form!");
+                return;
+            }
             Application.Run(form);
         }
 

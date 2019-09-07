@@ -39,6 +39,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btnLoad = new System.Windows.Forms.Button();
             this.txtConfig = new System.Windows.Forms.TextBox();
+            this.btnRead = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -52,7 +53,7 @@
             this.txtMessage.Location = new System.Drawing.Point(0, 0);
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(800, 268);
+            this.txtMessage.Size = new System.Drawing.Size(800, 243);
             this.txtMessage.TabIndex = 24;
             // 
             // btnClear
@@ -139,25 +140,27 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.btnLoad);
             this.splitContainer1.Panel1.Controls.Add(this.txtConfig);
+            this.splitContainer1.Panel1.Controls.Add(this.btnRead);
+            this.splitContainer1.Panel1.Controls.Add(this.btnLoad);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtMessage);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
-            this.splitContainer1.SplitterDistance = 178;
+            this.splitContainer1.Size = new System.Drawing.Size(800, 407);
+            this.splitContainer1.SplitterDistance = 160;
             this.splitContainer1.TabIndex = 41;
             // 
             // btnLoad
             // 
             this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoad.Location = new System.Drawing.Point(713, 12);
+            this.btnLoad.Location = new System.Drawing.Point(713, 41);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(75, 23);
             this.btnLoad.TabIndex = 35;
             this.btnLoad.Text = "LoadTraces";
             this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // txtConfig
             // 
@@ -165,16 +168,27 @@
             this.txtConfig.Location = new System.Drawing.Point(0, 0);
             this.txtConfig.Multiline = true;
             this.txtConfig.Name = "txtConfig";
-            this.txtConfig.Size = new System.Drawing.Size(800, 178);
+            this.txtConfig.Size = new System.Drawing.Size(800, 160);
             this.txtConfig.TabIndex = 27;
+            // 
+            // btnRead
+            // 
+            this.btnRead.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRead.Location = new System.Drawing.Point(713, 12);
+            this.btnRead.Name = "btnRead";
+            this.btnRead.Size = new System.Drawing.Size(75, 23);
+            this.btnRead.TabIndex = 36;
+            this.btnRead.Text = "ReadTraces";
+            this.btnRead.UseVisualStyleBackColor = true;
+            this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
             // 
             // ServiceManageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.groupBox1);
             this.Name = "ServiceManageForm";
             this.Text = "ServiceManage";
             this.groupBox1.ResumeLayout(false);
@@ -201,6 +215,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.TextBox txtConfig;
+        private System.Windows.Forms.Button btnRead;
     }
 }
 
