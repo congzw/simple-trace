@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Common;
 using SimpleTrace.TraceClients;
 
-namespace SimpleTrace.Server.UI
+namespace SimpleTrace.Server.CallApis
 {
     public class ClientSpanRepos
     {

@@ -1,15 +1,13 @@
 ﻿using System.Windows.Forms;
 using Common;
-using SimpleTrace.Server.CallApis;
-using SimpleTrace.Server.UI;
 
-namespace SimpleTrace.Server
+namespace SimpleTrace.Server.CallApis
 {
-    public partial class ServiceManageForm : Form
+    public partial class CallApiForm : Form
     {
         public CallApiFormCtrl Ctrl { get; }
 
-        public ServiceManageForm(CallApiFormCtrl ctrl)
+        public CallApiForm(CallApiFormCtrl ctrl)
         {
             Ctrl = ctrl;
             InitializeComponent();

@@ -1,5 +1,6 @@
 ﻿using Common;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleTrace.Server.CallApis;
 using SimpleTrace.Server.UI;
 using SimpleTrace.TraceClients.ApiProxy;
 

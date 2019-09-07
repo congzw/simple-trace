@@ -5,14 +5,14 @@ using Common;
 using SimpleTrace.TraceClients;
 using SimpleTrace.TraceClients.ApiProxy;
 
-namespace SimpleTrace.Server.UI
+namespace SimpleTrace.Server.CallApis
 {
-    public class ServiceManageFormCtrl
+    public class CallApiFormCtrl
     {
         private readonly ClientSpanRepos _clientSpanRepository;
         private readonly IClientTracerApiProxy _apiProxy;
 
-        public ServiceManageFormCtrl(ClientSpanRepos clientSpanRepository, IClientTracerApiProxy apiProxy)
+        public CallApiFormCtrl(ClientSpanRepos clientSpanRepository, IClientTracerApiProxy apiProxy)
         {
             _clientSpanRepository = clientSpanRepository;
             _apiProxy = apiProxy;
@@ -39,7 +39,7 @@ namespace SimpleTrace.Server.UI
 
         private void LogInfo(string info)
         {
-            var logger = SimpleLogSingleton<ServiceManageFormCtrl>.Instance.Logger;
+            var logger = SimpleLogSingleton<CallApiFormCtrl>.Instance.Logger;
             logger.LogInfo(info);
         }
     }

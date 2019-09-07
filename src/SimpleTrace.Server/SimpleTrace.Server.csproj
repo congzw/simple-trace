@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CallApis\CallApiForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CallApis\CallApiForm.Designer.cs">
+      <DependentUpon>CallApiForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Common\AsyncUiHelper.cs" />
     <Compile Include="Common\AsyncUiHelperForMessageEventBus.cs" />
     <Compile Include="Common\SimpleEventBus.cs" />
@@ -59,7 +65,7 @@
     <Compile Include="Demo\FooService.cs" />
     <Compile Include="Init\Extensions\CommonExtensions.cs" />
     <Compile Include="Init\Extensions\DemoExtensions.cs" />
-    <Compile Include="Init\Extensions\ServiceManageExtensions.cs" />
+    <Compile Include="Init\Extensions\CallApiExtensions.cs" />
     <Compile Include="Init\Extensions\SimpleTraceExtensions.cs" />
     <Compile Include="Init\MyContainer.cs" />
     <Compile Include="Init\Startup.cs" />
@@ -71,16 +77,19 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DemoForm.cs">
+    <Compile Include="Demo\DemoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DemoForm.Designer.cs">
+    <Compile Include="Demo\DemoForm.Designer.cs">
       <DependentUpon>DemoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\ThreadExceptionHandler.cs" />
-    <Compile Include="UI\ClientSpanRepos.cs" />
-    <Compile Include="UI\ServiceManageFormCtrl.cs" />
-    <Compile Include="UI\DemoFormCtrl.cs" />
+    <Compile Include="CallApis\ClientSpanRepos.cs" />
+    <Compile Include="CallApis\CallApiFormCtrl.cs" />
+    <Compile Include="Demo\DemoFormCtrl.cs" />
+    <EmbeddedResource Include="CallApis\CallApiForm.resx">
+      <DependentUpon>CallApiForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -93,7 +102,7 @@
     <EmbeddedResource Include="ServiceManageForm.resx">
       <DependentUpon>ServiceManageForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DemoForm.resx">
+    <EmbeddedResource Include="Demo\DemoForm.resx">
       <DependentUpon>DemoForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="SimpleTrace.ini" />

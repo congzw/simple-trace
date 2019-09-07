@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows.Forms;
 using Common;
+using SimpleTrace.Server.CallApis;
 using SimpleTrace.Server.Init;
 
 namespace SimpleTrace.Server
@@ -23,7 +24,8 @@ namespace SimpleTrace.Server
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             //var form = myContainer.GetService<DemoForm>();
-            var form = myContainer.GetService<ServiceManageForm>();
+            //var form = myContainer.GetService<ServiceManageForm>();
+            var form = myContainer.GetService<CallApiForm>();
             if (form == null)
             {
                 MessageBox.Show(@"Fail to create entry form!");
