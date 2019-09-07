@@ -38,6 +38,7 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.txtConfig = new System.Windows.Forms.TextBox();
+            this.btnLoad = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -144,6 +145,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnLoad);
             this.splitContainer1.Panel1.Controls.Add(this.txtConfig);
             // 
             // splitContainer1.Panel2
@@ -161,6 +163,17 @@
             this.txtConfig.Name = "txtConfig";
             this.txtConfig.Size = new System.Drawing.Size(800, 160);
             this.txtConfig.TabIndex = 27;
+            // 
+            // btnLoad
+            // 
+            this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLoad.Location = new System.Drawing.Point(713, 12);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(75, 23);
+            this.btnLoad.TabIndex = 36;
+            this.btnLoad.Text = "LoadTraces";
+            this.btnLoad.UseVisualStyleBackColor = true;
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // ServiceManageForm
             // 
@@ -195,6 +208,7 @@
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TextBox txtConfig;
+        private System.Windows.Forms.Button btnLoad;
     }
 }
 

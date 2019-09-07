@@ -31,6 +31,8 @@ namespace SimpleTrace.Server
                 MessageBox.Show(@"Fail to create entry form!");
                 return;
             }
+
+            form.StartPosition = FormStartPosition.CenterScreen;
             Application.Run(form);
         }
     }

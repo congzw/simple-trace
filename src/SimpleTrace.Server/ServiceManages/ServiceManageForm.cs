@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using Common;
+using SimpleTrace.Server.CallApis;
+using SimpleTrace.Server.Init;
 
 namespace SimpleTrace.Server.ServiceManages
 {
@@ -64,6 +65,17 @@ namespace SimpleTrace.Server.ServiceManages
         private void btnClear_Click(object sender, System.EventArgs e)
         {
             this.txtMessage.Clear();
+        }
+
+        private void btnLoad_Click(object sender, System.EventArgs e)
+        {
+            using (var theForm = MyContainer.Instance.GetService<CallApiForm>())
+            {
+                this.Hide();
+                theForm.StartPosition = FormStartPosition.CenterScreen;
+                theForm.ShowDialog(this);
+                this.Show();
+            }
         }
     }
 }
