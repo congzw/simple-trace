@@ -1,7 +1,5 @@
-﻿using Common;
-using Microsoft.Extensions.DependencyInjection;
-using SimpleTrace.Server.CallApis;
-using SimpleTrace.TraceClients.ApiProxy;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SimpleTrace.Server.ServiceManages;
 
 namespace SimpleTrace.Server.Init.Extensions
 {
@@ -9,26 +7,8 @@ namespace SimpleTrace.Server.Init.Extensions
     {
         public static IServiceCollection AddSimpleTrace(this IServiceCollection services)
         {
-            //services.AddSingleton<IClientSpanRepository, ClientSpanRepository>();
-
-            services.AddTransient<ClientSpanRepos>();
-
-            //todo read from config
-            var apiProxyConfig = new ApiProxyConfig();
-            services.AddSingleton(apiProxyConfig);
-
-            //IClientTracerApiProxy
-            services.AddSingleton<IClientTracerApiProxy>(sp =>
-            {
-                var webApiHelper = sp.GetService<IWebApiHelper>();
-                var proxyConfig = sp.GetService<ApiProxyConfig>();
-                var httpClientTracerApiProxy = new HttpClientTracerApiProxy(webApiHelper, proxyConfig);
-                var apiProxySmartWrapper = ClientTracerApiProxySmartWrapper.Resolve();
-                apiProxySmartWrapper.Reset(httpClientTracerApiProxy);
-
-                return apiProxySmartWrapper;
-            });
-
+            services.AddTransient<ServiceManageFormCtrl>();
+            services.AddTransient<ServiceManageForm>();
             return services;
         }
     }

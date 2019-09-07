@@ -17,6 +17,14 @@ namespace SimpleTrace.Server
 
             appMain.HandleGlobalException();
 
+            if (appMain.NeedRunAsAdmin() && !appMain.IsRunAsAdmin())
+            {
+                var message = string.Format("{0}{1}{2}", "服务的安装、卸载需要管理员身份！", Environment.NewLine,
+                    "请尝试使用右键，然后以管理员身份运行此程序！");
+                MessageBox.Show(message);
+                return;
+            }
+
             var form = appMain.CreateEntryForm();
             if (form == null)
             {

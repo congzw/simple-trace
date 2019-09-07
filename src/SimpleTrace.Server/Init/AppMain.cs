@@ -16,11 +16,22 @@ namespace SimpleTrace.Server.Init
             Container.Init(new Startup().ConfigureServices);
         }
 
-        public static bool IsRunAsAdmin()
+        public bool IsRunAsAdmin()
         {
             var identity = WindowsIdentity.GetCurrent();
             var principal = new WindowsPrincipal(identity);
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        public bool NeedRunAsAdmin()
+        {
+            var simpleIniFile = SimpleIni.ResolveFile();
+            var items = simpleIniFile.TryLoadIniFileItems("SimpleTrace.ini");
+            var runAsAdminValue = simpleIniFile.GetValue(items, "Entry", "RunAsAdmin");
+            var runAsAdmin = runAsAdminValue == null ? "false" : runAsAdminValue.ToString().Trim();
+
+            bool.TryParse(runAsAdmin, out var needRunAsAdmin);
+            return needRunAsAdmin;
         }
 
         public void HandleGlobalException()
@@ -33,23 +44,23 @@ namespace SimpleTrace.Server.Init
         {
             var simpleIniFile = SimpleIni.ResolveFile();
             var items = simpleIniFile.TryLoadIniFileItems("SimpleTrace.ini");
-            var value = simpleIniFile.GetValue(items, "Entry", "FormName");
-            var entryFormName = value == null ?  string.Empty : value.ToString().Trim();
+            var entryFormNameValue = simpleIniFile.GetValue(items, "Entry", "FormName");
+            var entryFormName = entryFormNameValue == null ? string.Empty : entryFormNameValue.ToString().Trim();
 
-            if (entryFormName.Equals("CallApiForm", StringComparison.Ordinal))
+            if (entryFormName.IsSameName(KnownFormNames.CallApiForm))
             {
                 return Container.GetService<CallApis.CallApiForm>();
             }
 
-            if (entryFormName.Equals("ServiceManage", StringComparison.Ordinal))
+            if (entryFormName.IsSameName(KnownFormNames.ServiceManageForm))
             {
                 return Container.GetService<ServiceManages.ServiceManageForm>();
             }
-            
+
             //default
             return Container.GetService<Demos.DemoForm>();
         }
-        
+
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             //https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.application.threadexception
@@ -75,5 +86,27 @@ namespace SimpleTrace.Server.Init
 
 
         public static AppMain Instance = new AppMain();
+    }
+
+    public static class KnownFormNames
+    {
+        public static string ServiceManageForm = "ServiceManageForm";
+        public static string CallApiForm = "CallApiForm";
+        public static string DemoForm = "DemoForm";
+
+        public static bool IsSameName(this string name1, string name2)
+        {
+            if (name1 == null)
+            {
+                return false;
+            }
+
+            if (name2 == null)
+            {
+                return false;
+            }
+
+            return name1.Trim().Equals(name2.Trim(), StringComparison.OrdinalIgnoreCase);
+        }
     }
 }
