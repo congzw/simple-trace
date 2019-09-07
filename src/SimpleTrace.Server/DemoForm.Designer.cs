@@ -28,29 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtMessage = new System.Windows.Forms.TextBox();
             this.btnRun = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnThrowEx = new System.Windows.Forms.Button();
             this.btnTransient = new System.Windows.Forms.Button();
             this.btnSingleton = new System.Windows.Forms.Button();
-            this.btnThrowEx = new System.Windows.Forms.Button();
+            this.txtMessage = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // txtMessage
-            // 
-            this.txtMessage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtMessage.Location = new System.Drawing.Point(0, 0);
-            this.txtMessage.Multiline = true;
-            this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(800, 268);
-            this.txtMessage.TabIndex = 24;
             // 
             // btnRun
             // 
@@ -101,9 +92,20 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.txtMessage);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
-            this.splitContainer1.SplitterDistance = 178;
-            this.splitContainer1.TabIndex = 41;
+            this.splitContainer1.Size = new System.Drawing.Size(800, 407);
+            this.splitContainer1.SplitterDistance = 160;
+            this.splitContainer1.TabIndex = 42;
+            // 
+            // btnThrowEx
+            // 
+            this.btnThrowEx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnThrowEx.Location = new System.Drawing.Point(590, 12);
+            this.btnThrowEx.Name = "btnThrowEx";
+            this.btnThrowEx.Size = new System.Drawing.Size(96, 23);
+            this.btnThrowEx.TabIndex = 39;
+            this.btnThrowEx.Text = "ThrowEx";
+            this.btnThrowEx.UseVisualStyleBackColor = true;
+            this.btnThrowEx.Click += new System.EventHandler(this.btnThrowEx_Click);
             // 
             // btnTransient
             // 
@@ -127,24 +129,22 @@
             this.btnSingleton.UseVisualStyleBackColor = true;
             this.btnSingleton.Click += new System.EventHandler(this.btnSingleton_Click);
             // 
-            // btnThrowEx
+            // txtMessage
             // 
-            this.btnThrowEx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnThrowEx.Location = new System.Drawing.Point(590, 12);
-            this.btnThrowEx.Name = "btnThrowEx";
-            this.btnThrowEx.Size = new System.Drawing.Size(96, 23);
-            this.btnThrowEx.TabIndex = 39;
-            this.btnThrowEx.Text = "ThrowEx";
-            this.btnThrowEx.UseVisualStyleBackColor = true;
-            this.btnThrowEx.Click += new System.EventHandler(this.btnThrowEx_Click);
+            this.txtMessage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtMessage.Location = new System.Drawing.Point(0, 0);
+            this.txtMessage.Multiline = true;
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.Size = new System.Drawing.Size(800, 243);
+            this.txtMessage.TabIndex = 24;
             // 
             // DemoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.groupBox1);
             this.Name = "DemoForm";
             this.Text = "DemoForm";
             this.Load += new System.EventHandler(this.ServicesForm_Load);
@@ -159,14 +159,13 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button btnSingleton;
-        private System.Windows.Forms.Button btnTransient;
         private System.Windows.Forms.Button btnThrowEx;
+        private System.Windows.Forms.Button btnTransient;
+        private System.Windows.Forms.Button btnSingleton;
+        private System.Windows.Forms.TextBox txtMessage;
     }
 }

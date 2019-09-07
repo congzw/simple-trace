@@ -68,7 +68,11 @@ namespace Common
 
         public static void LogEx(this ISimpleLog simpleLog, Exception ex, string message = null)
         {
-            var logMessage = string.Format("{0} => {1}", message ?? ex.Message, ex.StackTrace);
+            if (ex == null)
+            {
+                return;
+            }
+            var logMessage = string.Format("{0} {1}", message ?? ex.Message, Environment.NewLine + ex.StackTrace);
             simpleLog.Log(logMessage, SimpleLogLevel.Error);
         }
     }
