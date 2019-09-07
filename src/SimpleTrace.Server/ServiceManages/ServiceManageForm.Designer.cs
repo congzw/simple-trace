@@ -37,8 +37,6 @@
             this.btnInstall = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.btnRead = new System.Windows.Forms.Button();
-            this.btnLoad = new System.Windows.Forms.Button();
             this.txtConfig = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -76,6 +74,7 @@
             this.btnStart.TabIndex = 29;
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // groupBox1
             // 
@@ -101,6 +100,7 @@
             this.btnGetStatus.TabIndex = 34;
             this.btnGetStatus.Text = "GetStatus";
             this.btnGetStatus.UseVisualStyleBackColor = true;
+            this.btnGetStatus.Click += new System.EventHandler(this.btnGetStatus_Click);
             // 
             // btnUninstall
             // 
@@ -111,6 +111,7 @@
             this.btnUninstall.TabIndex = 33;
             this.btnUninstall.Text = "Uninstall";
             this.btnUninstall.UseVisualStyleBackColor = true;
+            this.btnUninstall.Click += new System.EventHandler(this.btnUninstall_Click);
             // 
             // btnInstall
             // 
@@ -121,6 +122,7 @@
             this.btnInstall.TabIndex = 32;
             this.btnInstall.Text = "Install";
             this.btnInstall.UseVisualStyleBackColor = true;
+            this.btnInstall.Click += new System.EventHandler(this.btnInstall_Click);
             // 
             // btnStop
             // 
@@ -131,6 +133,7 @@
             this.btnStop.TabIndex = 31;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // splitContainer1
             // 
@@ -141,8 +144,6 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.btnRead);
-            this.splitContainer1.Panel1.Controls.Add(this.btnLoad);
             this.splitContainer1.Panel1.Controls.Add(this.txtConfig);
             // 
             // splitContainer1.Panel2
@@ -151,28 +152,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(800, 407);
             this.splitContainer1.SplitterDistance = 160;
             this.splitContainer1.TabIndex = 41;
-            // 
-            // btnRead
-            // 
-            this.btnRead.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRead.Location = new System.Drawing.Point(713, 12);
-            this.btnRead.Name = "btnRead";
-            this.btnRead.Size = new System.Drawing.Size(75, 23);
-            this.btnRead.TabIndex = 36;
-            this.btnRead.Text = "ReadTraces";
-            this.btnRead.UseVisualStyleBackColor = true;
-            this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
-            // 
-            // btnLoad
-            // 
-            this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoad.Location = new System.Drawing.Point(713, 41);
-            this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(75, 23);
-            this.btnLoad.TabIndex = 35;
-            this.btnLoad.Text = "LoadTraces";
-            this.btnLoad.UseVisualStyleBackColor = true;
-            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
             // txtConfig
             // 
@@ -192,6 +171,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "ServiceManageForm";
             this.Text = "ServiceManage";
+            this.Load += new System.EventHandler(this.ServiceManageForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -214,9 +194,7 @@
         private System.Windows.Forms.Button btnInstall;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.TextBox txtConfig;
-        private System.Windows.Forms.Button btnRead;
     }
 }
 

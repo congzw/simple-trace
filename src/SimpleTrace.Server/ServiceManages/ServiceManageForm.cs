@@ -22,18 +22,46 @@ namespace SimpleTrace.Server.ServiceManages
 
         public AsyncUiHelperForMessageEventBus AsyncMessageHelper { get; set; }
 
-        private async void btnRead_Click(object sender, System.EventArgs e)
+        private void ServiceManageForm_Load(object sender, System.EventArgs e)
         {
-            await Ctrl.ToDo();
-            AsyncMessageHelper.SafeUpdateUi("ToDo");
+            var serviceInfo = Ctrl.LoadWindowServiceInfo();
+            var formatConfig = Ctrl.FormatConfig(serviceInfo);
+            Ctrl.Init(serviceInfo);
+            this.txtConfig.Text = formatConfig;
         }
 
-        private async void btnLoad_Click(object sender, System.EventArgs e)
+        private async void btnGetStatus_Click(object sender, System.EventArgs e)
         {
             await Ctrl.ToDo();
-            AsyncMessageHelper.SafeUpdateUi("ToDo");
+            //AsyncMessageHelper.SafeUpdateUi("ToDo");
+            //var tryGetStatus = Ctrl.TheController.TryGetStatus();
+            //MessageBox.Show(tryGetStatus.Message);
         }
 
+
+        private void btnInstall_Click(object sender, System.EventArgs e)
+        {
+            var messageResult = Ctrl.TheController.TryInstall();
+            MessageBox.Show(messageResult.Message);
+        }
+
+        private void btnUninstall_Click(object sender, System.EventArgs e)
+        {
+            var messageResult = Ctrl.TheController.TryUninstall();
+            MessageBox.Show(messageResult.Message);
+        }
+
+        private void btnStart_Click(object sender, System.EventArgs e)
+        {
+            var messageResult = Ctrl.TheController.TryStart();
+            MessageBox.Show(messageResult.Message);
+        }
+
+        private void btnStop_Click(object sender, System.EventArgs e)
+        {
+            var messageResult = Ctrl.TheController.TryStop();
+            MessageBox.Show(messageResult.Message);
+        }
         private void btnClear_Click(object sender, System.EventArgs e)
         {
             this.txtMessage.Clear();

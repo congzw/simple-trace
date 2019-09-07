@@ -62,6 +62,8 @@
     <Compile Include="Common\AsyncUiHelperForMessageEventBus.cs" />
     <Compile Include="Common\SimpleEventBus.cs" />
     <Compile Include="Common\SimpleEventBusExtensions.cs" />
+    <Compile Include="Common\WindowsServices\ServiceController.cs" />
+    <Compile Include="Common\WindowsServices\ServiceInstaller.cs" />
     <Compile Include="Demos\FooService.cs" />
     <Compile Include="Init\AppMain.cs" />
     <Compile Include="Init\Extensions\CommonExtensions.cs" />
