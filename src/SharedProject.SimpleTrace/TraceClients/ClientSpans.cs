@@ -16,6 +16,51 @@ namespace SimpleTrace.TraceClients
 
     public static class ClientSpanExtensions
     {
+        public static MessageResult ValidateSave(this IClientSpan clientSpan, bool validateFinish)
+        {
+            var result = MessageResult.FailResult(string.Empty);
+            if (clientSpan == null)
+            {
+                result.Message = "Span不能空";
+                return result;
+            }
+
+            result.Data = clientSpan;
+
+            var isBadLocateArgs = clientSpan.IsBadLocateArgs(ClientSpanLocateMode.ForCurrent);
+            if (isBadLocateArgs)
+            {
+                result.Message = "Span的关键KEY不能空";
+                return result;
+            }
+
+            //if (string.IsNullOrWhiteSpace(clientSpan.OpName))
+            //{
+            //    return false;
+            //}
+
+            if (clientSpan.StartUtc == default(DateTime))
+            {
+                result.Message = "StartUtc必须赋值";
+                return result;
+            }
+
+            if (validateFinish && clientSpan.FinishUtc == null)
+            {
+                result.Message = "FinishUtc必须赋值";
+                return result;
+            }
+
+            if (clientSpan.FinishUtc == default(DateTime))
+            {
+                result.Message = "FinishUtc必须赋值";
+                return result;
+            }
+
+            result.Success = true;
+            return result;
+        }
+
         public static bool CanFinish(this IClientSpan clientSpan)
         {
             return clientSpan.FinishUtc.HasValue;

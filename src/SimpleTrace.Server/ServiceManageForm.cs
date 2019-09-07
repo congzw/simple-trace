@@ -29,9 +29,12 @@ namespace SimpleTrace.Server
             AsyncMessageHelper.SafeUpdateUi("ReadSpans: " + clientSpans.Count);
         }
 
-        private void btnLoad_Click(object sender, System.EventArgs e)
+        private async void btnLoad_Click(object sender, System.EventArgs e)
         {
-
+            var clientSpans = await Ctrl.ReadClientSpanEntities();
+            AsyncMessageHelper.SafeUpdateUi("ReadSpans: " + clientSpans.Count);
+            await Ctrl.SendApiSpans(clientSpans);
+            AsyncMessageHelper.SafeUpdateUi("LoadSpans: " + clientSpans.Count);
         }
 
         private void btnClear_Click(object sender, System.EventArgs e)

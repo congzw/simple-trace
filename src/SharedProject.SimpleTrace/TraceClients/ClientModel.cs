@@ -90,6 +90,7 @@ namespace SimpleTrace.TraceClients
         public string ParentSpanId { get; set; }
     }
 
+    //接口JSON序列化有问题
     public class SaveSpansArgs : IBatchClientSpanLocate<ClientSpan>
     {
         public SaveSpansArgs()
@@ -98,10 +99,65 @@ namespace SimpleTrace.TraceClients
         }
         public IList<ClientSpan> Items { get; set; }
 
-        public static SaveSpansArgs Create(params ClientSpan[] clientSpans)
+        public static SaveSpansArgs Create(params IClientSpan[] clientSpans)
         {
-            var saveSpansArgs = new SaveSpansArgs { Items = clientSpans.ToList() };
+            var spans = new List<ClientSpan>();
+            foreach (var someImpl in clientSpans)
+            {
+                if (someImpl == null)
+                {
+                    continue;
+                }
+
+                if (someImpl is ClientSpan)
+                {
+                    spans.Add((ClientSpan)someImpl);
+                }
+                else
+                {
+                    var clientSpan = new ClientSpan();
+                    MyModelHelper.SetProperties(clientSpan, someImpl);
+                    spans.Add(clientSpan);
+                }
+            }
+            
+            var saveSpansArgs = new SaveSpansArgs { Items = spans };
             return saveSpansArgs;
+        }
+
+        public static MessageResult Validate(SaveSpansArgs args)
+        {
+            var result = MessageResult.FailResult(string.Empty);
+            if (args == null)
+            {
+                result.Message = "参数不能为空";
+                return result;
+            }
+
+            if (args.Items == null)
+            {
+                result.Message = "Items不能为空";
+                return result;
+            }
+
+            if (args.Items.Count == 0)
+            {
+                result.Message = "Items数量不能为0";
+                return result;
+            }
+
+
+            foreach (var clientSpan in args.Items)
+            {
+                var validateSave = clientSpan.ValidateSave(true);
+                if (!validateSave.Success)
+                {
+                    return validateSave;
+                }
+            }
+
+            result.Success = true;
+            return result;
         }
     }
 
@@ -150,6 +206,7 @@ namespace SimpleTrace.TraceClients
 
             return clientSpan;
         }
+
     }
     
     public class QueueInfo

@@ -52,6 +52,13 @@ namespace SimpleTrace.TraceClients.Api
 
         public Task SaveSpans(SaveSpansArgs args)
         {
+            var vr = SaveSpansArgs.Validate(args);
+            if (!vr.Success)
+            {
+                LogInfo( vr.Message + " => " + vr.Data.ToJson(false));
+                return Task.FromResult(0);
+            }
+
             LogInfo(args.Items.Count.ToString(), "SaveSpans");
             return _commandQueue.Enqueue(SaveSpansCommand.Create(args));
         }

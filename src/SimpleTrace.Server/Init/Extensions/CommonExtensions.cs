@@ -10,6 +10,7 @@ namespace SimpleTrace.Server.Init.Extensions
         public static IServiceCollection AddCommon(this IServiceCollection services)
         {
             services.AddSingleton(AsyncFile.Instance);
+
             services.AddSingleton(sp =>
             {
                 var simpleLogFactory = SimpleLogFactory.Resolve();
@@ -31,6 +32,10 @@ namespace SimpleTrace.Server.Init.Extensions
 
                 return simpleLogFactory;
             });
+
+            var webApiHelper = WebApiHelper.Resolve();
+            services.AddSingleton(webApiHelper);
+
             return services;
         }
 

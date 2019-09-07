@@ -10,7 +10,6 @@ namespace SimpleTrace.Server.Init.Extensions
         {
             services.AddTransient<ServiceManageFormCtrl>();
             services.AddTransient<ServiceManageForm>();
-            services.AddTransient<IClientSpanRepository, ClientSpanRepository>();
             return services;
         }
     }
