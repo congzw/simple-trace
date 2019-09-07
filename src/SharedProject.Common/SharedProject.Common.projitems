@@ -27,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Common\MessageResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\MyModelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\MyTree.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Common\SimpleIni.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SimpleIoc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SimpleJson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\SimpleLog.cs" />

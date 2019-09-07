@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
 using Common;
@@ -15,6 +16,13 @@ namespace SimpleTrace.Server.Init
             Container.Init(new Startup().ConfigureServices);
         }
 
+        public static bool IsRunAsAdmin()
+        {
+            var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
         public void HandleGlobalException()
         {
             Application.ThreadException += Application_ThreadException;
@@ -23,11 +31,23 @@ namespace SimpleTrace.Server.Init
 
         public Form CreateEntryForm()
         {
-            //todo load by config
-            //var form = myContainer.GetService<DemoForm>();
-            //var form = Container.GetService<ServiceManages.ServiceManageForm>();
-            var form = Container.GetService<CallApis.CallApiForm>();
-            return form;
+            var simpleIniFile = SimpleIni.ResolveFile();
+            var items = simpleIniFile.TryLoadIniFileItems("SimpleTrace.ini");
+            var value = simpleIniFile.GetValue(items, "Entry", "FormName");
+            var entryFormName = value == null ?  string.Empty : value.ToString().Trim();
+
+            if (entryFormName.Equals("CallApiForm", StringComparison.Ordinal))
+            {
+                return Container.GetService<CallApis.CallApiForm>();
+            }
+
+            if (entryFormName.Equals("ServiceManage", StringComparison.Ordinal))
+            {
+                return Container.GetService<ServiceManages.ServiceManageForm>();
+            }
+            
+            //default
+            return Container.GetService<Demos.DemoForm>();
         }
         
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)

@@ -107,7 +107,9 @@
     <EmbeddedResource Include="Demos\DemoForm.resx">
       <DependentUpon>DemoForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="SimpleTrace.ini" />
+    <None Include="SimpleTrace.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
