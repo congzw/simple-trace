@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Threading.Tasks;
+using System.Windows.Forms;
 using Common;
 
 namespace SimpleTrace.Server.ServiceManages
@@ -30,12 +31,10 @@ namespace SimpleTrace.Server.ServiceManages
             this.txtConfig.Text = formatConfig;
         }
 
-        private async void btnGetStatus_Click(object sender, System.EventArgs e)
+        private void btnGetStatus_Click(object sender, System.EventArgs e)
         {
-            await Ctrl.ToDo();
-            //AsyncMessageHelper.SafeUpdateUi("ToDo");
-            //var tryGetStatus = Ctrl.TheController.TryGetStatus();
-            //MessageBox.Show(tryGetStatus.Message);
+            var tryGetStatus = Ctrl.TheController.TryGetStatus();
+            MessageBox.Show(tryGetStatus.Message);
         }
 
 

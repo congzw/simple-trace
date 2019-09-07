@@ -2,7 +2,7 @@
 using System.ServiceProcess;
 using Common;
 
-namespace SimpleTraceWs
+namespace SimpleTrace.Ws
 {
     static class Program
     {

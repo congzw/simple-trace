@@ -1,4 +1,4 @@
-﻿namespace SimpleTraceWs
+﻿namespace SimpleTrace.Ws
 {
     partial class SimpleTraceService
     {

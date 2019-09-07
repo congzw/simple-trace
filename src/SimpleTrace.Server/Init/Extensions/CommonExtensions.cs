@@ -11,32 +11,34 @@ namespace SimpleTrace.Server.Init.Extensions
         {
             services.AddSingleton(AsyncFile.Instance);
 
-            services.AddSingleton(sp =>
-            {
-                var simpleLogFactory = SimpleLogFactory.Resolve();
-                simpleLogFactory.LogWithSimpleEventBus();
-
-
-                var initLog = simpleLogFactory.GetOrCreate(null);
-                _folderPath = AppDomain.CurrentDomain.Combine("Logs");
-                initLog.LogInfo(">>>> log folder path => " + _folderPath);
-
-                var logActions = simpleLogFactory.LogActions;
-                logActions["LogExToFile"] = new LogMessageAction("LogExToFile", true, args =>
-                {
-                    if (args.Level.ShouldLog(SimpleLogLevel.Error))
-                    {
-                        LogExToFile(args);
-                    }
-                });
-
-                return simpleLogFactory;
-            });
+            var simpleLogFactory = SetupLog();
+            services.AddSingleton(sp => simpleLogFactory);
 
             var webApiHelper = WebApiHelper.Resolve();
             services.AddSingleton(webApiHelper);
 
             return services;
+        }
+
+        private static ISimpleLogFactory SetupLog()
+        {
+            var simpleLogFactory = SimpleLogFactory.Resolve();
+            simpleLogFactory.LogWithSimpleEventBus();
+
+            var initLog = simpleLogFactory.GetOrCreate(null);
+            _folderPath = AppDomain.CurrentDomain.Combine("Logs");
+            initLog.LogInfo(">>>> log folder path => " + _folderPath);
+
+            var logActions = simpleLogFactory.LogActions;
+            logActions["LogExToFile"] = new LogMessageAction("LogExToFile", true, args =>
+            {
+                if (args.Level.ShouldLog(SimpleLogLevel.Error))
+                {
+                    LogExToFile(args);
+                }
+            });
+
+            return simpleLogFactory;
         }
 
         private static string _folderPath = null;

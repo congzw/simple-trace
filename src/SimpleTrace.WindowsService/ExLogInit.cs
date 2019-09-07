@@ -2,7 +2,7 @@
 using System.IO;
 using Common;
 
-namespace SimpleTraceWs
+namespace SimpleTrace.Ws
 {
     public class ExLogInit
     {

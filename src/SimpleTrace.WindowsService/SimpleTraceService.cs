@@ -3,7 +3,7 @@ using System.ServiceProcess;
 using System.Threading;
 using Common;
 
-namespace SimpleTraceWs
+namespace SimpleTrace.Ws
 {
     public partial class SimpleTraceService : ServiceBase
     {
@@ -11,8 +11,7 @@ namespace SimpleTraceWs
         {
             InitializeComponent();
         }
-
-
+        
         protected override void OnStart(string[] args)
         {
             LogInfo(string.Format("OnStart begin {0:yyyy-MM-dd HH:mm:ss:fff} in thread {1}", DateTime.Now, Thread.CurrentThread.ManagedThreadId));

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{ECB24F09-FAA8-4E3B-94EC-13C081BC4C48}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SimpleTraceWs</RootNamespace>
+    <RootNamespace>SimpleTrace.Ws</RootNamespace>
     <AssemblyName>SimpleTraceWs</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
