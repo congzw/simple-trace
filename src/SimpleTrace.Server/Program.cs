@@ -20,6 +20,7 @@ namespace SimpleTrace.Server
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.ThreadException += Application_ThreadException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             //var form = myContainer.GetService<DemoForm>();
             var form = myContainer.GetService<ServiceManageForm>();
@@ -43,6 +44,15 @@ namespace SimpleTrace.Server
                 var logger = MyContainer.Instance.GetService<ISimpleLogFactory>().GetOrCreate(null);
                 logger.LogEx(ex);
             }
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+            Console.WriteLine(e.ExceptionObject);
         }
     }
 }
