@@ -9,6 +9,7 @@ namespace SimpleTrace.Server.Init.Extensions
     {
         public static IServiceCollection AddCommon(this IServiceCollection services)
         {
+            services.AddSingleton(AsyncFile.Instance);
             services.AddSingleton(sp =>
             {
                 var simpleLogFactory = SimpleLogFactory.Resolve();
@@ -16,7 +17,7 @@ namespace SimpleTrace.Server.Init.Extensions
 
 
                 var initLog = simpleLogFactory.GetOrCreate(null);
-                _folderPath = AppDomainExtensions.Combine(AppDomain.CurrentDomain, "Logs");
+                _folderPath = AppDomain.CurrentDomain.Combine("Logs");
                 initLog.LogInfo(">>>> log folder path => " + _folderPath);
 
                 var logActions = simpleLogFactory.LogActions;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SimpleTrace.Server.UI;
+using SimpleTrace.TraceClients.Repos;
 
 namespace SimpleTrace.Server.Init.Extensions
 {
@@ -9,6 +10,7 @@ namespace SimpleTrace.Server.Init.Extensions
         {
             services.AddTransient<ServiceManageFormCtrl>();
             services.AddTransient<ServiceManageForm>();
+            services.AddTransient<IClientSpanRepository, ClientSpanRepository>();
             return services;
         }
     }

@@ -93,6 +93,10 @@ namespace SimpleTrace.TraceClients.Repos
             }
 
             var folderPath = AppDomain.CurrentDomain.Combine("Trace");
+            if (!Directory.Exists(folderPath))
+            {
+                return new List<DateTimeRangeArchive>();
+            }
             var logs = Directory.GetFiles(folderPath, "*.log");
             var archiveIds = logs.Select(x => Path.GetFileNameWithoutExtension(new FileInfo(x).Name)).ToList();
             var archives = ParseArchives(archiveIds).FilterOverlaps(begin, end).ToList();

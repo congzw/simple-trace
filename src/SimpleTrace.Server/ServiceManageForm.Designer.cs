@@ -37,9 +37,9 @@
             this.btnInstall = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.txtConfig = new System.Windows.Forms.TextBox();
             this.btnRead = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
+            this.txtConfig = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -65,6 +65,7 @@
             this.btnClear.TabIndex = 30;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnStart
             // 
@@ -151,15 +152,6 @@
             this.splitContainer1.SplitterDistance = 160;
             this.splitContainer1.TabIndex = 41;
             // 
-            // txtConfig
-            // 
-            this.txtConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtConfig.Location = new System.Drawing.Point(0, 0);
-            this.txtConfig.Multiline = true;
-            this.txtConfig.Name = "txtConfig";
-            this.txtConfig.Size = new System.Drawing.Size(800, 160);
-            this.txtConfig.TabIndex = 27;
-            // 
             // btnRead
             // 
             this.btnRead.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -181,6 +173,15 @@
             this.btnLoad.Text = "LoadTraces";
             this.btnLoad.UseVisualStyleBackColor = true;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            // 
+            // txtConfig
+            // 
+            this.txtConfig.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtConfig.Location = new System.Drawing.Point(0, 0);
+            this.txtConfig.Multiline = true;
+            this.txtConfig.Name = "txtConfig";
+            this.txtConfig.Size = new System.Drawing.Size(800, 160);
+            this.txtConfig.TabIndex = 27;
             // 
             // ServiceManageForm
             // 

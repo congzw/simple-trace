@@ -33,5 +33,10 @@ namespace SimpleTrace.Server
         {
 
         }
+
+        private void btnClear_Click(object sender, System.EventArgs e)
+        {
+            this.txtMessage.Clear();
+        }
     }
 }
