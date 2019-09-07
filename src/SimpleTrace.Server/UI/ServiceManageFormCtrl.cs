@@ -4,16 +4,15 @@ using System.Threading.Tasks;
 using Common;
 using SimpleTrace.TraceClients;
 using SimpleTrace.TraceClients.ApiProxy;
-using SimpleTrace.TraceClients.Repos;
 
 namespace SimpleTrace.Server.UI
 {
     public class ServiceManageFormCtrl
     {
-        private readonly IClientSpanRepository _clientSpanRepository;
+        private readonly ClientSpanRepos _clientSpanRepository;
         private readonly IClientTracerApiProxy _apiProxy;
 
-        public ServiceManageFormCtrl(IClientSpanRepository clientSpanRepository, IClientTracerApiProxy apiProxy)
+        public ServiceManageFormCtrl(ClientSpanRepos clientSpanRepository, IClientTracerApiProxy apiProxy)
         {
             _clientSpanRepository = clientSpanRepository;
             _apiProxy = apiProxy;

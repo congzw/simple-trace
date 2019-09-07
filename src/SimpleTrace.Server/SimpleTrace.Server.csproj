@@ -78,6 +78,7 @@
       <DependentUpon>DemoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\ThreadExceptionHandler.cs" />
+    <Compile Include="UI\ClientSpanRepos.cs" />
     <Compile Include="UI\ServiceManageFormCtrl.cs" />
     <Compile Include="UI\DemoFormCtrl.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -111,13 +112,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{a0483866-91de-402c-9583-566a7f87cf42}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SimpleTrace\SimpleTrace.csproj">
-      <Project>{4432c6b4-ea5d-43e3-acef-e8f7f8965b3e}</Project>
-      <Name>SimpleTrace</Name>
+    <ProjectReference Include="..\SimpleTrace.Shared\SimpleTrace.Shared.csproj">
+      <Project>{f6cb31f3-a577-4618-8c78-37aacc6bcf8c}</Project>
+      <Name>SimpleTrace.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
