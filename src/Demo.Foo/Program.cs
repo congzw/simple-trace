@@ -7,25 +7,18 @@ namespace Demo.Foo
 {
     class Program
     {
-        private static bool _looping = true;
-
         static void Main(string[] args)
         {
-            LogInfo("Use 'ESC' to Exit App");
             Task.Run(() =>
             {
-                while (_looping)
+                for (int i = 0; i < 100; i++)
                 {
-                    LogInfo("...");
-                    Thread.Sleep(3000);
+                    LogInfo("Processing " + i);
+                    Thread.Sleep(1000);
                 }
             });
 
-            while (Console.ReadKey().Key != ConsoleKey.Escape)
-            {
-                LogInfo("Use 'ESC' KEY to Exit App");
-                _looping = false;
-            }
+            LogInfo("App Exit ...");
         }
         
         static void LogInfo(string info)

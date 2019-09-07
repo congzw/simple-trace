@@ -1,4 +1,7 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
 using Common;
 using SimpleTrace.Server.CallApis;
 using SimpleTrace.Server.Init;
@@ -34,6 +37,14 @@ namespace SimpleTrace.Server.ServiceManages
 
         private void btnGetStatus_Click(object sender, System.EventArgs e)
         {
+            //var instanceLogger = SimpleLogSingleton<ServiceManageForm>.Instance.Logger;
+            //var fullExePath = Path.GetFullPath(AppDomain.CurrentDomain.Combine(@"DemoFoo\Demo.Foo.exe"));
+            //instanceLogger.LogInfo(fullExePath); 
+            //var isRun = Process.GetProcessesByName("Demo.Foo.exe").Length > 0;
+            //var isRun2 = Process.GetProcessesByName("Demo.Foo").Length > 0;
+            //instanceLogger.LogInfo("Demo.Foo.exe isRunning ? " + isRun); //KO
+            //instanceLogger.LogInfo("Demo.Foo isRunning ? " + isRun2); //OK
+
             var tryGetStatus = Ctrl.TheController.TryGetStatus();
             MessageBox.Show(tryGetStatus.Message);
         }
