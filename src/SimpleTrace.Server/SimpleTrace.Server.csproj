@@ -63,7 +63,7 @@
     <Compile Include="Common\SimpleEventBus.cs" />
     <Compile Include="Common\SimpleEventBusExtensions.cs" />
     <Compile Include="Demos\FooService.cs" />
-    <Compile Include="Init\AppHelper.cs" />
+    <Compile Include="Init\AppMain.cs" />
     <Compile Include="Init\Extensions\CommonExtensions.cs" />
     <Compile Include="Init\Extensions\DemoExtensions.cs" />
     <Compile Include="Init\Extensions\CallApiExtensions.cs" />

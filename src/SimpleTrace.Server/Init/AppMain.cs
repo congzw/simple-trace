@@ -5,7 +5,7 @@ using Common;
 
 namespace SimpleTrace.Server.Init
 {
-    public class AppHelper
+    public class AppMain
     {
         public MyContainer Container { get; set; }
         
@@ -54,6 +54,6 @@ namespace SimpleTrace.Server.Init
         }
 
 
-        public static AppHelper Instance = new AppHelper();
+        public static AppMain Instance = new AppMain();
     }
 }

@@ -9,15 +9,15 @@ namespace SimpleTrace.Server
         [STAThread]
         static void Main()
         {
-            var appHelper = AppHelper.Instance;
-            appHelper.InitContainer();
+            var appMain = AppMain.Instance;
+            appMain.InitContainer();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            appHelper.HandleGlobalException();
+            appMain.HandleGlobalException();
 
-            var form = appHelper.CreateEntryForm();
+            var form = appMain.CreateEntryForm();
             if (form == null)
             {
                 MessageBox.Show(@"Fail to create entry form!");
