@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+// ReSharper disable CheckNamespace
 
 namespace Common
 {
@@ -81,9 +82,31 @@ namespace Common
                         LogInfo(string.Format("fail {0} more then max: {1}, exit", errorCount, MaxTryFailCount));
                         break;
                     }
-                    LogEx(e, string.Format("fail time: {0}/{1}", errorCount, MaxTryFailCount));
+                    LogEx(e, string.Format("fail time: {0}/{1}, ex:{2}", errorCount, MaxTryFailCount, e.Message));
                 }
-                TaskEx.Delay(LoopSpan).Wait();
+
+                try
+                {
+                    //Thread.Sleep actually makes current thread to sleep
+                    //Task.Delay is a logical delay without blocking the current thread. Task.Delay is a timer based wait mechanism.
+                    //In async programming model you should always use Task.Delay() if you want something(continuation) happen after some delay.
+                    TaskEx.Delay(LoopSpan).Wait();
+                }
+                catch (TaskCanceledException)
+                {
+                    //await TaskEx.Delay(LoopSpan); should enter here 
+                    LogInfo(string.Format("Task Canceled => TaskCanceledException"));
+                }
+                catch (AggregateException)
+                {
+                    //TaskEx.Delay(LoopSpan).Wait(); should enter here 
+                    LogInfo(string.Format("Task Canceled => AggregateException"));
+                }
+                catch (Exception)
+                {
+                    //should never enter here
+                    LogInfo(string.Format("Task Canceled => Exception"));
+                }
             }
         }
 
