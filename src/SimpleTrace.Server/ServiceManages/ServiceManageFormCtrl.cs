@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Common;
-using Common.WindowsServices;
+using SimpleTrace.Common;
+using SimpleTrace.Common.WindowsServices;
 
 namespace SimpleTrace.Server.ServiceManages
 {

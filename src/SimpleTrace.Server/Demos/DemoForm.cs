@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using Common;
+using SimpleTrace.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace SimpleTrace.Server.Demos

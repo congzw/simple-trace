@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Common
+namespace SimpleTrace.Common
 {
     public class AsyncQueue<T>
     {

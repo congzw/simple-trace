@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Common
+namespace SimpleTrace.Common
 {
     //this helper will prevent deadlocks and could be used within a try/catch block to get the exception raised by the AsyncMethod itself.
     public static class AsyncHelper

@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using Common;
+using SimpleTrace.Common;
 
 namespace SimpleTrace.Server.CallApis
 {

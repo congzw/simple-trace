@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 // ReSharper disable CheckNamespace
 
-namespace Common
+namespace SimpleTrace.Common
 {
     #region internal helper
 

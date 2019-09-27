@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 // ReSharper disable CheckNamespace
 
-namespace Common
+namespace SimpleTrace.Common
 {
     public delegate void UpdateUiMessageDelegate(string value);
 

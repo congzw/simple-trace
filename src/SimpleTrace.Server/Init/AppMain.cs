@@ -2,7 +2,7 @@
 using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
-using Common;
+using SimpleTrace.Common;
 
 namespace SimpleTrace.Server.Init
 {

@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 // ReSharper disable CheckNamespace
 
-namespace Common
+namespace SimpleTrace.Common
 {
     public class SimpleLoopTask : IDisposable
     {

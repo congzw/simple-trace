@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common
+namespace SimpleTrace.Common
 {
     public class ExpiredIn
     {

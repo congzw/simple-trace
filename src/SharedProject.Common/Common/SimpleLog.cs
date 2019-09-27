@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Common
+namespace SimpleTrace.Common
 {
     //内部使用的简单日志，不依赖任何第三方类库
     public interface ISimpleLog

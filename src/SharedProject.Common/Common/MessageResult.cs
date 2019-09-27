@@ -1,4 +1,4 @@
-﻿namespace Common
+﻿namespace SimpleTrace.Common
 {
     public class MessageResult
     {

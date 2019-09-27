@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 // ReSharper disable CheckNamespace
 
-namespace Common
+namespace SimpleTrace.Common
 {
     public class SimpleProcessInfo
     {

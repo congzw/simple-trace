@@ -1,7 +1,7 @@
 ﻿
 // ReSharper disable CheckNamespace
 
-namespace Common
+namespace SimpleTrace.Common
 {
     #region demo for LogWithSimpleEventBus
     

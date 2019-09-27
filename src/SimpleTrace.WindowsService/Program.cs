@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ServiceProcess;
-using Common;
+using SimpleTrace.Common;
 
 namespace SimpleTrace.Ws
 {

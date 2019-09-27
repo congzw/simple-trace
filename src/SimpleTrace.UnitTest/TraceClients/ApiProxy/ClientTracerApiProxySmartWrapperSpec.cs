@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Common;
+using SimpleTrace.Common;
 
 namespace SimpleTrace.TraceClients.ApiProxy
 {
@@ -41,11 +41,11 @@ namespace SimpleTrace.TraceClients.ApiProxy
             ((MockClientTracerApiProxy)apiProxy.Proxy).TryTestApiConnectionInvoked.ShouldTrue();
             ((MockClientTracerApiProxy)apiProxy.Proxy).StartSpanInvoked.ShouldTrue();
         }
-        
+
         private readonly DateTime _mockNow = new DateTime(2019, 1, 1);
         private ClientTracerApiProxySmartWrapper Create(bool needCheck, bool apiTestOkResult)
         {
-            var proxy = new MockClientTracerApiProxy(){MockApiTestOkResult = apiTestOkResult };
+            var proxy = new MockClientTracerApiProxy() { MockApiTestOkResult = apiTestOkResult };
             var wrapper = new ClientTracerApiProxySmartWrapper(proxy);
             wrapper.GetDateNow = () => _mockNow;
             wrapper.CheckSmart = new MockCheckSmart(needCheck);

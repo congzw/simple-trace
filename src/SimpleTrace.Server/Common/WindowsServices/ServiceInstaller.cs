@@ -8,7 +8,7 @@ using System.Threading;
 #pragma warning disable 414
 
 // ReSharper disable once CheckNamespace
-namespace Common.WindowsServices
+namespace SimpleTrace.Common.WindowsServices
 {
     public static class ServiceInstaller
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // ReSharper disable once CheckNamespace
-namespace Common
+namespace SimpleTrace.Common
 {
     public static class TestExtensions
     {

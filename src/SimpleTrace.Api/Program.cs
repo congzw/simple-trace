@@ -1,5 +1,5 @@
 ﻿using System;
-using Common;
+using SimpleTrace.Common;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

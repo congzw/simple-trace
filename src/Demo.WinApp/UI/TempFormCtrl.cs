@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Common;
+using SimpleTrace.Common;
 
 namespace Demo.WinApp.UI
 {

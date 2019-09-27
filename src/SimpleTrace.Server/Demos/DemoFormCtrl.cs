@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Common;
+using SimpleTrace.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 

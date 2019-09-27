@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Common;
+using SimpleTrace.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

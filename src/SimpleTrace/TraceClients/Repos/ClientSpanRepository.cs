@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Common;
+using SimpleTrace.Common;
 
 namespace SimpleTrace.TraceClients.Repos
 {

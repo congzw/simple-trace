@@ -4,7 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace Common
+namespace SimpleTrace.Common
 {
     public sealed class ObjectCounter: IDisposable
     {

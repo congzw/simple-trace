@@ -2,7 +2,7 @@
 using System.IO;
 
 // ReSharper disable once CheckNamespace
-namespace Common.WindowsServices
+namespace SimpleTrace.Common.WindowsServices
 {
     public interface IServiceController
     {

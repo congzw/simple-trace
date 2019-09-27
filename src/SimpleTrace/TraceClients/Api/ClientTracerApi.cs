@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Common;
+using SimpleTrace.Common;
 using SimpleTrace.TraceClients.Commands;
 
 namespace SimpleTrace.TraceClients.Api

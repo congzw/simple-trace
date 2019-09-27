@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 // ReSharper disable CheckNamespace
-namespace Common
+namespace SimpleTrace.Common
 {
     public class IncludeProperties
     {

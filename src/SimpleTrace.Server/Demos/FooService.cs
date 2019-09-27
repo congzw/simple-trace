@@ -1,5 +1,5 @@
 ﻿using System;
-using Common;
+using SimpleTrace.Common;
 
 namespace SimpleTrace.Server.Demos
 {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Common;
+using SimpleTrace.Common;
 
 // ReSharper disable CheckNamespace
 

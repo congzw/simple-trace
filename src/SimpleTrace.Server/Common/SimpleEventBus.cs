@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 // ReSharper disable CheckNamespace
 
-namespace Common
+namespace SimpleTrace.Common
 {
     public interface ISimpleEventBus<T> where T : ISimpleEvent
     {

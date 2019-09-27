@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Common;
+using SimpleTrace.Common;
 using Demo.WinApp.UI;
 
 namespace Demo.WinApp

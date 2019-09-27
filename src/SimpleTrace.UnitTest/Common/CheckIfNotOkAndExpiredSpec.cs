@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 // ReSharper disable CheckNamespace
 
-namespace Common
+namespace SimpleTrace.Common
 {
     [TestClass]
     public class CheckIfNotOkAndExpiredSpec
@@ -30,7 +30,7 @@ namespace Common
             checkIf.CheckIfNecessary(now, mockCheckApi.CheckIsStatusOk);
             mockCheckApi.IsInvoked.ShouldFalse();
         }
-        
+
         [TestMethod]
         public void CheckIfNecessary_StatusNotOk_Expired_Should_Invoke()
         {

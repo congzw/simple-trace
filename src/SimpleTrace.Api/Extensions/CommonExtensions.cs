@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using SimpleTrace.Common;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

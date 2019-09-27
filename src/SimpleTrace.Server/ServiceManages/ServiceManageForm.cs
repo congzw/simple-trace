@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using Common;
+using SimpleTrace.Common;
 using SimpleTrace.Server.CallApis;
 using SimpleTrace.Server.Init;
 

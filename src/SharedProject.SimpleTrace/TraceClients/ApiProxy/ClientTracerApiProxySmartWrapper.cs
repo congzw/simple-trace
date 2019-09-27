@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Common;
+using SimpleTrace.Common;
 
 namespace SimpleTrace.TraceClients.ApiProxy
 {

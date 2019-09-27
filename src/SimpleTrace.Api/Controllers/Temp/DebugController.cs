@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Common;
+using SimpleTrace.Common;
 using Microsoft.AspNetCore.Mvc;
 using SimpleTrace.TraceClients.ScheduleTasks;
 
